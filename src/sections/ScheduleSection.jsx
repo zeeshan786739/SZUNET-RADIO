@@ -39,7 +39,7 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]',
           'hover:border-[rgba(0,142,255,0.44)] hover:bg-[rgba(255,255,255,0.38)] hover:shadow-[0_8px_16px_rgba(7,7,56,0.11)]',
           isActive &&
-            'border-[rgba(255,17,17,0.56)] bg-[rgba(255,255,255,0.46)] shadow-[0_10px_18px_rgba(7,7,56,0.15),0_0_0_1px_rgba(255,255,255,0.66),0_0_18px_rgba(0,142,255,0.18)]',
+            'border-[rgba(255,17,17,0.56)] bg-[rgba(255,255,255,0.72)] shadow-[0_10px_18px_rgba(7,7,56,0.15),0_0_0_1px_rgba(255,255,255,0.78),0_0_14px_rgba(255,17,17,0.12)] backdrop-blur-[6px]',
         )}
         type="button"
         aria-label={`Play ${item.artist} - ${item.title} at ${item.time}`}
@@ -58,7 +58,7 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
 
         <div
           className={cx(
-            'relative isolate aspect-square overflow-hidden rounded-sm bg-[#d9d9de] shadow-[0_6px_12px_rgba(7,7,56,0.16),inset_0_0_0_1px_rgba(255,255,255,0.36)]',
+            'relative isolate aspect-square overflow-hidden rounded-sm bg-[rgba(217,217,222,0.88)] shadow-[0_6px_12px_rgba(7,7,56,0.14),inset_0_0_0_1px_rgba(255,255,255,0.45)] backdrop-blur-[2px]',
             isActive && 'shadow-[0_8px_16px_rgba(7,7,56,0.22),0_0_0_2px_rgba(255,17,17,0.82)]',
           )}
         >
@@ -232,8 +232,10 @@ function ScheduleSection({ variant = 'default' }) {
     >
       {!isHeroVariant ? (
         <img
-          className="pointer-events-none absolute left-1/2 top-[clamp(105px,13vw,165px)] z-[1] w-[clamp(380px,58vw,820px)] max-w-none -translate-x-[4%] opacity-100 max-[900px]:w-[clamp(430px,72vw,620px)] max-[900px]:-translate-x-[-6%] max-[767px]:top-[clamp(118px,28vw,170px)] max-[767px]:w-[clamp(390px,82vw,520px)] max-[767px]:-translate-x-1/2 max-[560px]:w-[clamp(340px,98vw,460px)] max-[420px]:w-[clamp(300px,108vw,380px)]"
+          className="pointer-events-none absolute right-[-50px] top-[200px] z-[1] h-[814px] w-[713px] max-w-none"
           src={blueRing}
+          width={713}
+          height={814}
           alt=""
           aria-hidden="true"
         />
@@ -269,19 +271,23 @@ function ScheduleSection({ variant = 'default' }) {
       ) : null}
       <div
         className={cx(
-          'relative isolate z-[2] mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px] border border-[rgba(7,7,56,0.08)] bg-[#e6e4e4] shadow-[0_8px_20px_rgba(7,7,56,0.08),inset_0_1px_0_rgba(255,255,255,0.42)] max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl',
+          'relative z-[2] mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px]',
+          'border border-[rgba(255,255,255,0.58)]',
+          'bg-[rgba(235,233,237,0.38)] shadow-[0_10px_28px_rgba(7,7,56,0.08),inset_0_1px_0_rgba(255,255,255,0.65)]',
+          'backdrop-blur-[10px] backdrop-saturate-[1.1]',
+          'max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl max-[560px]:backdrop-blur-[8px]',
           isHeroVariant &&
-            'rounded-[9px] border-[rgba(255,255,255,0.52)] bg-[#e6e4e4] shadow-[0_12px_24px_rgba(76,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.46)] max-[560px]:w-[var(--page-width)]',
+            'rounded-[9px] border-[rgba(255,255,255,0.55)] bg-[rgba(230,228,232,0.55)] shadow-[0_12px_24px_rgba(76,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.5)] max-[560px]:w-[var(--page-width)]',
         )}
       >
         <img
-          className="pointer-events-none absolute inset-0 -z-[2] h-full w-full object-fill"
+          className="pointer-events-none absolute inset-0 -z-[2] h-full w-full object-fill opacity-[0.28] mix-blend-multiply"
           src={schedulePanelBg}
           alt=""
           aria-hidden="true"
         />
         <span
-          className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.18),transparent_13%,transparent_87%,rgba(255,255,255,0.16)),repeating-linear-gradient(90deg,rgba(7,7,56,0.035)_0_1px,transparent_1px_84px)]"
+          className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.22),transparent_14%,transparent_86%,rgba(255,255,255,0.18)),repeating-linear-gradient(90deg,rgba(7,7,56,0.045)_0_1px,transparent_1px_84px)]"
           aria-hidden="true"
         />
         {isHeroVariant ? <ScheduleHeroRocket /> : null}
