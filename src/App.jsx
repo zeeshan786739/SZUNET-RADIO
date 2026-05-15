@@ -9,6 +9,7 @@ import FooterSection from './sections/FooterSection'
 import SecondRadioPage from './pages/SecondRadioPage'
 import SongSearchPage from './pages/SongSearchPage'
 import RevealOnScroll from './components/RevealOnScroll'
+import EditorialBlueRing from './components/EditorialBlueRing'
 
 function getInitialView() {
   const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/'
@@ -23,7 +24,8 @@ function LandingPage({ playingChannelId, onToggleChannel }) {
   return (
     <>
       <HeroSection channels={channels} playingChannelId={playingChannelId} onToggleChannel={onToggleChannel} />
-      <div className="relative isolate overflow-hidden bg-white">
+      <div className="relative isolate overflow-visible bg-white [--editorial-ellipse-size:clamp(210px,49.5vw,713px)] [--editorial-ellipse-right:calc(-1*clamp(34px,var(--editorial-ellipse-size)*clamp(0.15,calc(0.20-0.05*((100vw-400px)*(1440px-100vw))/540800),0.22),157px))] [--editorial-ellipse-top:clamp(48px,calc(5vw+28px),196px)] [--editorial-ellipse-opacity:clamp(0.7,calc(0.66+0.2*((100vw-360px)/1080)),0.9)]">
+        <EditorialBlueRing />
         <div className="relative z-[2]">
           <RevealOnScroll>
             <ScheduleSection />

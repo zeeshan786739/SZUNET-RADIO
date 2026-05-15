@@ -67,7 +67,7 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
           aria-label="Gyorslinkek"
         >
           <a
-            className="inline-flex items-center rounded-md border-2 border-[#080833] bg-white/90 px-[0.55em] py-[0.38em] [font-family:Arial,Helvetica,sans-serif] text-[clamp(10px,0.95vw,13px)] font-[950] normal-case leading-none tracking-[0.02em] text-[#080833] no-underline shadow-[0_2px_8px_rgba(8,8,51,0.08)] backdrop-blur-[2px] transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-white focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#080833] max-[420px]:px-2 max-[420px]:text-[9px]"
+            className="inline-flex items-center rounded-md border-2 border-[#080833] bg-white/90 px-[0.55em] py-[0.38em] [font-family:Arial,Helvetica,sans-serif] text-[clamp(10px,0.95vw,13px)] font-[950] normal-case leading-none tracking-[0.02em] text-[#080833] no-underline shadow-[0_2px_8px_rgba(8,8,51,0.08)] backdrop-blur-[1px] transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-white focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#080833] max-[420px]:px-2 max-[420px]:text-[9px]"
             href="/second-page"
             aria-label="Second page — műsor és archívum, lejátszás folytatódik"
           >
