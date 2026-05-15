@@ -26,7 +26,7 @@ function LandingPage({ playingChannelId, onToggleChannel }) {
       <HeroSection channels={channels} playingChannelId={playingChannelId} onToggleChannel={onToggleChannel} />
       <div className="relative isolate overflow-hidden bg-white">
         <img
-          className="pointer-events-none absolute top-[clamp(96px,9vw,152px)] right-[clamp(-470px,-24vw,-235px)] z-0 w-[clamp(600px,58vw,890px)] max-w-none opacity-[0.96] max-[1180px]:top-[138px] max-[1180px]:right-[-370px] max-[1180px]:w-[620px] max-[1180px]:opacity-[0.72] max-[900px]:top-[168px] max-[900px]:right-[-390px] max-[900px]:w-[520px] max-[900px]:opacity-[0.52] max-[760px]:top-[188px] max-[760px]:right-[-335px] max-[760px]:w-[430px] max-[760px]:opacity-[0.48] max-[560px]:top-[168px] max-[560px]:right-[-338px] max-[560px]:w-[420px] max-[560px]:opacity-[0.42] max-[420px]:top-[168px] max-[420px]:right-[-290px] max-[420px]:w-[350px] max-[380px]:right-[-270px] max-[380px]:w-[330px]"
+          className="pointer-events-none absolute top-[clamp(136px,15vw,222px)] right-[clamp(-120px,-1vw,-15px)] z-0 w-[clamp(500px,48vw,790px)] max-w-none opacity-[0.96] max-[1180px]:top-[138px] max-[1180px]:right-[-370px] max-[1180px]:w-[620px] max-[1180px]:opacity-[0.72] max-[900px]:top-[168px] max-[900px]:right-[-390px] max-[900px]:w-[520px] max-[900px]:opacity-[0.52] max-[760px]:top-[188px] max-[760px]:right-[-335px] max-[760px]:w-[430px] max-[760px]:opacity-[0.48] max-[560px]:top-[168px] max-[560px]:right-[-338px] max-[560px]:w-[420px] max-[560px]:opacity-[0.42] max-[420px]:top-[168px] max-[420px]:right-[-290px] max-[420px]:w-[350px] max-[380px]:right-[-270px] max-[380px]:w-[330px]"
           src={blueRing}
           alt=""
           aria-hidden="true"
@@ -248,7 +248,7 @@ function App() {
   }
 
   return (
-    <main className="[--page-width:min(1448px,calc(100vw-40px))] [--player-height:52px] min-h-[100svh] overflow-x-hidden bg-white pb-[calc(var(--player-height)+env(safe-area-inset-bottom,0px))] max-[700px]:[--page-width:calc(100vw-24px)] max-[700px]:[--player-height:70px]">
+    <main className="[--page-width:min(1448px,calc(100vw-40px))] [--player-height:64px] min-h-[100svh] overflow-x-hidden bg-white pb-[calc(var(--player-height)+env(safe-area-inset-bottom,0px))] max-[700px]:[--page-width:calc(100vw-24px)] max-[700px]:[--player-height:58px]">
       <audio ref={audioRef} preload="none" />
       {view === 'archive' ? (
         <SecondRadioPage onNavigateHome={() => navigate('home')} />

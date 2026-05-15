@@ -51,7 +51,7 @@ export default function StreamSelector({
     return (
       <div
         className={cx(
-          'flex h-8 min-w-[76px] items-center justify-center border border-[rgba(0,142,255,0.45)] bg-[rgba(7,7,56,0.65)] px-2 [font-family:Arial,Helvetica,sans-serif] text-[10px] font-black uppercase tracking-wide text-[rgba(255,255,255,0.82)] max-[700px]:h-10 max-[700px]:min-w-0 max-[700px]:w-full max-[700px]:text-[7px]',
+          'flex h-8 min-w-[76px] items-center justify-center border border-[rgba(0,142,255,0.58)] bg-[rgba(3,3,34,0.82)] px-2 [font-family:Arial,Helvetica,sans-serif] text-[10px] font-black uppercase tracking-wide text-[rgba(255,255,255,0.86)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] max-[700px]:h-10 max-[700px]:min-w-0 max-[700px]:w-full max-[700px]:text-[8px]',
           compact && 'h-8 min-w-0 max-w-full px-1.5 text-[9px] leading-none tracking-normal max-[700px]:h-8 max-[700px]:text-[9px]',
           className,
         )}
@@ -69,7 +69,7 @@ export default function StreamSelector({
       </span>
       <button
         className={cx(
-          'flex h-8 w-full min-w-[92px] cursor-pointer items-center justify-between gap-2 border border-[#008eff] bg-[#070738] px-2.5 pr-2 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-[border-color,box-shadow,background] duration-150 hover:border-[#00b4ff] hover:bg-[#0a0a45] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-[700px]:h-10 max-[700px]:min-w-0',
+          'flex h-8 w-full min-w-[92px] cursor-pointer items-center justify-between gap-2 border border-[#008eff] bg-[#030322] px-2.5 pr-2 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-[border-color,box-shadow,background] duration-150 hover:border-[#00b4ff] hover:bg-[#0a0a45] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_14px_rgba(0,142,255,0.2)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-[700px]:h-10 max-[700px]:min-w-0',
           compact && 'h-8 min-h-[36px] min-w-0 gap-1 px-1.5 py-0 pr-1.5 max-[700px]:h-8',
         )}
         type="button"
@@ -99,7 +99,7 @@ export default function StreamSelector({
 
       {open ? (
         <ul
-          className="absolute bottom-[calc(100%+6px)] right-0 z-[70] min-w-[100%] overflow-hidden rounded-sm border border-[#008eff] bg-[#070738] py-1 shadow-[0_-12px_28px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.06)] max-[700px]:bottom-[calc(100%+4px)] max-[700px]:left-0 max-[700px]:right-0 max-[700px]:min-w-full"
+          className="absolute bottom-[calc(100%+6px)] right-0 z-[70] min-w-[100%] overflow-hidden rounded-sm border border-[#008eff] bg-[#050536] py-1 shadow-[0_-12px_28px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.06)] max-[700px]:bottom-[calc(100%+4px)] max-[700px]:left-0 max-[700px]:right-0 max-[700px]:min-w-full"
           role="listbox"
           aria-label="Choose stream quality"
         >

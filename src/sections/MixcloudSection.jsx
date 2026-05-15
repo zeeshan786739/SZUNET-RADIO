@@ -60,7 +60,33 @@ function MixcloudCard({ item, variant = 'top' }) {
             {item.eyebrow}
           </span>
         )}
-        {item.label ? (
+        {item.hideTitle ? null : item.titleImage || item.subtitleImage ? (
+          <h2 className="relative z-0 m-0 grid w-fit max-w-full gap-0.5">
+            <span className="sr-only">{`${item.title} ${item.subtitle ?? ''}`.trim()}</span>
+            {item.titleImage ? (
+              <img
+                className="relative z-[1] block h-[clamp(20px,2vw,32px)] w-auto max-w-full object-contain object-left"
+                src={item.titleImage}
+                alt=""
+                aria-hidden="true"
+              />
+            ) : null}
+            {item.subtitleImage ? (
+              <span className="relative isolate z-0 block w-fit max-w-full">
+                <img
+                  className="relative z-[1] block h-[clamp(20px,2vw,32px)] w-auto max-w-full object-contain object-left"
+                  src={item.subtitleImage}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span
+                  className="pointer-events-none absolute inset-x-0 bottom-[5px] z-0 h-[7px] bg-[#ff1111] max-[560px]:bottom-[2px] max-[560px]:h-[5px]"
+                  aria-hidden="true"
+                />
+              </span>
+            ) : null}
+          </h2>
+        ) : item.label ? (
           <strong className="relative z-0 m-0 block max-w-full overflow-hidden text-ellipsis whitespace-nowrap [font-family:Arial,Helvetica,sans-serif] text-[clamp(38px,5vw,72px)] font-[950] leading-[0.88]">
             {item.label}
             <span className="absolute left-[28%] right-[-14px] bottom-[-3px] -z-[1] h-[9px] min-w-[86px] bg-[#ff1111] max-[560px]:left-[24%] max-[560px]:right-[-10px]" aria-hidden="true" />

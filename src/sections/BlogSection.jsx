@@ -19,7 +19,6 @@ function BlogSection() {
             <article
               className={cx(
                 'relative min-w-0 aspect-[1.02/1] overflow-hidden bg-[#0b0b15] max-[480px]:aspect-[0.92/1]',
-                post.featured && 'outline-4 -outline-offset-4 outline-[#0098ff]',
               )}
               key={post.id}
             >
@@ -34,12 +33,16 @@ function BlogSection() {
                 aria-hidden="true"
               />
               <div className="absolute right-[clamp(12px,1.4vw,22px)] bottom-[clamp(16px,1.7vw,24px)] left-[clamp(12px,1.4vw,22px)] z-[1] min-w-0 max-w-full text-white max-[480px]:right-2.5 max-[480px]:bottom-2.5 max-[480px]:left-2.5">
-                <h2 className="relative z-0 mb-[9px] min-w-0 max-w-full [font-family:Arial,Helvetica,sans-serif] text-[clamp(16px,2.1vw,34px)] font-[950] leading-[1] uppercase max-[480px]:mb-2 max-[480px]:text-[clamp(14px,4.7vw,18px)]">
-                  <span className="relative z-[1] block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap drop-shadow-[0_1px_1px_rgba(0,0,0,0.65)]">
-                    {post.title}
-                  </span>
+                <h2 className="relative isolate z-0 mb-[9px] w-fit min-w-0 max-w-full max-[480px]:mb-2">
+                  <span className="sr-only">{post.title}</span>
+                  <img
+                    className="relative z-[1] block h-[clamp(18px,2.2vw,36px)] w-auto max-w-full object-contain object-left"
+                    src={post.titleImage}
+                    alt=""
+                    aria-hidden="true"
+                  />
                   <span
-                    className="pointer-events-none absolute left-0 right-[15%] bottom-[-0.02em] z-0 h-[0.28em] max-w-full bg-[#ff1111] max-[480px]:h-[0.3em]"
+                    className="pointer-events-none absolute inset-x-0 bottom-[5px] z-0 h-[7px] max-w-full bg-[#ff1111] max-[560px]:bottom-[2px] max-[560px]:h-[5px]"
                     aria-hidden="true"
                   />
                 </h2>

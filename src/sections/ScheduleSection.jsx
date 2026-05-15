@@ -3,6 +3,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { scheduleItems } from '../data/schedule'
 import { cx } from '../utils/cx'
 import ScheduleHeroRocket from '../components/ScheduleHeroRocket'
+import donnaDonnaLabel from '../assets/images/Donna Donna Ball in my hand.png'
+import schedulePanelBg from '../assets/images/Rectangle 98.png'
 
 const DEFAULT_ACTIVE_ITEM_ID = '1745'
 const TICK_COUNT = 96
@@ -32,7 +34,7 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
     >
       <motion.button
         className={cx(
-          'group relative grid w-full min-w-0 cursor-pointer grid-rows-[auto_auto_auto] justify-items-stretch gap-1 rounded-lg border border-transparent bg-transparent p-[3px] text-left text-[#050526] transition-[border-color,box-shadow,background] duration-[160ms] motion-reduce:transition-none',
+          'group relative grid w-full min-w-0 cursor-pointer grid-rows-[15px_auto_auto] justify-items-stretch gap-[3px] rounded-lg border border-transparent bg-transparent p-[3px] text-left text-[#050526] transition-[border-color,box-shadow,background] duration-[160ms] motion-reduce:transition-none',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]',
           'hover:border-[rgba(0,142,255,0.44)] hover:bg-[rgba(255,255,255,0.38)] hover:shadow-[0_8px_16px_rgba(7,7,56,0.11)]',
           isActive &&
@@ -45,13 +47,12 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
         whileHover={prefersReducedMotion ? undefined : { y: -3 }}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
       >
-        <div className="grid min-h-[18px] w-full min-w-0 max-w-full gap-px leading-none">
-          <span className="block min-w-0 w-full overflow-hidden text-ellipsis whitespace-nowrap [font-family:Arial,Helvetica,sans-serif] text-[clamp(6px,0.52vw,8px)] font-extrabold text-[rgba(5,5,38,0.82)]">
-            {item.artist}
-          </span>
-          <strong className="block min-w-0 w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(6px,0.54vw,8px)] font-[950] text-[#050526]">
-            {item.title}
-          </strong>
+        <div className="grid h-[15px] w-full min-w-0 max-w-full place-items-start overflow-hidden">
+          <img
+            className="block h-auto w-[clamp(36px,4.2vw,52px)] max-w-full object-contain object-left"
+            src={donnaDonnaLabel}
+            alt={`${item.artist} - ${item.title}`}
+          />
         </div>
 
         <div
@@ -235,13 +236,19 @@ function ScheduleSection({ variant = 'default' }) {
       ) : null}
       <div
         className={cx(
-          'relative isolate mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px] border border-[rgba(7,7,56,0.1)] bg-[linear-gradient(180deg,rgba(255,255,255,0.74),rgba(230,229,232,0.96)),#e8e6e7] shadow-[0_10px_26px_rgba(7,7,56,0.1),inset_0_1px_0_rgba(255,255,255,0.76)] max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl',
+          'relative isolate mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px] border border-[rgba(7,7,56,0.08)] bg-[#e6e4e4] shadow-[0_8px_20px_rgba(7,7,56,0.08),inset_0_1px_0_rgba(255,255,255,0.42)] max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl',
           isHeroVariant &&
-            'rounded-[9px] border-[rgba(255,255,255,0.7)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(235,235,241,0.98)),#ececf0] shadow-[0_14px_30px_rgba(76,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.84)] max-[560px]:w-[var(--page-width)]',
+            'rounded-[9px] border-[rgba(255,255,255,0.52)] bg-[#e6e4e4] shadow-[0_12px_24px_rgba(76,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.46)] max-[560px]:w-[var(--page-width)]',
         )}
       >
+        <img
+          className="pointer-events-none absolute inset-0 -z-[2] h-full w-full object-fill"
+          src={schedulePanelBg}
+          alt=""
+          aria-hidden="true"
+        />
         <span
-          className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.32),transparent_13%,transparent_87%,rgba(255,255,255,0.28)),repeating-linear-gradient(90deg,rgba(7,7,56,0.035)_0_1px,transparent_1px_84px)]"
+          className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.18),transparent_13%,transparent_87%,rgba(255,255,255,0.16)),repeating-linear-gradient(90deg,rgba(7,7,56,0.035)_0_1px,transparent_1px_84px)]"
           aria-hidden="true"
         />
         {isHeroVariant ? <ScheduleHeroRocket /> : null}
