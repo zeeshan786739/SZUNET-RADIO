@@ -5,7 +5,6 @@ import { cx } from '../utils/cx'
 import ScheduleHeroRocket from '../components/ScheduleHeroRocket'
 import donnaDonnaLabel from '../assets/images/Donna Donna Ball in my hand.png'
 import schedulePanelBg from '../assets/images/Rectangle 98.png'
-import blueRing from '../assets/images/Ellipse 5.png'
 
 const DEFAULT_ACTIVE_ITEM_ID = '1745'
 const TICK_COUNT = 96
@@ -39,7 +38,7 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]',
           'hover:border-[rgba(0,142,255,0.44)] hover:bg-[rgba(255,255,255,0.38)] hover:shadow-[0_8px_16px_rgba(7,7,56,0.11)]',
           isActive &&
-            'border-[rgba(255,17,17,0.62)] bg-[rgba(255,255,255,0.58)] shadow-[0_10px_18px_rgba(7,7,56,0.14),0_0_0_1px_rgba(255,255,255,0.72),0_0_12px_rgba(255,17,17,0.14)] backdrop-blur-[5px]',
+            'border-[rgba(255,17,17,0.62)] bg-[rgba(255,255,255,0.58)] shadow-[0_10px_18px_rgba(7,7,56,0.14),0_0_0_1px_rgba(255,255,255,0.72),0_0_12px_rgba(255,17,17,0.14)] backdrop-blur-[1px]',
         )}
         type="button"
         aria-label={`Play ${item.artist} - ${item.title} at ${item.time}`}
@@ -227,19 +226,12 @@ function ScheduleSection({ variant = 'default' }) {
 
   return (
     <section
-      className={cx('relative isolate overflow-visible bg-transparent pt-2 max-[560px]:pt-[7px]', isHeroVariant && 'pt-0 max-[560px]:pt-0')}
+      className={cx(
+        'relative isolate overflow-visible bg-transparent pt-2 max-[560px]:pt-[7px]',
+        isHeroVariant && 'pt-0 max-[560px]:pt-0',
+      )}
       aria-label={isHeroVariant ? 'Közelgő műsor' : 'Nemrég hallottad — közelgő műsor'}
     >
-      {!isHeroVariant ? (
-        <img
-          className="pointer-events-none absolute right-[-50px] top-[200px] z-[1] h-[814px] w-[713px] max-w-none"
-          src={blueRing}
-          width={713}
-          height={814}
-          alt=""
-          aria-hidden="true"
-        />
-      ) : null}
       {!isHeroVariant ? (
         <div className="relative z-[2] mx-auto mb-2 w-[var(--page-width)] max-w-[min(100%,var(--page-width))] max-[560px]:mb-1.5 max-[560px]:w-[calc(100vw-20px)]">
           <div className="flex min-h-7 items-center justify-between gap-3 px-1 [font-family:Arial,Helvetica,sans-serif] text-[#070738] max-[560px]:px-2">
@@ -275,7 +267,7 @@ function ScheduleSection({ variant = 'default' }) {
           'border border-[rgba(255,255,255,0.38)]',
           'bg-[rgba(255,255,255,0.12)] shadow-[0_8px_22px_rgba(7,7,56,0.07),inset_0_1px_0_rgba(255,255,255,0.28)]',
           'backdrop-blur-[1px] backdrop-saturate-[1.06]',
-          'max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl max-[560px]:bg-[rgba(255,255,255,0.14)] max-[560px]:backdrop-blur-[5px]',
+          'max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl max-[560px]:bg-[rgba(255,255,255,0.14)] max-[560px]:backdrop-blur-[1px]',
           isHeroVariant &&
             'rounded-[9px] border-[rgba(255,255,255,0.45)] bg-[rgba(255,255,255,0.22)] shadow-[0_12px_24px_rgba(76,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.32)] max-[560px]:w-[var(--page-width)]',
         )}

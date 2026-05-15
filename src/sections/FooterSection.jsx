@@ -16,13 +16,9 @@ function FooterSection() {
       />
 
       <div className="relative mx-auto grid min-h-[inherit] w-[min(100%,var(--page-width))] grid-rows-[1fr_auto] px-[clamp(16px,3vw,52px)] pb-[clamp(22px,3vw,34px)] pt-[clamp(44px,7vw,110px)]">
-        <div className="relative grid place-self-center place-items-center px-[clamp(20px,4vw,72px)] pb-3.5 pt-2.5">
+        <div className="relative inline-block w-[clamp(210px,28vw,420px)] place-self-center px-[clamp(20px,4vw,72px)] pb-3.5 pt-2.5">
           <span
-            className="pointer-events-none absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-[rgba(255,255,255,0.92)]"
-            aria-hidden="true"
-          />
-          <span
-            className="pointer-events-none absolute bottom-1.5 right-[clamp(20px,4vw,72px)] h-[9px] w-[min(74%,340px)] bg-[#ff1111]"
+            className="pointer-events-none absolute bottom-[14%] left-[25%] right-[25%] z-0 h-[38%] bg-[#ff1111]"
             aria-hidden="true"
           />
           <img
