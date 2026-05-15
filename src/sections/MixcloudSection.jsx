@@ -132,7 +132,7 @@ function MixcloudSection() {
       />
 
         <div className="relative z-[1] mx-auto w-[min(100%,var(--page-width))] min-w-0 px-[clamp(12px,1.5vw,18px)] pb-7 pt-5">
-        <div className="grid min-w-0 grid-cols-4 gap-[clamp(10px,1.25vw,18px)] max-[760px]:grid-cols-2 max-[480px]:gap-3">
+        <div className="grid min-w-0 grid-cols-4 gap-[clamp(10px,1.2vw,22px)] max-[760px]:grid-cols-2 max-[480px]:gap-3">
           {topMixcloudItems.map((item) => (
             <MixcloudCard item={item} key={item.id} />
           ))}
@@ -140,7 +140,7 @@ function MixcloudSection() {
 
         <div className="grid min-h-[130px] grid-cols-[minmax(200px,0.92fr)_minmax(180px,0.48fr)] items-center gap-[clamp(14px,3vw,54px)] max-[700px]:min-h-0 max-[700px]:grid-cols-1 max-[700px]:gap-4 max-[700px]:py-4">
           <img
-            className="w-[min(100%,650px)] max-w-none justify-self-start max-[700px]:mx-auto max-[700px]:w-[min(86vw,430px)] max-[420px]:w-[min(78vw,320px)]"
+            className="w-[min(100%,clamp(430px,42vw,720px))] max-w-none justify-self-start max-[700px]:mx-auto max-[700px]:w-[min(86vw,430px)] max-[420px]:w-[min(78vw,320px)]"
             src={mixcloudLogo}
             alt="Mixcloud"
           />
@@ -151,7 +151,7 @@ function MixcloudSection() {
           </p>
         </div>
 
-        <div className="grid min-w-0 grid-cols-4 gap-[clamp(10px,1.25vw,18px)] max-[760px]:grid-cols-2 max-[480px]:gap-3">
+        <div className="grid min-w-0 grid-cols-4 gap-[clamp(10px,1.2vw,22px)] max-[760px]:grid-cols-2 max-[480px]:gap-3">
           {bottomMixcloudItems.map((item) => (
             <MixcloudCard item={item} key={item.id} variant="bottom" />
           ))}

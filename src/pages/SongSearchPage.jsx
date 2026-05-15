@@ -64,7 +64,7 @@ function SongSearchPage({ onNavigateHome }) {
   const hasFilter = query.trim().length > 0
 
   return (
-    <div className="min-h-[calc(100svh-var(--player-height))] bg-[#f0f1f6] text-[#11112a] [--page-width:min(1448px,calc(100vw-40px))] max-[700px]:[--page-width:calc(100vw-24px)]">
+    <div className="min-h-[calc(100svh-var(--player-height))] bg-[#f0f1f6] text-[#11112a]">
       <header className="border-b border-[rgba(8,8,51,0.08)] bg-white shadow-[0_1px_0_rgba(255,255,255,0.9)]">
         <div className="mx-auto flex w-[var(--page-width)] items-center px-[clamp(12px,1.5vw,18px)] py-[clamp(14px,2vw,20px)]">
           <button

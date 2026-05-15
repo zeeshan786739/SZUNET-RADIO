@@ -24,7 +24,7 @@ function LandingPage({ playingChannelId, onToggleChannel }) {
   return (
     <>
       <HeroSection channels={channels} playingChannelId={playingChannelId} onToggleChannel={onToggleChannel} />
-      <div className="relative isolate overflow-visible bg-white [--editorial-ellipse-size:clamp(210px,49.5vw,713px)] [--editorial-ellipse-right:calc(-1*clamp(34px,var(--editorial-ellipse-size)*clamp(0.15,calc(0.20-0.05*((100vw-400px)*(1440px-100vw))/540800),0.22),157px))] [--editorial-ellipse-top:clamp(48px,calc(5vw+28px),196px)] [--editorial-ellipse-opacity:clamp(0.7,calc(0.66+0.2*((100vw-360px)/1080)),0.9)]">
+      <div className="relative isolate overflow-visible bg-white">
         <EditorialBlueRing />
         <div className="relative z-[2]">
           <RevealOnScroll>
@@ -243,7 +243,7 @@ function App() {
   }
 
   return (
-    <main className="[--page-width:min(1448px,calc(100vw-40px))] [--player-height:64px] min-h-[100svh] overflow-x-hidden bg-white pb-[calc(var(--player-height)+env(safe-area-inset-bottom,0px))] max-[700px]:[--page-width:calc(100vw-24px)] max-[700px]:[--player-height:58px]">
+    <main className="min-h-[100svh] overflow-x-hidden bg-white pb-[calc(var(--player-height)+env(safe-area-inset-bottom,0px))]">
       <audio ref={audioRef} preload="none" />
       {view === 'archive' ? (
         <SecondRadioPage onNavigateHome={() => navigate('home')} />

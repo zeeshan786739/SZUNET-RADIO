@@ -14,7 +14,7 @@ function BlogSection() {
           <span className="absolute right-[-9px] bottom-[2px] z-0 h-3 w-[70%] bg-[#ff1111]" aria-hidden="true" />
         </header>
 
-        <div className="relative z-[2] grid min-w-0 grid-cols-4 gap-[clamp(14px,1.55vw,22px)] max-[760px]:grid-cols-2 max-[480px]:gap-3">
+        <div className="relative z-[2] grid min-w-0 grid-cols-4 gap-[clamp(14px,1.4vw,26px)] max-[760px]:grid-cols-2 max-[480px]:gap-3">
           {blogPosts.map((post) => (
             <article
               className={cx(

@@ -1,77 +1,110 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { useMemo } from 'react'
+import { getHeroCardVariants, heroLightSweepTransition } from '../animations/heroIntro'
 import { brandAssets } from '../data/channels'
 import { cx } from '../utils/cx'
 
-const desktopCardSizes = {
-  electric:
-    'min-[761px]:h-[clamp(390px,66svh,510px)] min-[761px]:w-[clamp(145px,17vw,174px)]',
-  oldschool:
-    'min-[761px]:h-[clamp(430px,75svh,575px)] min-[761px]:w-[clamp(150px,17.5vw,180px)]',
-  prime:
-    'min-[761px]:h-[clamp(470px,84svh,645px)] min-[761px]:w-[clamp(205px,24vw,246px)]',
-  power:
-    'min-[761px]:h-[clamp(390px,66svh,510px)] min-[761px]:w-[clamp(145px,17vw,174px)]',
-  relax:
-    'min-[761px]:h-[clamp(430px,76svh,585px)] min-[761px]:w-[clamp(185px,21vw,215px)]',
+/** Proportional flex weights mirror original 1040px strip ratios; width fills --page-width. */
+const desktopFlexSizes = {
+  electric: 'min-[761px]:flex-[1.05_1_0%] min-[761px]:min-w-0',
+  oldschool: 'min-[761px]:flex-[1.12_1_0%] min-[761px]:min-w-0',
+  prime: 'min-[761px]:flex-[1.58_1.12_0%] min-[761px]:min-w-0',
+  power: 'min-[761px]:flex-[1.05_1_0%] min-[761px]:min-w-0',
+  relax: 'min-[761px]:flex-[1.32_1_0%] min-[761px]:min-w-0',
 }
 
-function ChannelCard({ channel, index, introActive = false, isPlaying, onToggle }) {
+const desktopHeights = {
+  electric: 'min-[761px]:h-[clamp(465px,75svh,760px)]',
+  oldschool: 'min-[761px]:h-[clamp(505px,81svh,820px)]',
+  prime: 'min-[761px]:h-[clamp(510px,88svh,840px)]',
+  power: 'min-[761px]:h-[clamp(415px,67svh,680px)]',
+  relax: 'min-[761px]:h-[clamp(470px,78svh,780px)]',
+}
+
+/** Focal point per portrait (square album art in tall cards). */
+const portraitFocus = {
+  electric: 'object-[center_32%]',
+  oldschool: 'object-[center_28%]',
+  prime: 'object-[center_30%]',
+  power: 'object-[center_34%]',
+  relax: 'object-[center_42%]',
+}
+
+function ChannelCard({
+  channel,
+  index,
+  introEnabled = true,
+  introComplete = false,
+  isPlaying,
+  onToggle,
+}) {
   const isFeature = channel.size === 'feature'
   const prefersReducedMotion = useReducedMotion()
-  const introOffset = index - 2
+  const skipIntro = prefersReducedMotion || !introEnabled
+  const variants = useMemo(() => getHeroCardVariants(isFeature), [isFeature])
+  const showIntroFx = introEnabled && !skipIntro && !introComplete
+
+  const cardAnimate = skipIntro
+    ? false
+    : introComplete
+      ? prefersReducedMotion
+        ? 'settled'
+        : 'breathe'
+      : 'visible'
 
   return (
     <motion.article
       className={cx(
-        'relative min-h-0 min-w-0 snap-center overflow-hidden bg-[#111] shadow-[0_16px_32px_rgba(0,0,0,0.18)]',
-        '[--footer-height:26%] [--play-size:clamp(48px,4.2vw,68px)]',
-        'min-[761px]:flex-none',
-        desktopCardSizes[channel.id],
-        /* Mobile: one card width per “page”, full strip height */
-        'max-[760px]:h-full max-[760px]:max-h-full max-[760px]:w-[calc(100vw-24px)] max-[760px]:max-w-[calc(100vw-24px)] max-[760px]:flex-[0_0_calc(100vw-24px)] max-[760px]:snap-center max-[760px]:snap-always',
+        'relative z-[1] min-h-0 min-w-0 snap-center overflow-hidden bg-[#111] shadow-[0_16px_32px_rgba(0,0,0,0.18)]',
+        '[--footer-height:26%] [--play-size:clamp(48px,4.5vw,88px)]',
+        desktopFlexSizes[channel.id],
+        desktopHeights[channel.id],
+        'max-[760px]:h-full max-[760px]:max-h-full max-[760px]:w-[var(--hero-mobile-card-width)] max-[760px]:max-w-[var(--hero-mobile-card-width)] max-[760px]:flex-[0_0_var(--hero-mobile-card-width)] max-[760px]:snap-center max-[760px]:snap-always',
         isFeature && 'max-[760px]:[--footer-height:25%] max-[760px]:[--play-size:clamp(54px,14vw,64px)]',
         isPlaying && 'outline-4 -outline-offset-4 outline-white',
       )}
-      initial={
-        prefersReducedMotion
-          ? false
-          : {
-              opacity: 0,
-              y: introActive ? -150 : 36,
-              x: introActive ? introOffset * 34 : 0,
-              rotate: introActive ? introOffset * -3.5 : 0,
-              scale: introActive ? 0.72 : 0.94,
-              filter: introActive ? 'saturate(0.85) brightness(1.08)' : 'none',
-            }
-      }
-      animate={{ opacity: 1, y: 0, x: 0, rotate: 0, scale: 1, filter: 'none' }}
-      transition={
-        introActive
-          ? {
-              type: 'spring',
-              stiffness: 92,
-              damping: 15,
-              mass: 0.82,
-              delay: 0.08 + index * 0.09,
-            }
-          : { duration: 0.56, ease: 'easeOut', delay: 0.12 + index * 0.08 }
-      }
+      custom={index}
+      variants={variants}
+      initial={skipIntro ? false : 'hidden'}
+      animate={cardAnimate}
     >
-      <img
-        className={cx(
-          'absolute inset-x-0 top-0 bottom-[var(--footer-height)] h-[calc(100%_-_var(--footer-height))] w-full object-cover object-top transition-[filter,transform] duration-[240ms]',
-          channel.id === 'relax' && 'max-[760px]:object-[58%_center]',
-          isPlaying && '[filter:saturate(1.12)_contrast(1.04)] scale-[1.015]',
+      {showIntroFx && isFeature && (
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_50%_32%,rgba(255,17,17,0.22),transparent_62%)]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.65, 0] }}
+          transition={{ duration: 1.35, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          aria-hidden="true"
+        />
+      )}
+
+      <div className="absolute inset-x-0 top-0 bottom-[var(--footer-height)] overflow-hidden">
+        <img
+          className={cx(
+            'block h-full w-full object-cover transition-[filter,transform] duration-[240ms]',
+            portraitFocus[channel.id],
+            isPlaying && '[filter:saturate(1.12)_contrast(1.04)] scale-[1.02]',
+          )}
+          src={channel.portrait}
+          alt={`${channel.artist} - ${channel.track}`}
+        />
+
+        {showIntroFx && (
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-[3] bg-[linear-gradient(105deg,transparent_38%,rgba(255,255,255,0.14)_50%,transparent_62%)]"
+            initial={{ x: '-120%' }}
+            animate={{ x: '130%' }}
+            transition={heroLightSweepTransition(index, isFeature)}
+            aria-hidden="true"
+          />
         )}
-        src={channel.portrait}
-        alt={`${channel.artist} - ${channel.track}`}
-      />
+      </div>
 
       <div className="absolute inset-x-0 bottom-[calc(var(--footer-height)_+_clamp(10px,1.4vw,15px))] z-[2] flex min-w-0 max-w-full flex-col gap-px px-[clamp(9px,1.1vw,13px)] uppercase text-white [text-shadow:0_2px_7px_rgba(0,0,0,0.8)]">
-        <span className="block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(8px,0.9vw,11px)] font-black leading-none">
+        <span className="block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(8px,0.85vw,13px)] font-black leading-none">
           {channel.artist}
         </span>
-        <strong className="block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(12px,1.25vw,16px)] font-[950] leading-[0.95]">
+        <strong className="block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(12px,1.15vw,18px)] font-[950] leading-[0.95]">
           {channel.track}
         </strong>
       </div>
@@ -109,15 +142,15 @@ function ChannelCard({ channel, index, introActive = false, isPlaying, onToggle 
         <div className="relative z-[1] grid h-full content-center justify-items-center gap-[clamp(2px,0.6vw,7px)] px-[8%] py-[clamp(10px,1.6vw,18px)]">
           <img
             className={cx(
-              'h-auto w-[clamp(88px,11vw,112px)]',
-              isFeature && 'w-[clamp(104px,12.5vw,130px)]',
+              'h-auto w-[clamp(88px,10vw,140px)]',
+              isFeature && 'w-[clamp(104px,11.5vw,160px)]',
             )}
             src={brandAssets.stationLogo}
             alt="SZUNET Radio"
           />
           {channel.label && (
             <img
-              className="h-[clamp(18px,2.6vw,36px)] w-auto max-w-[86%] object-contain"
+              className="h-[clamp(18px,2.4vw,42px)] w-auto max-w-[86%] object-contain"
               src={channel.label}
               alt={channel.title}
             />

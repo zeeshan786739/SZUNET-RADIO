@@ -1,5 +1,86 @@
 @import 'tailwindcss';
 
+/*
+ * Responsive layout tokens — scale proportionally from mobile through ultra-wide.
+ * Components reference these via var() instead of hard-coded pixel caps.
+ */
+:root {
+  --page-gutter: clamp(12px, calc(12px + (100vw - 360px) * 0.018), 32px);
+  --page-width: min(1680px, calc(100vw - var(--page-gutter) * 2));
+  --player-height: clamp(58px, calc(56px + 0.45vw), 68px);
+
+  /* Hero — same horizontal rhythm as schedule/blog/player */
+  --hero-card-gap: clamp(6px, 0.75vw, 16px);
+  --hero-header-safe-top: env(safe-area-inset-top, 0px);
+  --hero-stage-top: clamp(96px, min(22svh, 180px), 200px);
+  --hero-loader-top: 58%;
+  --hero-loader-size: clamp(48px, 9vw, 76px);
+  --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.9), 400px);
+  --hero-ribbon-mobile-left: clamp(52px, 16vw, 110px);
+  --hero-ribbon-mobile-width: clamp(520px, 168vw, 680px);
+
+  /* Ring height drives size (width follows aspect ratio); avoid max-h caps that block width changes */
+  --editorial-ellipse-size: clamp(420px, 76vh, 920px);
+  --editorial-ellipse-top: 15.5%;
+  --editorial-ellipse-offset-y: 2%;
+  --editorial-ellipse-opacity: clamp(0.78, 0.82, 0.88);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --hero-stage-top: clamp(76px, 18svh, 140px);
+    --hero-loader-top: 54%;
+    --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.88), 380px);
+    --hero-ribbon-mobile-left: clamp(44px, 14vw, 74px);
+    --hero-ribbon-mobile-width: clamp(480px, 155vw, 600px);
+    --editorial-ellipse-size: clamp(360px, 70vh, 640px);
+    --editorial-ellipse-top: 13%;
+    --editorial-ellipse-offset-y: 1.5%;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 520px) {
+  :root {
+    --hero-stage-top: clamp(56px, 10svh, 80px);
+    --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.86), 320px);
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.92), 340px);
+    --hero-ribbon-mobile-left: clamp(36px, 12vw, 52px);
+    --hero-ribbon-mobile-width: clamp(420px, 148vw, 520px);
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --page-gutter: 12px;
+    --player-height: 58px;
+  }
+}
+
+@media (max-height: 700px) and (max-width: 760px) {
+  :root {
+    --hero-stage-top: clamp(64px, 12svh, 96px);
+    --hero-loader-top: 52%;
+  }
+}
+
+@media (max-height: 560px) {
+  :root {
+    --hero-loader-top: 50%;
+    --hero-loader-size: clamp(40px, 8vw, 56px);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  :root {
+    --hero-card-gap: clamp(5px, 0.65vw, 12px);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -22,28 +103,4 @@ a {
 
 img {
   max-width: 100%;
-}
-
-@keyframes hero-loader {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scaleX(0.72);
-  }
-  18%,
-  76% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(0) scaleX(1);
-  }
-}
-
-@keyframes hero-loader-fill {
-  0% {
-    transform: scaleX(0);
-  }
-  100% {
-    transform: scaleX(1);
-  }
 }

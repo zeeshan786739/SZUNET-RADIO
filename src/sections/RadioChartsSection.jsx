@@ -157,7 +157,7 @@ function ChartRow({ row, index }) {
         <div className="flex w-max flex-nowrap items-stretch gap-[clamp(8px,1.2vw,14px)] py-[clamp(10px,1.2vw,16px)] pl-[clamp(8px,1.4vw,18px)] pr-[clamp(12px,2vw,28px)]">
           {row.cards.map((card, cardIndex) => (
             <div
-              className="w-[clamp(76px,16vw,120px)] shrink-0 snap-start max-[420px]:w-[clamp(72px,26vw,100px)]"
+              className="w-[clamp(76px,14vw,140px)] shrink-0 snap-start max-[420px]:w-[clamp(72px,26vw,100px)]"
               key={`${row.id}-${card.id}`}
             >
               <ChartCard card={card} rank={cardIndex + 1} rowTone={row.tone} />

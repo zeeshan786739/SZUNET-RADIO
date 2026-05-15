@@ -44,7 +44,7 @@ function RadioHeader({ onNavigateHome }) {
       </button>
 
       <div
-        className="grid w-[clamp(312px,31vw,482px)] justify-self-center pt-[clamp(16px,1.75vw,26px)] max-[980px]:justify-self-end max-[700px]:w-[min(100%,360px)] max-[700px]:justify-self-center max-[700px]:pt-1.5 max-[420px]:w-full"
+        className="grid w-[clamp(312px,28vw,560px)] justify-self-center pt-[clamp(16px,1.75vw,26px)] max-[980px]:justify-self-end max-[700px]:w-[min(100%,360px)] max-[700px]:justify-self-center max-[700px]:pt-1.5 max-[420px]:w-full"
         aria-label="Radio categories"
       >
         {categoryTextRows.map((row, rowIndex) => (
@@ -301,7 +301,7 @@ function ChartsSection() {
 
 function SecondRadioPage({ onNavigateHome }) {
   return (
-    <div className="min-h-[100svh] overflow-x-hidden bg-[#5cf5df] text-white [--page-width:min(1448px,calc(100vw-40px))] max-[700px]:[--page-width:calc(100vw-24px)]">
+    <div className="min-h-[100svh] overflow-x-hidden bg-[#5cf5df] text-white">
       <div className="relative z-[1] overflow-visible">
         <HeroRadioSection onNavigateHome={onNavigateHome} />
         <ScheduleTimelineSection />

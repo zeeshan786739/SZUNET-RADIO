@@ -5,7 +5,7 @@ import likeIcon from '../assets/images/Group 41.png'
 import dislikeIcon from '../assets/images/Group 42.png'
 import volumeLine from '../assets/images/Line 1.png'
 import volumeKnob from '../assets/images/Ellipse 1.png'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { cx } from '../utils/cx'
 import StreamSelector from '../components/StreamSelector'
 
@@ -30,6 +30,92 @@ function useNarrowPlayerBar() {
   }, [])
 
   return narrow
+}
+
+function VolumeSlider({ volume, onChangeVolume }) {
+  const trackRef = useRef(null)
+
+  const setVolumeFromPointer = useCallback(
+    (clientX) => {
+      const track = trackRef.current
+      if (!track) return
+
+      const { left, width } = track.getBoundingClientRect()
+      if (width <= 0) return
+
+      const next = Math.round(((clientX - left) / width) * 100)
+      onChangeVolume(Math.min(100, Math.max(0, next)))
+    },
+    [onChangeVolume],
+  )
+
+  function handlePointerDown(event) {
+    event.preventDefault()
+    trackRef.current?.setPointerCapture(event.pointerId)
+    setVolumeFromPointer(event.clientX)
+  }
+
+  function handlePointerMove(event) {
+    if (!trackRef.current?.hasPointerCapture(event.pointerId)) return
+    setVolumeFromPointer(event.clientX)
+  }
+
+  function handlePointerUp(event) {
+    trackRef.current?.releasePointerCapture(event.pointerId)
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+      event.preventDefault()
+      onChangeVolume(Math.min(100, volume + 5))
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+      event.preventDefault()
+      onChangeVolume(Math.max(0, volume - 5))
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      onChangeVolume(0)
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      onChangeVolume(100)
+    }
+  }
+
+  return (
+    <div
+      ref={trackRef}
+      role="slider"
+      tabIndex={0}
+      aria-label="Volume"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={volume}
+      className="relative block h-8 w-[clamp(88px,9vw,160px)] min-w-[88px] max-w-[160px] cursor-pointer touch-none select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      style={{ '--volume': `${volume}%` }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onKeyDown={handleKeyDown}
+    >
+      <span
+        className="absolute left-0 top-1/2 h-[3px] -translate-y-1/2 bg-[#ff1111]"
+        style={{ width: `${volume}%` }}
+        aria-hidden="true"
+      />
+      <img
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-[3px] w-full -translate-y-1/2 opacity-90"
+        src={volumeLine}
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="pointer-events-none absolute left-[var(--volume)] top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2"
+        src={volumeKnob}
+        alt=""
+        aria-hidden="true"
+      />
+    </div>
+  )
 }
 
 function PlayerBar({
@@ -122,7 +208,7 @@ function PlayerBar({
             ))}
           </div>
 
-          <div className="min-w-0 max-w-[clamp(170px,28vw,390px)] overflow-hidden">
+          <div className="min-w-0 max-w-[clamp(170px,24vw,480px)] overflow-hidden">
             <div className="flex min-w-0 items-center gap-2">
               <span className="hidden shrink-0 border border-[rgba(255,255,255,0.14)] bg-white px-1.5 py-0.5 text-[10px] font-black uppercase leading-none text-[#071052] min-[1040px]:inline-flex">
                 Now
@@ -153,37 +239,7 @@ function PlayerBar({
 
           <div className="order-1 flex items-center gap-2 max-[860px]:hidden">
             <img className="h-4 w-[18px] shrink-0 object-contain" src={volumeIcon} alt="" aria-hidden="true" />
-            <label
-              className="relative block h-8 w-[clamp(88px,10vw,142px)] min-w-[88px] max-w-[142px]"
-              style={{ '--volume': `${volume}%` }}
-            >
-              <span className="sr-only">Volume</span>
-              <span
-                className="absolute left-0 top-1/2 h-[3px] -translate-y-1/2 bg-[#ff1111]"
-                style={{ width: `${volume}%` }}
-                aria-hidden="true"
-              />
-              <img
-                className="absolute inset-x-0 top-1/2 h-[3px] w-full -translate-y-1/2 opacity-90"
-                src={volumeLine}
-                alt=""
-                aria-hidden="true"
-              />
-              <img
-                className="pointer-events-none absolute left-[var(--volume)] top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2"
-                src={volumeKnob}
-                alt=""
-                aria-hidden="true"
-              />
-              <input
-                className="absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0 [appearance:none] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [&::-webkit-slider-thumb]:appearance-none [&::-moz-range-thumb]:appearance-none"
-                type="range"
-                min="0"
-                max="100"
-                value={volume}
-                onChange={(event) => onChangeVolume(Number(event.target.value))}
-              />
-            </label>
+            <VolumeSlider volume={volume} onChangeVolume={onChangeVolume} />
             <span className="w-10 text-right text-[9px] font-black uppercase leading-none text-[rgba(255,255,255,0.72)]">
               {activeStream?.label ?? ''}
             </span>
