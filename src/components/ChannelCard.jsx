@@ -2,6 +2,19 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { brandAssets } from '../data/channels'
 import { cx } from '../utils/cx'
 
+const desktopCardSizes = {
+  electric:
+    'min-[761px]:h-[clamp(390px,66svh,510px)] min-[761px]:w-[clamp(145px,17vw,174px)]',
+  oldschool:
+    'min-[761px]:h-[clamp(430px,75svh,575px)] min-[761px]:w-[clamp(150px,17.5vw,180px)]',
+  prime:
+    'min-[761px]:h-[clamp(470px,84svh,645px)] min-[761px]:w-[clamp(205px,24vw,246px)]',
+  power:
+    'min-[761px]:h-[clamp(390px,66svh,510px)] min-[761px]:w-[clamp(145px,17vw,174px)]',
+  relax:
+    'min-[761px]:h-[clamp(430px,76svh,585px)] min-[761px]:w-[clamp(185px,21vw,215px)]',
+}
+
 function ChannelCard({ channel, index, introActive = false, isPlaying, onToggle }) {
   const isFeature = channel.size === 'feature'
   const prefersReducedMotion = useReducedMotion()
@@ -12,9 +25,8 @@ function ChannelCard({ channel, index, introActive = false, isPlaying, onToggle 
       className={cx(
         'relative min-h-0 min-w-0 snap-center overflow-hidden bg-[#111] shadow-[0_16px_32px_rgba(0,0,0,0.18)]',
         '[--footer-height:26%] [--play-size:clamp(48px,4.2vw,68px)]',
-        /* Desktop / tablet: fill strip height; prime slightly wider */
-        'min-[761px]:h-full min-[761px]:flex-1',
-        isFeature && 'min-[761px]:flex-[1.38]',
+        'min-[761px]:flex-none',
+        desktopCardSizes[channel.id],
         /* Mobile: one card width per “page”, full strip height */
         'max-[760px]:h-full max-[760px]:max-h-full max-[760px]:w-[calc(100vw-24px)] max-[760px]:max-w-[calc(100vw-24px)] max-[760px]:flex-[0_0_calc(100vw-24px)] max-[760px]:snap-center max-[760px]:snap-always',
         isFeature && 'max-[760px]:[--footer-height:25%] max-[760px]:[--play-size:clamp(54px,14vw,64px)]',

@@ -5,6 +5,7 @@ import { cx } from '../utils/cx'
 import ScheduleHeroRocket from '../components/ScheduleHeroRocket'
 import donnaDonnaLabel from '../assets/images/Donna Donna Ball in my hand.png'
 import schedulePanelBg from '../assets/images/Rectangle 98.png'
+import blueRing from '../assets/images/Ellipse 5.png'
 
 const DEFAULT_ACTIVE_ITEM_ID = '1745'
 const TICK_COUNT = 96
@@ -226,17 +227,49 @@ function ScheduleSection({ variant = 'default' }) {
 
   return (
     <section
-      className={cx('bg-transparent pt-2 max-[560px]:pt-[7px]', isHeroVariant && 'pt-0 max-[560px]:pt-0')}
+      className={cx('relative isolate overflow-visible bg-transparent pt-2 max-[560px]:pt-[7px]', isHeroVariant && 'pt-0 max-[560px]:pt-0')}
       aria-label={isHeroVariant ? 'Közelgő műsor' : 'Nemrég hallottad — közelgő műsor'}
     >
       {!isHeroVariant ? (
-        <h2 className="mx-auto mb-2 w-[var(--page-width)] max-w-[min(100%,var(--page-width))] px-1 [font-family:Arial,Helvetica,sans-serif] text-[clamp(11px,1.05vw,14px)] font-black uppercase tracking-[0.12em] text-[#070738] max-[560px]:mb-1.5 max-[560px]:w-[calc(100vw-20px)] max-[560px]:px-2">
+        <img
+          className="pointer-events-none absolute left-1/2 top-[clamp(105px,13vw,165px)] z-[1] w-[clamp(380px,58vw,820px)] max-w-none -translate-x-[4%] opacity-100 max-[900px]:w-[clamp(430px,72vw,620px)] max-[900px]:-translate-x-[-6%] max-[767px]:top-[clamp(118px,28vw,170px)] max-[767px]:w-[clamp(390px,82vw,520px)] max-[767px]:-translate-x-1/2 max-[560px]:w-[clamp(340px,98vw,460px)] max-[420px]:w-[clamp(300px,108vw,380px)]"
+          src={blueRing}
+          alt=""
+          aria-hidden="true"
+        />
+      ) : null}
+      {!isHeroVariant ? (
+        <div className="relative z-[2] mx-auto mb-2 w-[var(--page-width)] max-w-[min(100%,var(--page-width))] max-[560px]:mb-1.5 max-[560px]:w-[calc(100vw-20px)]">
+          <div className="flex min-h-7 items-center justify-between gap-3 px-1 [font-family:Arial,Helvetica,sans-serif] text-[#070738] max-[560px]:px-2">
+            <h2 className="m-0 inline-flex min-w-0 items-center gap-1.5 [font-family:Impact,Haettenschweiler,'Arial_Narrow_Bold','Arial_Narrow',Arial,sans-serif] text-[clamp(16px,1.55vw,23px)] font-normal lowercase leading-none tracking-normal">
+              <span className="relative inline-grid h-[1em] w-[1em] shrink-0 place-items-center rounded-full border-2 border-current" aria-hidden="true">
+                <span className="absolute left-1/2 top-[22%] h-[36%] w-[2px] -translate-x-1/2 rounded-full bg-current" />
+                <span className="absolute left-1/2 top-1/2 h-[2px] w-[34%] -translate-y-1/2 rounded-full bg-current" />
+              </span>
+              <span className="truncate">nemrég hallottad</span>
+              <span className="mt-[0.12em] h-0 w-0 shrink-0 border-x-[4px] border-t-[6px] border-x-transparent border-t-current" aria-hidden="true" />
+            </h2>
+            <a
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#ff1111] px-3 py-1.5 text-[clamp(9px,0.86vw,12px)] font-[950] lowercase leading-none text-white no-underline shadow-[0_2px_8px_rgba(255,17,17,0.22)]"
+              href="/dal-kereses"
+              aria-label="Dal keresés"
+            >
+              <span className="relative inline-block h-[1em] w-[1em] rounded-full border border-white" aria-hidden="true">
+                <span className="absolute left-[62%] top-[68%] h-[1.5px] w-[42%] origin-left rotate-45 rounded-full bg-white" />
+              </span>
+              dalkereses
+            </a>
+          </div>
+        </div>
+      ) : null}
+      {!isHeroVariant ? (
+        <h2 className="sr-only">
           Nemrég hallottad
         </h2>
       ) : null}
       <div
         className={cx(
-          'relative isolate mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px] border border-[rgba(7,7,56,0.08)] bg-[#e6e4e4] shadow-[0_8px_20px_rgba(7,7,56,0.08),inset_0_1px_0_rgba(255,255,255,0.42)] max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl',
+          'relative isolate z-[2] mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px] border border-[rgba(7,7,56,0.08)] bg-[#e6e4e4] shadow-[0_8px_20px_rgba(7,7,56,0.08),inset_0_1px_0_rgba(255,255,255,0.42)] max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl',
           isHeroVariant &&
             'rounded-[9px] border-[rgba(255,255,255,0.52)] bg-[#e6e4e4] shadow-[0_12px_24px_rgba(76,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.46)] max-[560px]:w-[var(--page-width)]',
         )}

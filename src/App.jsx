@@ -9,7 +9,6 @@ import FooterSection from './sections/FooterSection'
 import SecondRadioPage from './pages/SecondRadioPage'
 import SongSearchPage from './pages/SongSearchPage'
 import RevealOnScroll from './components/RevealOnScroll'
-import blueRing from './assets/images/Ellipse 5.png'
 
 function getInitialView() {
   const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/'
@@ -25,13 +24,7 @@ function LandingPage({ playingChannelId, onToggleChannel }) {
     <>
       <HeroSection channels={channels} playingChannelId={playingChannelId} onToggleChannel={onToggleChannel} />
       <div className="relative isolate overflow-hidden bg-white">
-        <img
-          className="pointer-events-none absolute top-[clamp(136px,15vw,222px)] right-[clamp(-120px,-1vw,-15px)] z-0 w-[clamp(500px,48vw,790px)] max-w-none opacity-[0.96] max-[1180px]:top-[138px] max-[1180px]:right-[-370px] max-[1180px]:w-[620px] max-[1180px]:opacity-[0.72] max-[900px]:top-[168px] max-[900px]:right-[-390px] max-[900px]:w-[520px] max-[900px]:opacity-[0.52] max-[760px]:top-[188px] max-[760px]:right-[-335px] max-[760px]:w-[430px] max-[760px]:opacity-[0.48] max-[560px]:top-[168px] max-[560px]:right-[-338px] max-[560px]:w-[420px] max-[560px]:opacity-[0.42] max-[420px]:top-[168px] max-[420px]:right-[-290px] max-[420px]:w-[350px] max-[380px]:right-[-270px] max-[380px]:w-[330px]"
-          src={blueRing}
-          alt=""
-          aria-hidden="true"
-        />
-        <div className="relative z-[1]">
+        <div className="relative z-[2]">
           <RevealOnScroll>
             <ScheduleSection />
           </RevealOnScroll>

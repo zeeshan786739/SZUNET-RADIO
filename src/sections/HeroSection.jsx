@@ -90,10 +90,10 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
         alt="Kimaxoljuk a napodat!"
       />
 
-      {/* Fills all space under headline: five columns share width & height (desktop); one card + snap scroll (mobile). */}
+      {/* Desktop uses staggered channel proportions from the supplied design; mobile stays one-card-per-snap. */}
       <div className="relative z-[2] flex min-h-0 flex-1 flex-col justify-end pb-[max(6px,env(safe-area-inset-bottom,0px))] pt-[clamp(96px,min(22svh,180px),200px)] max-[760px]:min-h-[min(360px,calc(100svh-var(--player-height)-48px)))] max-[760px]:pt-[clamp(88px,18svh,160px)]">
         <div
-          className="mx-auto flex min-h-0 w-full max-w-[min(100vw,1720px)] flex-1 flex-row items-stretch justify-center gap-[clamp(3px,0.45vw,10px)] min-[761px]:max-h-full max-[760px]:h-full max-[760px]:max-h-[min(72svh,calc(100svh-var(--player-height)-72px))] max-[760px]:min-h-[260px] max-[760px]:max-w-none max-[760px]:snap-x max-[760px]:snap-mandatory max-[760px]:justify-start max-[760px]:gap-3 max-[760px]:overflow-x-auto max-[760px]:overflow-y-visible max-[760px]:overscroll-x-contain max-[760px]:scroll-smooth max-[760px]:[scroll-padding-inline:12px] max-[760px]:[scroll-padding-bottom:8px] max-[760px]:[scrollbar-width:none] max-[760px]:[&::-webkit-scrollbar]:hidden"
+          className="mx-auto flex min-h-0 w-full max-w-[1040px] flex-1 flex-row items-end justify-center gap-[clamp(3px,0.45vw,8px)] min-[761px]:max-h-full max-[760px]:h-full max-[760px]:max-h-[min(72svh,calc(100svh-var(--player-height)-72px))] max-[760px]:min-h-[260px] max-[760px]:max-w-none max-[760px]:snap-x max-[760px]:snap-mandatory max-[760px]:justify-start max-[760px]:items-stretch max-[760px]:gap-3 max-[760px]:overflow-x-auto max-[760px]:overflow-y-visible max-[760px]:overscroll-x-contain max-[760px]:scroll-smooth max-[760px]:[scroll-padding-inline:12px] max-[760px]:[scroll-padding-bottom:8px] max-[760px]:[scrollbar-width:none] max-[760px]:[&::-webkit-scrollbar]:hidden"
           aria-label="Radio channels"
           ref={channelStripRef}
         >
