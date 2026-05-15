@@ -39,7 +39,7 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]',
           'hover:border-[rgba(0,142,255,0.44)] hover:bg-[rgba(255,255,255,0.38)] hover:shadow-[0_8px_16px_rgba(7,7,56,0.11)]',
           isActive &&
-            'border-[rgba(255,17,17,0.56)] bg-[rgba(255,255,255,0.72)] shadow-[0_10px_18px_rgba(7,7,56,0.15),0_0_0_1px_rgba(255,255,255,0.78),0_0_14px_rgba(255,17,17,0.12)] backdrop-blur-[6px]',
+            'border-[rgba(255,17,17,0.62)] bg-[rgba(255,255,255,0.58)] shadow-[0_10px_18px_rgba(7,7,56,0.14),0_0_0_1px_rgba(255,255,255,0.72),0_0_12px_rgba(255,17,17,0.14)] backdrop-blur-[5px]',
         )}
         type="button"
         aria-label={`Play ${item.artist} - ${item.title} at ${item.time}`}
@@ -272,22 +272,24 @@ function ScheduleSection({ variant = 'default' }) {
       <div
         className={cx(
           'relative z-[2] mx-auto w-[var(--page-width)] overflow-hidden rounded-[14px]',
-          'border border-[rgba(255,255,255,0.58)]',
-          'bg-[rgba(235,233,237,0.38)] shadow-[0_10px_28px_rgba(7,7,56,0.08),inset_0_1px_0_rgba(255,255,255,0.65)]',
-          'backdrop-blur-[10px] backdrop-saturate-[1.1]',
-          'max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl max-[560px]:backdrop-blur-[8px]',
+          'border border-[rgba(255,255,255,0.38)]',
+          'bg-[rgba(255,255,255,0.12)] shadow-[0_8px_22px_rgba(7,7,56,0.07),inset_0_1px_0_rgba(255,255,255,0.28)]',
+          'backdrop-blur-[1px] backdrop-saturate-[1.06]',
+          'max-[560px]:w-[calc(100vw-20px)] max-[560px]:rounded-xl max-[560px]:bg-[rgba(255,255,255,0.14)] max-[560px]:backdrop-blur-[5px]',
           isHeroVariant &&
-            'rounded-[9px] border-[rgba(255,255,255,0.55)] bg-[rgba(230,228,232,0.55)] shadow-[0_12px_24px_rgba(76,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.5)] max-[560px]:w-[var(--page-width)]',
+            'rounded-[9px] border-[rgba(255,255,255,0.45)] bg-[rgba(255,255,255,0.22)] shadow-[0_12px_24px_rgba(76,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.32)] max-[560px]:w-[var(--page-width)]',
         )}
       >
-        <img
-          className="pointer-events-none absolute inset-0 -z-[2] h-full w-full object-fill opacity-[0.28] mix-blend-multiply"
-          src={schedulePanelBg}
-          alt=""
-          aria-hidden="true"
-        />
+        {!isHeroVariant ? null : (
+          <img
+            className="pointer-events-none absolute inset-0 -z-[2] h-full w-full object-fill opacity-[0.12]"
+            src={schedulePanelBg}
+            alt=""
+            aria-hidden="true"
+          />
+        )}
         <span
-          className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.22),transparent_14%,transparent_86%,rgba(255,255,255,0.18)),repeating-linear-gradient(90deg,rgba(7,7,56,0.045)_0_1px,transparent_1px_84px)]"
+          className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.06),transparent_16%,transparent_84%,rgba(255,255,255,0.05)),repeating-linear-gradient(90deg,rgba(7,7,56,0.055)_0_1px,transparent_1px_84px)]"
           aria-hidden="true"
         />
         {isHeroVariant ? <ScheduleHeroRocket /> : null}
