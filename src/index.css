@@ -7,7 +7,9 @@
 :root {
   --page-gutter: clamp(12px, calc(12px + (100vw - 360px) * 0.018), 32px);
   --page-width: min(1680px, calc(100vw - var(--page-gutter) * 2));
-  --player-height: clamp(58px, calc(56px + 0.45vw), 68px);
+  --player-height: clamp(66px, calc(64px + 0.52vw), 78px);
+  --player-on-air-half: 44px;
+  --player-controls-inset: clamp(175px, 21vw, 295px);
 
   /* Hero — same horizontal rhythm as schedule/blog/player */
   --hero-card-gap: clamp(6px, 0.75vw, 16px);
@@ -16,8 +18,12 @@
   --hero-loader-top: 58%;
   --hero-loader-size: clamp(48px, 9vw, 76px);
   --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.9), 400px);
-  --hero-ribbon-mobile-left: clamp(52px, 16vw, 110px);
-  --hero-ribbon-mobile-width: clamp(520px, 168vw, 680px);
+  /* Match Power card footer: 26% of clamp(415px, 67svh, 680px) — fixed px so all cards align */
+  --channel-footer-height: clamp(108px, 17.42svh, 177px);
+
+  /* Figma typography — Karantina Regular */
+  --font-family: 'Karantina', Impact, Haettenschweiler, 'Arial Narrow Bold', Arial, sans-serif;
+  --hero-nav-link-size: clamp(1.125rem, 1.65vw, 1.6875rem);
 
   /* Ring height drives size (width follows aspect ratio); avoid max-h caps that block width changes */
   --editorial-ellipse-size: clamp(420px, 76vh, 920px);
@@ -31,8 +37,6 @@
     --hero-stage-top: clamp(76px, 18svh, 140px);
     --hero-loader-top: 54%;
     --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.88), 380px);
-    --hero-ribbon-mobile-left: clamp(44px, 14vw, 74px);
-    --hero-ribbon-mobile-width: clamp(480px, 155vw, 600px);
     --editorial-ellipse-size: clamp(360px, 70vh, 640px);
     --editorial-ellipse-top: 13%;
     --editorial-ellipse-offset-y: 1.5%;
@@ -49,15 +53,13 @@
 @media (max-width: 420px) {
   :root {
     --hero-mobile-card-width: min(calc((100vw - var(--page-gutter) * 2) * 0.92), 340px);
-    --hero-ribbon-mobile-left: clamp(36px, 12vw, 52px);
-    --hero-ribbon-mobile-width: clamp(420px, 148vw, 520px);
   }
 }
 
 @media (max-width: 700px) {
   :root {
     --page-gutter: 12px;
-    --player-height: 58px;
+    --player-height: 66px;
   }
 }
 
@@ -89,18 +91,310 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100svh;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', Arial, Helvetica,
-    sans-serif;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-synthesis: none;
   background: #ffffff;
   color: #111111;
   overflow-x: hidden;
 }
 
 button,
-a {
+a,
+input,
+select,
+textarea {
   font: inherit;
+  font-family: inherit;
 }
 
 img {
   max-width: 100%;
+}
+
+/* Hero red ribbon — full-bleed diagonal behind all cards */
+.hero-ribbon {
+  overflow: hidden;
+}
+
+.hero-ribbon__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: right top;
+}
+
+/* Styled track labels — Electric / Oldschool overlays */
+.styled-track-label {
+  --track-label-accent: #c049f0;
+}
+
+.styled-track-label__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.styled-track-label__artist-unit {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: clamp(1px, 0.1em, 3px);
+}
+
+.styled-track-label__line {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  transform: scaleY(1.46);
+  transform-origin: left bottom;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+.styled-track-label__line--artist {
+  font-size: clamp(11px, 1.05vw, 17px);
+  font-weight: 400;
+  font-synthesis: none;
+  font-variation-settings: 'wght' 400;
+  padding: 0 0.06em;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 42%,
+    var(--track-label-accent) 42%,
+    var(--track-label-accent) 92%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.styled-track-label__line--track {
+  font-size: clamp(12px, 1.12vw, 19px);
+  font-weight: 700;
+  margin-top: clamp(2px, 0.5em, 5px);
+}
+
+/* Player bar — card typography without accent strip */
+.styled-track-label--plain .styled-track-label__line--artist {
+  background: none;
+  padding: 0;
+}
+
+.player-track-label {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.player-track-label .styled-track-label__line {
+  transform: scaleY(1.38);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-track-label .styled-track-label__line--artist {
+  font-size: clamp(9px, 0.88vw, 14px);
+}
+
+.player-track-label .styled-track-label__line--track {
+  font-size: clamp(10px, 0.95vw, 16px);
+  margin-top: clamp(2px, 0.42em, 4px);
+}
+
+/* Schedule track card — two-line label above artwork */
+.schedule-track-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  max-width: 100%;
+  padding-bottom: 1px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.schedule-track-label__artist,
+.schedule-track-label__title {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(8px, 0.72vw, 10px);
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  color: #050526;
+}
+
+.schedule-track-label__artist {
+  font-weight: 400;
+}
+
+.schedule-track-label__title {
+  font-weight: 700;
+}
+
+/* Schedule panel — solid grey card (#e8e6e6, not transparent) */
+.schedule-panel {
+  background: #e8e6e6;
+}
+
+.schedule-panel--hero {
+  background: #e8e6e6;
+}
+
+/* Stream selector — value over red chevron (player bar) */
+.stream-selector__value {
+  display: block;
+  font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 400;
+  font-synthesis: none;
+  font-variation-settings: 'wght' 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-transform: none;
+}
+
+.stream-selector__chevron {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #ff1111;
+}
+
+.stream-selector__chevron--open {
+  transform: rotate(180deg);
+}
+
+.stream-selector__button--open {
+  outline: none;
+}
+
+.stream-selector__button--open .stream-selector__value {
+  color: #7ec0ff;
+}
+
+.stream-selector__menu {
+  position: fixed;
+  z-index: 200;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  transform: translateX(-50%);
+  border: 1px solid #008eff;
+  background: #050536;
+  border-radius: 2px;
+  box-shadow:
+    0 -12px 32px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(0, 87, 255, 0.2);
+}
+
+.stream-selector__menu-option {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  font-size: clamp(13px, 1.2vw, 16px);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.stream-selector__menu-option:hover {
+  background: rgba(0, 87, 255, 0.22);
+}
+
+.stream-selector__menu-option--selected {
+  color: #7ec0ff;
+  background: rgba(0, 87, 255, 0.14);
+}
+
+/* Player bar — channel name centered between ON AIR badge and volume */
+.player-channel-zone {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
+  left: calc(50% + var(--player-on-air-half));
+  right: calc((100vw - var(--page-width)) / 2 + var(--player-controls-inset));
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.player-channel-name {
+  font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  font-size: clamp(11px, 1.05vw, 16px);
+  font-weight: 700;
+  font-synthesis: none;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: scaleY(1.48);
+  transform-origin: center center;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Hero header nav — Karantina text links */
+.hero-nav-link {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-family: var(--font-family);
+  font-size: var(--hero-nav-link-size);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #080833;
+  text-decoration: none;
+  box-shadow: none;
+  transition: opacity 0.2s ease;
+}
+
+.hero-nav-link:hover {
+  opacity: 0.7;
+}
+
+.hero-nav-link:focus-visible {
+  outline: 2px solid #080833;
+  outline-offset: 4px;
+}
+
+.hero-nav-link--with-icon {
+  gap: 0.1em;
+}
+
+.hero-nav-link__icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+@media (max-width: 420px) {
+  :root {
+    --hero-nav-link-size: 1.0625rem;
+  }
 }

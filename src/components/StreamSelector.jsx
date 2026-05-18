@@ -1,17 +1,45 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { cx } from '../utils/cx'
 
-function shortBitrateLabel(label) {
+function streamMenuLabel(label) {
   const t = label.replace(/\s+/g, ' ').trim()
   const match = t.match(/^(\d+)\s*kb\/s$/i)
-  if (match) return `${match[1]}K`
+  if (match) return `${match[1]} KB/S`
   return t
+}
+
+function StreamValue({ label, compact }) {
+  const t = label.replace(/\s+/g, ' ').trim()
+  const match = t.match(/^(\d+)\s*kb\/s$/i)
+
+  if (!match) {
+    return <span className="stream-selector__value">{label}</span>
+  }
+
+  if (compact) {
+    return <span className="stream-selector__value">{`${match[1]}K`}</span>
+  }
+
+  return <span className="stream-selector__value">{`${match[1]}KB/S`}</span>
+}
+
+function StreamChevron({ open, className }) {
+  return (
+    <span
+      className={cx(
+        'stream-selector__chevron pointer-events-none shrink-0 transition-transform duration-150',
+        open && 'stream-selector__chevron--open',
+        className,
+      )}
+      aria-hidden="true"
+    />
+  )
 }
 
 /**
  * Stream quality control for the player bar.
- * — Multiple streams: custom listbox (designed), opens above the bar.
- * — Single stream: compact read-only chip (same visual weight as the control).
+ * Menu renders in a portal so it is not clipped by the fixed player bar overflow.
  */
 export default function StreamSelector({
   streams,
@@ -22,19 +50,51 @@ export default function StreamSelector({
 }) {
   const labelId = useId()
   const [open, setOpen] = useState(false)
+  const [menuPos, setMenuPos] = useState(null)
   const rootRef = useRef(null)
+  const buttonRef = useRef(null)
   const selected = streams.find((s) => s.id === selectedStreamId) ?? streams[0]
+
+  const updateMenuPosition = useCallback(() => {
+    const button = buttonRef.current
+    if (!button) return
+
+    const rect = button.getBoundingClientRect()
+    setMenuPos({
+      left: rect.left + rect.width / 2,
+      bottom: window.innerHeight - rect.top + 10,
+      minWidth: Math.max(rect.width, 112),
+    })
+  }, [])
+
+  useLayoutEffect(() => {
+    if (!open) {
+      setMenuPos(null)
+      return undefined
+    }
+
+    updateMenuPosition()
+    window.addEventListener('resize', updateMenuPosition)
+    window.addEventListener('scroll', updateMenuPosition, true)
+
+    return () => {
+      window.removeEventListener('resize', updateMenuPosition)
+      window.removeEventListener('scroll', updateMenuPosition, true)
+    }
+  }, [open, updateMenuPosition])
 
   useEffect(() => {
     if (!open) return
     function handlePointerDown(event) {
-      if (rootRef.current && !rootRef.current.contains(event.target)) {
-        setOpen(false)
-      }
+      const target = event.target
+      if (rootRef.current?.contains(target)) return
+      const menu = document.getElementById(`${labelId}-menu`)
+      if (menu?.contains(target)) return
+      setOpen(false)
     }
     document.addEventListener('mousedown', handlePointerDown)
     return () => document.removeEventListener('mousedown', handlePointerDown)
-  }, [open])
+  }, [open, labelId])
 
   useEffect(() => {
     if (!open) return
@@ -51,89 +111,81 @@ export default function StreamSelector({
     return (
       <div
         className={cx(
-          'flex h-8 min-w-[76px] items-center justify-center border border-[rgba(0,142,255,0.58)] bg-[rgba(3,3,34,0.82)] px-2 [font-family:Arial,Helvetica,sans-serif] text-[10px] font-black uppercase tracking-wide text-[rgba(255,255,255,0.86)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] max-[700px]:h-10 max-[700px]:min-w-0 max-[700px]:w-full max-[700px]:text-[8px]',
-          compact && 'h-8 min-w-0 max-w-full px-1.5 text-[9px] leading-none tracking-normal max-[700px]:h-8 max-[700px]:text-[9px]',
+          'stream-selector stream-selector--static flex min-w-[52px] flex-col items-center justify-center gap-0.5 px-1 py-0.5',
           className,
         )}
         title={streams[0].label}
       >
-        {compact ? shortBitrateLabel(streams[0].label) : streams[0].label}
+        <StreamValue label={streams[0].label} compact={compact} />
       </div>
     )
   }
 
+  const menu =
+    open && menuPos
+      ? createPortal(
+          <ul
+            id={`${labelId}-menu`}
+            className="stream-selector__menu"
+            style={{
+              left: menuPos.left,
+              bottom: menuPos.bottom,
+              minWidth: menuPos.minWidth,
+            }}
+            role="listbox"
+            aria-label="Choose stream quality"
+          >
+            {streams.map((stream) => {
+              const isSelected = stream.id === selected.id
+              return (
+                <li className="list-none" key={stream.id} role="presentation">
+                  <button
+                    className={cx(
+                      'stream-selector__menu-option',
+                      isSelected && 'stream-selector__menu-option--selected',
+                    )}
+                    type="button"
+                    role="option"
+                    aria-selected={isSelected}
+                    onClick={() => {
+                      onSelect(stream.id)
+                      setOpen(false)
+                    }}
+                  >
+                    {streamMenuLabel(stream.label)}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>,
+          document.body,
+        )
+      : null
+
   return (
-    <div className={cx('relative min-w-0', className)} ref={rootRef}>
+    <div className={cx('stream-selector relative z-[60] min-w-0', className)} ref={rootRef}>
       <span className="sr-only" id={labelId}>
         Stream quality
       </span>
       <button
+        ref={buttonRef}
         className={cx(
-          'flex h-8 w-full min-w-[92px] cursor-pointer items-center justify-between gap-2 border border-[#008eff] bg-[#030322] px-2.5 pr-2 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-[border-color,box-shadow,background] duration-150 hover:border-[#00b4ff] hover:bg-[#0a0a45] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_14px_rgba(0,142,255,0.2)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-[700px]:h-10 max-[700px]:min-w-0',
-          compact && 'h-8 min-h-[36px] min-w-0 gap-1 px-1.5 py-0 pr-1.5 max-[700px]:h-8',
+          'stream-selector__button flex w-full min-w-[52px] cursor-pointer flex-col items-center justify-center gap-0.5 border-0 bg-transparent px-1 py-0.5 transition-opacity duration-150 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-[700px]:min-w-0',
+          open && 'stream-selector__button--open',
+          compact && 'min-w-0 max-w-full',
         )}
         type="button"
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-labelledby={labelId}
+        aria-controls={open ? `${labelId}-menu` : undefined}
         title={selected.label}
         onClick={() => setOpen((value) => !value)}
       >
-        <span
-          className={cx(
-            'min-w-0 truncate [font-family:Arial,Helvetica,sans-serif] text-[10px] font-black uppercase leading-none text-white max-[700px]:text-[7px]',
-            compact && 'text-[9px] font-[950] tracking-tight max-[700px]:text-[9px]',
-          )}
-        >
-          {compact ? shortBitrateLabel(selected.label) : selected.label}
-        </span>
-        <span
-          className={cx(
-            'pointer-events-none h-0 w-0 shrink-0 border-x-[4px] border-t-[5px] border-x-transparent border-t-white transition-transform duration-150 max-[700px]:border-x-[3px] max-[700px]:border-t-[4px]',
-            compact && 'border-x-[3px] border-t-[4px]',
-            open && '-rotate-180',
-          )}
-          aria-hidden="true"
-        />
+        <StreamValue label={selected.label} compact={compact} />
+        <StreamChevron open={open} />
       </button>
-
-      {open ? (
-        <ul
-          className="absolute bottom-[calc(100%+6px)] right-0 z-[70] min-w-[100%] overflow-hidden rounded-sm border border-[#008eff] bg-[#050536] py-1 shadow-[0_-12px_28px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.06)] max-[700px]:bottom-[calc(100%+4px)] max-[700px]:left-0 max-[700px]:right-0 max-[700px]:min-w-full"
-          role="listbox"
-          aria-label="Choose stream quality"
-        >
-          {streams.map((stream) => {
-            const isSelected = stream.id === selected.id
-            return (
-              <li className="list-none" key={stream.id} role="presentation">
-                <button
-                  className={cx(
-                    'flex w-full cursor-pointer items-center border-0 bg-transparent px-3 py-2 text-left [font-family:Arial,Helvetica,sans-serif] text-[10px] font-black uppercase tracking-wide text-white transition-colors duration-150 hover:bg-[rgba(0,142,255,0.22)] max-[700px]:py-2.5 max-[700px]:text-[8px]',
-                    isSelected && 'bg-[rgba(255,17,17,0.12)] text-[#ff6b6b]',
-                  )}
-                  type="button"
-                  role="option"
-                  aria-selected={isSelected}
-                  onClick={() => {
-                    onSelect(stream.id)
-                    setOpen(false)
-                  }}
-                >
-                  <span
-                    className={cx(
-                      'mr-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[rgba(255,255,255,0.25)]',
-                      isSelected && 'bg-[#ff1111] shadow-[0_0_8px_rgba(255,17,17,0.55)]',
-                    )}
-                    aria-hidden="true"
-                  />
-                  {stream.label}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      ) : null}
+      {menu}
     </div>
   )
 }

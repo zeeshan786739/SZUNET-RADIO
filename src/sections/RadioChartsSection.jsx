@@ -33,7 +33,7 @@ function ChartLabel({ label }) {
       className="relative z-[2] grid place-items-center bg-[rgba(0,0,0,0.2)] shadow-[inset_-1px_0_0_rgba(255,255,255,0.2),inset_1px_0_0_rgba(0,0,0,0.12)]"
       aria-hidden="true"
     >
-      <span className="block rotate-180 [font-family:Arial,Helvetica,sans-serif] text-[clamp(8px,0.85vw,13px)] font-[950] leading-none tracking-[0.06em] text-white uppercase [text-shadow:0_2px_8px_rgba(0,0,0,0.28)] [writing-mode:vertical-rl] max-[420px]:text-[7px]">
+      <span className="block rotate-180 text-[clamp(8px,0.85vw,13px)] font-[950] leading-none tracking-[0.06em] text-white uppercase [text-shadow:0_2px_8px_rgba(0,0,0,0.28)] [writing-mode:vertical-rl] max-[420px]:text-[7px]">
         {label}
       </span>
     </div>
@@ -64,7 +64,7 @@ function ReactionIcons({ trend }) {
 
 function MusicMeta({ artist, title }) {
   return (
-    <div className="grid w-full min-w-0 max-w-full gap-[3px] [font-family:Arial,Helvetica,sans-serif] leading-tight text-white [text-shadow:0_2px_6px_rgba(0,0,0,0.28)]">
+    <div className="grid w-full min-w-0 max-w-full gap-[3px] leading-tight text-white [text-shadow:0_2px_6px_rgba(0,0,0,0.28)]">
       <strong className="block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(7px,0.78vw,11px)] font-[950] uppercase max-[360px]:text-[6.5px]">
         {artist}
       </strong>
@@ -102,7 +102,7 @@ function ChartCard({ card, rank, rowTone }) {
         <ReactionIcons trend={card.trend} />
         <span
           className={cx(
-            'absolute left-[4px] top-[4px] z-[3] inline-grid min-h-[18px] min-w-[18px] place-items-center rounded-full [font-family:Arial,Helvetica,sans-serif] text-[8px] font-[950] leading-none text-white shadow-[0_4px_10px_rgba(0,0,0,0.24)] max-[360px]:min-h-[16px] max-[360px]:min-w-[16px] max-[360px]:text-[7px]',
+            'absolute left-[4px] top-[4px] z-[3] inline-grid min-h-[18px] min-w-[18px] place-items-center rounded-full text-[8px] font-[950] leading-none text-white shadow-[0_4px_10px_rgba(0,0,0,0.24)] max-[360px]:min-h-[16px] max-[360px]:min-w-[16px] max-[360px]:text-[7px]',
             tone.chip,
           )}
         >

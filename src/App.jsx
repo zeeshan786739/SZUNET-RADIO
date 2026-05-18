@@ -10,6 +10,7 @@ import SecondRadioPage from './pages/SecondRadioPage'
 import SongSearchPage from './pages/SongSearchPage'
 import RevealOnScroll from './components/RevealOnScroll'
 import EditorialBlueRing from './components/EditorialBlueRing'
+import { usePlaybackProgress } from './hooks/usePlaybackProgress'
 
 function getInitialView() {
   const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/'
@@ -66,6 +67,7 @@ function App() {
   const selectedChannelName = selectedChannel.playerName ?? selectedChannel.title.toUpperCase()
 
   const isPlaying = playingChannelId === selectedChannel.id
+  const playbackProgress = usePlaybackProgress(isPlaying, selectedChannel.id)
 
   const playerChannel = useMemo(
     () => ({
@@ -255,6 +257,7 @@ function App() {
       <PlayerBar
         channel={playerChannel}
         isPlaying={isPlaying}
+        playbackProgress={playbackProgress}
         selectedStreamId={selectedStreamId}
         streams={selectedChannel.streams}
         volume={volume}

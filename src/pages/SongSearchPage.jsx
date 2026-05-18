@@ -19,7 +19,7 @@ function SearchIcon({ className }) {
 function SongSearchBar({ value, onChange, inputId }) {
   return (
     <label
-      className="group relative mx-auto block w-full max-w-[min(100%,560px)] cursor-text rounded-xl border border-[rgba(8,8,51,0.12)] bg-white shadow-[0_2px_14px_rgba(8,8,51,0.06)] transition-[border-color,box-shadow] duration-200 [font-family:Arial,Helvetica,sans-serif] focus-within:border-[#008eff] focus-within:shadow-[0_0_0_3px_rgba(0,142,255,0.18),0_4px_20px_rgba(8,8,51,0.08)]"
+      className="group relative mx-auto block w-full max-w-[min(100%,560px)] cursor-text rounded-xl border border-[rgba(8,8,51,0.12)] bg-white shadow-[0_2px_14px_rgba(8,8,51,0.06)] transition-[border-color,box-shadow] duration-200 focus-within:border-[#008eff] focus-within:shadow-[0_0_0_3px_rgba(0,142,255,0.18),0_4px_20px_rgba(8,8,51,0.08)]"
       htmlFor={inputId}
     >
       <span className="sr-only">Keresés előadóra vagy dalra</span>

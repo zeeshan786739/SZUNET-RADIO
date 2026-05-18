@@ -56,7 +56,7 @@ function MixcloudCard({ item, variant = 'top' }) {
         )}
       >
         {item.eyebrow && (
-          <span className="mb-1 block [font-family:Arial,Helvetica,sans-serif] text-[clamp(18px,1.6vw,26px)] font-black leading-none [writing-mode:vertical-rl] rotate-180 max-[480px]:text-[13px]">
+          <span className="mb-1 block text-[clamp(18px,1.6vw,26px)] font-black leading-none [writing-mode:vertical-rl] rotate-180 max-[480px]:text-[13px]">
             {item.eyebrow}
           </span>
         )}
@@ -87,7 +87,7 @@ function MixcloudCard({ item, variant = 'top' }) {
             ) : null}
           </h2>
         ) : item.label ? (
-          <strong className="relative z-0 m-0 block max-w-full overflow-hidden text-ellipsis whitespace-nowrap [font-family:Arial,Helvetica,sans-serif] text-[clamp(38px,5vw,72px)] font-[950] leading-[0.88]">
+          <strong className="relative z-0 m-0 block max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(38px,5vw,72px)] font-[950] leading-[0.88]">
             {item.label}
             <span className="absolute left-[28%] right-[-14px] bottom-[-3px] -z-[1] h-[9px] min-w-[86px] bg-[#ff1111] max-[560px]:left-[24%] max-[560px]:right-[-10px]" aria-hidden="true" />
           </strong>
@@ -95,14 +95,14 @@ function MixcloudCard({ item, variant = 'top' }) {
           <>
             <h2
               className={cx(
-                'm-0 max-w-full overflow-hidden text-ellipsis whitespace-nowrap [font-family:Arial,Helvetica,sans-serif] text-[clamp(20px,2vw,32px)] font-[950] leading-[0.88]',
+                'm-0 max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(20px,2vw,32px)] font-[950] leading-[0.88]',
                 isBottom && 'max-[480px]:text-[clamp(15px,4.15vw,18px)]',
               )}
             >
               {item.title}
             </h2>
             {item.subtitle && (
-              <strong className="m-0 block max-w-full overflow-hidden whitespace-nowrap [font-family:Arial,Helvetica,sans-serif] text-[clamp(20px,2vw,32px)] font-[950] leading-[0.88] max-[480px]:text-[clamp(17px,4.8vw,22px)]">
+              <strong className="m-0 block max-w-full overflow-hidden whitespace-nowrap text-[clamp(20px,2vw,32px)] font-[950] leading-[0.88] max-[480px]:text-[clamp(17px,4.8vw,22px)]">
                 <span className="relative inline-block w-fit max-w-full overflow-hidden text-ellipsis whitespace-nowrap align-top">
                   <span className="relative z-[1] text-white">
                   {item.subtitle}
@@ -144,7 +144,7 @@ function MixcloudSection() {
             src={mixcloudLogo}
             alt="Mixcloud"
           />
-          <p className="m-0 min-w-0 max-w-[52ch] overflow-hidden [display:-webkit-box] [font-family:Arial,Helvetica,sans-serif] text-[clamp(10px,1vw,15px)] font-extrabold leading-[1.55] text-[#05051c] [-webkit-box-orient:vertical] [-webkit-line-clamp:4] max-[700px]:max-w-none max-[700px]:text-center max-[700px]:[-webkit-line-clamp:5]">
+          <p className="m-0 min-w-0 max-w-[52ch] overflow-hidden [display:-webkit-box] text-[clamp(10px,1vw,15px)] font-extrabold leading-[1.55] text-[#05051c] [-webkit-box-orient:vertical] [-webkit-line-clamp:4] max-[700px]:max-w-none max-[700px]:text-center max-[700px]:[-webkit-line-clamp:5]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis.

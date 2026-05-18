@@ -46,7 +46,7 @@ function BlogSection() {
                     aria-hidden="true"
                   />
                 </h2>
-                <p className="m-0 min-w-0 w-full max-w-full overflow-hidden [display:-webkit-box] [font-family:Arial,Helvetica,sans-serif] text-[clamp(7px,0.74vw,11px)] font-semibold leading-[1.2] [-webkit-box-orient:vertical] [-webkit-line-clamp:4] max-[480px]:leading-[1.18]">
+                <p className="m-0 min-w-0 w-full max-w-full overflow-hidden [display:-webkit-box] text-[clamp(7px,0.74vw,11px)] font-semibold leading-[1.2] [-webkit-box-orient:vertical] [-webkit-line-clamp:4] max-[480px]:leading-[1.18]">
                   {post.excerpt}
                 </p>
               </div>

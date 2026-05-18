@@ -108,7 +108,7 @@ function CalendarWidget() {
 
   return (
     <motion.article
-      className="mt-[clamp(8px,1.6vw,26px)] w-[clamp(156px,15vw,212px)] justify-self-center self-start rounded-lg border border-[rgba(255,255,255,0.72)] bg-[rgba(255,255,255,0.96)] px-3 pb-[13px] pt-[11px] [font-family:Arial,Helvetica,sans-serif] text-[#11112a] shadow-[0_22px_44px_rgba(80,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.72)] max-[980px]:col-[2] max-[980px]:row-[2] max-[980px]:m-0 max-[980px]:self-start max-[700px]:col-auto max-[700px]:row-auto max-[700px]:self-center max-[700px]:justify-self-center max-[460px]:w-[162px]"
+      className="mt-[clamp(8px,1.6vw,26px)] w-[clamp(156px,15vw,212px)] justify-self-center self-start rounded-lg border border-[rgba(255,255,255,0.72)] bg-[rgba(255,255,255,0.96)] px-3 pb-[13px] pt-[11px] text-[#11112a] shadow-[0_22px_44px_rgba(80,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.72)] max-[980px]:col-[2] max-[980px]:row-[2] max-[980px]:m-0 max-[980px]:self-start max-[700px]:col-auto max-[700px]:row-auto max-[700px]:self-center max-[700px]:justify-self-center max-[460px]:w-[162px]"
       aria-label={`${month.label} ${month.year} calendar`}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ function CalendarWidget() {
 function TimeWidget() {
   return (
     <motion.div
-      className="relative grid min-w-[clamp(154px,14vw,220px)] place-items-center self-center justify-self-start [font-family:Arial,Helvetica,sans-serif] text-white max-[980px]:col-[2] max-[980px]:row-[1] max-[980px]:mb-5 max-[980px]:self-end max-[980px]:justify-self-center max-[700px]:col-auto max-[700px]:row-auto max-[700px]:m-0 max-[700px]:self-center max-[700px]:justify-self-center"
+      className="relative grid min-w-[clamp(154px,14vw,220px)] place-items-center self-center justify-self-start text-white max-[980px]:col-[2] max-[980px]:row-[1] max-[980px]:mb-5 max-[980px]:self-end max-[980px]:justify-self-center max-[700px]:col-auto max-[700px]:row-auto max-[700px]:m-0 max-[700px]:self-center max-[700px]:justify-self-center"
       aria-label="Current time 17:25"
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}

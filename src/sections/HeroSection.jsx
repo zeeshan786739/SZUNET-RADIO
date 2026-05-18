@@ -14,15 +14,7 @@ import HeroIntroLoader from '../components/HeroIntroLoader'
 import brandLogo from '../assets/images/Group 2.png'
 import headline from '../assets/images/KIMAXOLJUK A NAPODAT!.png'
 import redRibbon from '../assets/images/Rectangle 19.png'
-
-function SearchGlyph({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="10.5" cy="10.5" r="6.75" stroke="currentColor" strokeWidth="2.25" />
-      <path d="M16.25 16.25 20 20" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" />
-    </svg>
-  )
-}
+import SearchGlyph from '../components/SearchGlyph'
 
 function HeroSection({ channels, playingChannelId, onToggleChannel }) {
   const channelStripRef = useRef(null)
@@ -60,11 +52,11 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
     featureCard?.scrollIntoView({ inline: 'center', block: 'nearest' })
   }, [introComplete])
 
-  const cameraState = skipIntro ? 'idle' : introComplete ? 'idle' : 'intro'
+  const cameraState = skipIntro ? false : 'intro'
 
   return (
     <section
-      className="relative isolate flex h-[calc(100svh-var(--player-height))] min-h-0 flex-col overflow-hidden max-[760px]:px-[var(--page-gutter)]"
+      className="relative isolate flex h-[calc(100svh-var(--player-height))] min-h-0 flex-col overflow-hidden"
       aria-label="SZUNET Radio landing page"
     >
       <motion.div
@@ -76,22 +68,18 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
       />
 
       <motion.div
-        className="pointer-events-none absolute top-0 right-0 bottom-0 z-0 min-[761px]:left-[max(var(--page-gutter),calc((100vw-var(--page-width))/2))] max-[760px]:left-[var(--hero-ribbon-mobile-left)] max-[760px]:right-auto max-[760px]:w-[var(--hero-ribbon-mobile-width)]"
+        className="hero-ribbon pointer-events-none absolute inset-0 z-0"
         aria-hidden="true"
         variants={heroRibbonVariants}
         initial={skipIntro ? false : 'hidden'}
         animate="visible"
       >
-        <img
-          className="block h-full w-full object-fill object-right-top"
-          src={redRibbon}
-          alt=""
-        />
+        <img className="hero-ribbon__img" src={redRibbon} alt="" />
       </motion.div>
 
-      <header className="absolute left-1/2 top-[max(clamp(10px,1.7vw,18px),var(--hero-header-safe-top))] z-[3] w-[min(100%,var(--page-width))] max-w-[calc(100vw-var(--page-gutter)*2)] -translate-x-1/2 px-0 max-[760px]:max-w-full">
+      <header className="absolute inset-x-0 top-[max(clamp(10px,1.7vw,18px),var(--hero-header-safe-top))] z-[3] px-[var(--page-gutter)]">
         <motion.div
-          className="flex w-full items-start justify-between gap-3 sm:gap-4 max-[380px]:flex-col max-[380px]:items-stretch max-[380px]:gap-2"
+          className="mx-auto flex w-full max-w-[var(--page-width)] items-start justify-between gap-3 sm:gap-4 max-[380px]:flex-col max-[380px]:items-stretch max-[380px]:gap-2"
           variants={heroHeaderVariants}
           initial={skipIntro ? false : 'hidden'}
           animate="visible"
@@ -109,22 +97,22 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
             />
           </button>
           <nav
-            className="mt-1 flex max-w-full flex-wrap items-center justify-end gap-2 sm:gap-2.5 max-[380px]:mt-0 max-[380px]:justify-start"
+            className="mt-1 flex max-w-full flex-wrap items-center justify-end gap-[clamp(14px,2vw,28px)] max-[380px]:mt-0 max-[380px]:justify-start"
             aria-label="Gyorslinkek"
           >
             <a
-              className="inline-flex items-center rounded-md border-2 border-[#080833] bg-white/90 px-[0.55em] py-[0.38em] [font-family:Arial,Helvetica,sans-serif] text-[clamp(10px,0.95vw,13px)] font-[950] normal-case leading-none tracking-[0.02em] text-[#080833] no-underline shadow-[0_2px_8px_rgba(8,8,51,0.08)] backdrop-blur-[1px] transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-white focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#080833] max-[420px]:px-2 max-[420px]:text-[9px]"
+              className="hero-nav-link normal-case"
               href="/second-page"
               aria-label="Second page — műsor és archívum, lejátszás folytatódik"
             >
               second-page
             </a>
             <a
-              className="inline-flex items-center gap-[0.4em] rounded-md bg-[#ff1111] px-[0.65em] py-[0.42em] [font-family:Arial,Helvetica,sans-serif] text-[clamp(12px,1.05vw,17px)] font-[950] lowercase leading-none tracking-[0.02em] text-[#080833] no-underline shadow-[0_2px_12px_rgba(8,8,51,0.12)] ring-2 ring-white/75 transition-[transform,filter] duration-200 hover:-translate-y-px hover:brightness-[1.03] focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#080833] max-[420px]:text-[11px]"
+              className="hero-nav-link hero-nav-link--with-icon lowercase"
               href="/dal-kereses"
               aria-label="Dal keresés — lejátszás folytatódik"
             >
-              <SearchGlyph className="h-[1.05em] w-[1.05em] shrink-0 translate-y-px text-[#080833]" />
+              <SearchGlyph className="hero-nav-link__icon text-[#080833]" />
               <span>dalkereses</span>
             </a>
           </nav>
@@ -133,7 +121,6 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
 
       <motion.div
         className="relative z-[2] flex min-h-0 flex-1 flex-col justify-end pb-[max(6px,env(safe-area-inset-bottom,0px))] pt-[var(--hero-stage-top)] max-[760px]:min-h-[min(320px,calc(100svh-var(--player-height)-40px)))] max-[760px]:max-h-full"
-        style={{ perspective: 1400 }}
         variants={heroCameraVariants}
         initial={skipIntro ? false : 'hidden'}
         animate={cameraState}
@@ -151,24 +138,26 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
           {!skipIntro && showLoader ? <HeroIntroLoader key="hero-loader" /> : null}
         </AnimatePresence>
 
-        <motion.div
-          className="relative z-[1] mx-auto flex min-h-0 w-full max-w-[var(--page-width)] flex-1 flex-row items-end justify-stretch gap-[var(--hero-card-gap)] [transform-style:preserve-3d] min-[761px]:max-h-full max-[760px]:h-full max-[760px]:max-h-[min(72svh,calc(100svh-var(--player-height)-var(--hero-stage-top)))] max-[760px]:min-h-[220px] max-[760px]:max-w-none max-[760px]:snap-x max-[760px]:snap-mandatory max-[760px]:justify-start max-[760px]:items-stretch max-[760px]:gap-3 max-[760px]:overflow-x-auto max-[760px]:overflow-y-visible max-[760px]:overscroll-x-contain max-[760px]:scroll-smooth max-[760px]:[scroll-padding-inline:var(--page-gutter)] max-[760px]:[scroll-padding-bottom:8px] max-[760px]:[scrollbar-width:none] max-[760px]:[&::-webkit-scrollbar]:hidden"
-          aria-label="Radio channels"
-          ref={channelStripRef}
-        >
-          {channels.map((channel, index) => (
-            <div className="contents" data-channel-id={channel.id} key={channel.id}>
-              <ChannelCard
-                channel={channel}
-                index={index}
-                introEnabled={!skipIntro}
-                introComplete={introComplete}
-                isPlaying={playingChannelId === channel.id}
-                onToggle={onToggleChannel}
-              />
-            </div>
-          ))}
-        </motion.div>
+        <div className="w-full px-[var(--page-gutter)]">
+          <motion.div
+            className="relative z-[1] mx-auto flex min-h-0 w-full max-w-[var(--page-width)] flex-1 flex-row items-end justify-stretch gap-[var(--hero-card-gap)] min-[761px]:max-h-full max-[760px]:h-full max-[760px]:max-h-[min(72svh,calc(100svh-var(--player-height)-var(--hero-stage-top)))] max-[760px]:min-h-[220px] max-[760px]:max-w-none max-[760px]:snap-x max-[760px]:snap-mandatory max-[760px]:justify-start max-[760px]:items-stretch max-[760px]:gap-3 max-[760px]:overflow-x-auto max-[760px]:overflow-y-visible max-[760px]:overscroll-x-contain max-[760px]:scroll-smooth max-[760px]:[scroll-padding-inline:var(--page-gutter)] max-[760px]:[scroll-padding-bottom:8px] max-[760px]:[scrollbar-width:none] max-[760px]:[&::-webkit-scrollbar]:hidden"
+            aria-label="Radio channels"
+            ref={channelStripRef}
+          >
+            {channels.map((channel, index) => (
+              <div className="contents" data-channel-id={channel.id} key={channel.id}>
+                <ChannelCard
+                  channel={channel}
+                  index={index}
+                  introEnabled={!skipIntro}
+                  introComplete={introComplete}
+                  isPlaying={playingChannelId === channel.id}
+                  onToggle={onToggleChannel}
+                />
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </motion.div>
 
     </section>
