@@ -6,81 +6,89 @@ import teqila from '../assets/images/93f7-409c-4739-a711-fd2ba6bed801 1.png'
 import miley from '../assets/images/213b-240e-437c-982f-635bda5b5842 1.png'
 import bandCover from '../assets/images/b7ac-0556-4a7c-ad7f-c97045ea3bf6 1.png'
 import gdc40 from '../assets/images/4ea3-e07a-4a3e-b7a8-7e801a02171b 1.png'
-import kungsTitle from '../assets/images/KUNGS.png'
-import galaxyTitle from '../assets/images/GALAXY.png'
-import mixcloudOneTitle from '../assets/images/MIXCLOUD 1.png'
-import mixcloudThreeTitle from '../assets/images/MIXCLOUD 3.png'
+
+const mixcloudFeatureDescription =
+  'How Raye got over impostor syndrome to make a smash hit solo record'
+
+const loremDescription =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
 export const topMixcloudItems = [
   {
-    id: 'kungs-galaxy-one',
-    title: 'Kungs',
-    subtitle: 'Galaxy',
+    id: 'olivia-rodrigo',
+    artistName: 'OLIVIA RODRIGO',
+    description: loremDescription,
+    titleStyle: 'artist-feature',
     image: bubbleGirl,
     imagePosition: 'center center',
-    titleImage: kungsTitle,
-    subtitleImage: galaxyTitle,
     active: true,
     showVotes: true,
   },
   {
-    id: 'kungs-galaxy-two',
-    title: 'Kungs',
-    subtitle: 'Galaxy',
+    id: 'raye',
+    artistName: 'RAYE',
+    description: mixcloudFeatureDescription,
+    descriptionUppercase: true,
+    titleStyle: 'artist-feature',
     image: foxPortrait,
     imagePosition: 'center center',
-    titleImage: kungsTitle,
-    subtitleImage: galaxyTitle,
-  },
-  {
-    id: 'kungs-galaxy-three',
-    title: 'Kungs',
-    subtitle: 'Galaxy',
-    image: laufey,
-    imagePosition: 'center center',
-    titleImage: kungsTitle,
-    subtitleImage: galaxyTitle,
     showVotes: true,
   },
   {
-    id: 'kungs-galaxy-four',
-    title: 'Kungs',
-    subtitle: 'Galaxy',
+    id: 'laufey',
+    artistName: 'LAUFEY',
+    description: mixcloudFeatureDescription.replace(/^How Raye/, 'How Laufey'),
+    descriptionUppercase: true,
+    titleStyle: 'artist-feature',
+    image: laufey,
+    imagePosition: 'center center',
+    showVotes: true,
+  },
+  {
+    id: 'mia',
+    artistName: 'M.I.A',
+    description: loremDescription,
+    titleStyle: 'artist-feature',
     image: mia,
     imagePosition: 'center center',
-    titleImage: kungsTitle,
-    subtitleImage: galaxyTitle,
+    showVotes: true,
   },
 ]
 
 export const bottomMixcloudItems = [
   {
     id: 'mixcloud-one',
-    title: 'Mixcloud 1',
+    displayTitle: 'MIXCLOUD 1',
+    description: loremDescription,
+    titleStyle: 'mixcloud-feature',
     image: teqila,
     imagePosition: 'center top',
-    titleImage: mixcloudOneTitle,
   },
   {
     id: 'mixcloud-two',
-    title: 'Mixcloud 2',
+    displayTitle: 'MIXCLOUD 2',
+    description: mixcloudFeatureDescription.replace(/^How Raye/, 'How Laufey'),
+    descriptionUppercase: true,
+    titleStyle: 'mixcloud-feature',
     image: bandCover,
     imagePosition: 'center center',
-    hideTitle: true,
   },
   {
     id: 'mixcloud-three',
-    title: 'Mixcloud 3',
+    displayTitle: 'MIXCLOUD 3',
     eyebrow: 'Artist - To Mix',
+    description: mixcloudFeatureDescription.replace(/^How Raye/, 'How Laufey'),
+    descriptionUppercase: true,
+    titleStyle: 'mixcloud-feature',
     image: miley,
     imagePosition: 'center top',
-    titleImage: mixcloudThreeTitle,
   },
   {
-    id: 'gdc40',
-    title: 'Mixcloud 3',
+    id: 'mixcloud-four',
+    displayTitle: 'MIXCLOUD 4',
+    description: loremDescription,
+    titleStyle: 'mixcloud-feature',
     image: gdc40,
     imagePosition: 'center center',
-    titleImage: mixcloudThreeTitle,
   },
 ]

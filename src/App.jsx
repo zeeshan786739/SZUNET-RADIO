@@ -25,7 +25,7 @@ function LandingPage({ playingChannelId, onToggleChannel }) {
   return (
     <>
       <HeroSection channels={channels} playingChannelId={playingChannelId} onToggleChannel={onToggleChannel} />
-      <div className="relative isolate overflow-visible bg-white">
+      <div className="relative isolate overflow-visible bg-white [--editorial-ellipse-size:clamp(210px,49.5vw,713px)] [--editorial-ellipse-right:calc(-1*clamp(120px,var(--editorial-ellipse-size)*0.58,420px))] [--editorial-ellipse-top:clamp(48px,calc(5vw+28px),196px)] [--editorial-ellipse-opacity:clamp(0.7,calc(0.66+0.2*((100vw-360px)/1080)),0.9)] xl:[--editorial-ellipse-size:clamp(380px,42vw,820px)] xl:[--editorial-ellipse-top:clamp(56px,calc(4vw+32px),220px)] 2xl:[--editorial-ellipse-size:820px]">
         <EditorialBlueRing />
         <div className="relative z-[2]">
           <RevealOnScroll>

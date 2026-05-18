@@ -1,30 +1,55 @@
 import { useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { scheduleItems } from '../data/schedule'
+import ScheduleTrackLabel from '../components/ScheduleTrackLabel'
 import { cx } from '../utils/cx'
 import ScheduleHeroRocket from '../components/ScheduleHeroRocket'
 import SearchGlyph from '../components/SearchGlyph'
-import schedulePanelBg from '../assets/images/Rectangle 98.png'
-
 const DEFAULT_ACTIVE_ITEM_ID = '1745'
 const TICK_COUNT = 96
+
+const heroScheduleGridClass =
+  'grid w-full grid-cols-[repeat(8,minmax(76px,1fr))] gap-x-[clamp(8px,1.05vw,14px)] max-sm:grid-cols-[repeat(8,76px)] max-sm:gap-x-[6px] max-xs:grid-cols-[repeat(8,72px)] max-xs:gap-x-[5px] xl:grid-cols-[repeat(8,minmax(0,1fr))] xl:gap-x-[clamp(12px,0.95vw,20px)] 2xl:gap-x-[clamp(14px,1vw,24px)]'
+
+const defaultScheduleGridClass =
+  'grid w-full grid-cols-[repeat(8,minmax(72px,1fr))] gap-x-0 max-sm:grid-cols-[repeat(8,72px)] max-xs:grid-cols-[repeat(8,68px)] items-end xl:grid-cols-[repeat(8,minmax(0,1fr))] xl:gap-x-[clamp(8px,0.75vw,14px)]'
+
+const heroScheduleScrollMinClass =
+  'min-w-[min(100%,820px)] max-lg:min-w-[780px] max-sm:min-w-[700px] max-xs:min-w-[640px] xl:min-w-0 xl:w-full'
+
+const defaultScheduleScrollMinClass =
+  'min-w-[740px] max-lg:min-w-[720px] max-sm:min-w-[660px] max-xs:min-w-[620px] xl:min-w-0 xl:w-full'
+
+const heroScheduleStageClass = 'relative isolate'
+
+const heroScheduleCardsShellClass =
+  'relative isolate pb-[clamp(10px,1.2vw,18px)] xl:pb-[clamp(12px,1vw,22px)]'
+
+const heroScheduleCardsAreaClass = 'relative z-[1]'
+
+const heroCardHeaderClass =
+  'px-[clamp(3px,0.4vw,6px)] py-[clamp(3px,0.38vw,5px)]'
 
 function getAnchor(index, total) {
   return `${((index + 0.5) / total) * 100}%`
 }
 
-function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
+function ScheduleTrackCard({ item, index, isActive, onSelect, anchor, variant = 'default' }) {
   const prefersReducedMotion = useReducedMotion()
+  const isHeroVariant = variant === 'hero'
 
   return (
     <motion.article
-      className="relative min-w-0 snap-center px-[clamp(5px,0.85vw,14px)] [transform-origin:center_bottom]"
+      className={cx(
+        'relative min-w-0 snap-center [transform-origin:center_bottom]',
+        isHeroVariant ? 'px-0' : 'px-[clamp(5px,0.85vw,14px)]',
+      )}
       style={{ '--card-anchor': anchor }}
       initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
       animate={{
         opacity: 1,
-        scale: isActive ? 1.025 : 1,
-        y: isActive ? -4 : 0,
+        scale: isActive && !isHeroVariant ? 1.025 : 1,
+        y: isActive && !isHeroVariant ? -4 : 0,
       }}
       transition={{
         delay: prefersReducedMotion ? 0 : index * 0.035,
@@ -34,28 +59,42 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
     >
       <motion.button
         className={cx(
-          'group relative grid w-full min-w-0 cursor-pointer grid-rows-[auto_auto_auto] justify-items-stretch gap-[2px] rounded-lg border border-transparent bg-transparent p-[3px] text-left text-[#050526] transition-[border-color,box-shadow,background] duration-[160ms] motion-reduce:transition-none',
+          'group relative grid w-full min-w-0 cursor-pointer justify-items-stretch text-left transition-[border-color,box-shadow,background] duration-[160ms] motion-reduce:transition-none',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]',
-          'hover:border-[rgba(0,142,255,0.44)] hover:bg-[rgba(255,255,255,0.38)] hover:shadow-[0_8px_16px_rgba(7,7,56,0.11)]',
-          isActive &&
-            'border-[rgba(255,17,17,0.62)] bg-[rgba(255,255,255,0.58)] shadow-[0_10px_18px_rgba(7,7,56,0.14),0_0_0_1px_rgba(255,255,255,0.72),0_0_12px_rgba(255,17,17,0.14)] backdrop-blur-[1px]',
+          isHeroVariant
+            ? 'grid-rows-[auto_auto] gap-0 rounded-none border-0 bg-transparent p-0 hover:border-transparent hover:bg-transparent hover:shadow-none data-[pressed=true]:border-transparent data-[pressed=true]:bg-transparent data-[pressed=true]:shadow-none'
+            : [
+                'grid-rows-[auto_auto_auto] gap-[2px] rounded-lg border border-transparent bg-transparent p-[3px] text-[#050526]',
+                'hover:border-[rgba(0,142,255,0.44)] hover:bg-[rgba(255,255,255,0.38)] hover:shadow-[0_8px_16px_rgba(7,7,56,0.11)]',
+                isActive &&
+                  'border-[rgba(255,17,17,0.62)] bg-[rgba(255,255,255,0.58)] shadow-[0_10px_18px_rgba(7,7,56,0.14),0_0_0_1px_rgba(255,255,255,0.72),0_0_12px_rgba(255,17,17,0.14)] backdrop-blur-[1px]',
+              ],
         )}
         type="button"
         aria-label={`Play ${item.artist} - ${item.title} at ${item.time}`}
         aria-pressed={isActive}
         onClick={() => onSelect(item.id)}
-        whileHover={prefersReducedMotion ? undefined : { y: -3 }}
+        whileHover={prefersReducedMotion || isHeroVariant ? undefined : { y: -3 }}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
       >
-        <div className="schedule-track-label w-full min-w-0 max-w-full">
-          <p className="schedule-track-label__artist">{item.artist}</p>
-          <p className="schedule-track-label__title">{item.title}</p>
-        </div>
+        {!isHeroVariant ? (
+          <ScheduleTrackLabel artist={item.artist} title={item.title} className="w-full" />
+        ) : (
+          <div className={heroCardHeaderClass}>
+            <ScheduleTrackLabel artist={item.artist} title={item.title} variant="hero" className="w-full" />
+          </div>
+        )}
 
         <div
           className={cx(
-            'relative isolate aspect-square overflow-hidden rounded-sm bg-[rgba(217,217,222,0.88)] shadow-[0_6px_12px_rgba(7,7,56,0.14),inset_0_0_0_1px_rgba(255,255,255,0.45)] backdrop-blur-[2px]',
-            isActive && 'shadow-[0_8px_16px_rgba(7,7,56,0.22),0_0_0_2px_rgba(255,17,17,0.82)]',
+            'relative isolate aspect-square overflow-hidden bg-white',
+            isHeroVariant
+              ? cx(
+                  'rounded-none shadow-[0_8px_18px_rgba(0,0,0,0.14)]',
+                  isActive && 'shadow-[0_0_0_2px_#ff1111,0_10px_22px_rgba(7,7,56,0.2)]',
+                )
+              : 'rounded-sm bg-[rgba(217,217,222,0.88)] shadow-[0_6px_12px_rgba(7,7,56,0.14),inset_0_0_0_1px_rgba(255,255,255,0.45)] backdrop-blur-[2px]',
+            !isHeroVariant && isActive && 'shadow-[0_8px_16px_rgba(7,7,56,0.22),0_0_0_2px_rgba(255,17,17,0.82)]',
           )}
         >
           <img
@@ -93,68 +132,65 @@ function ScheduleTrackCard({ item, index, isActive, onSelect, anchor }) {
           </span>
         </div>
 
-        <time
-          className={cx(
-            'inline-grid min-h-3.5 min-w-[38px] place-items-center justify-self-center text-[clamp(7px,0.6vw,9px)] font-[950] leading-none text-[#080833] [text-shadow:0_1px_0_rgba(255,255,255,0.5)]',
-            isActive && 'text-[#ff1111]',
-          )}
-          dateTime={item.time}
-        >
+        <time className="sr-only" dateTime={item.time}>
           {item.time}
         </time>
       </motion.button>
 
-      <span
-        className={cx(
-          'absolute bottom-[-10px] left-1/2 h-3 w-px -translate-x-1/2 bg-[rgba(7,7,56,0.52)]',
-          isActive && 'w-0.5 bg-[#ff1111] shadow-[0_0_12px_rgba(255,17,17,0.56)]',
-        )}
-        aria-hidden="true"
-      />
     </motion.article>
   )
 }
 
-function ScheduleTimeline({ items, activeIndex, activeItem, onSelect }) {
-  const progress = getAnchor(activeIndex, items.length)
+function getTimelineTickClass(tick, activeMajorTick, isHero = false) {
+  const slotPosition = tick % 12
+  const isMajor = slotPosition === 6
+  const isMedium = slotPosition === 0
+  const isActiveMajor = tick === activeMajorTick
+
+  if (isActiveMajor) {
+    return cx(
+      'w-[2px] bg-[#ff1111] shadow-[0_0_12px_rgba(255,17,17,0.55)]',
+      isHero ? 'h-[26px] xl:h-[30px] 2xl:h-[32px]' : 'h-[22px] w-0.5',
+    )
+  }
+
+  if (isMajor) {
+    return isHero ? 'h-[22px] w-px bg-[#070738] xl:h-[26px] 2xl:h-[28px]' : 'h-[18px] bg-[#070738]'
+  }
+
+  if (isMedium) {
+    return isHero
+      ? 'h-[12px] w-px bg-[rgba(7,7,56,0.68)] xl:h-[14px] 2xl:h-[15px]'
+      : 'h-[10px] bg-[rgba(7,7,56,0.62)]'
+  }
+
+  return isHero
+    ? 'h-[7px] w-px bg-[rgba(7,7,56,0.52)] xl:h-[9px] 2xl:h-[10px]'
+    : 'h-[6px] bg-[rgba(7,7,56,0.5)]'
+}
+
+function ScheduleTimeline({ items, activeIndex, onSelect, variant = 'default' }) {
+  const isHeroVariant = variant === 'hero'
   const minorTicks = Array.from({ length: TICK_COUNT }, (_, index) => index)
-  const prefersReducedMotion = useReducedMotion()
+  const ticksPerItem = TICK_COUNT / items.length
+  const activeMajorTick = activeIndex * ticksPerItem + Math.floor(ticksPerItem / 2)
 
   return (
     <div
-      className="relative mt-px h-[42px] w-full"
-      style={{ '--timeline-progress': progress }}
-      aria-label="Schedule progress timeline"
+      className={cx(
+        'relative w-full',
+        isHeroVariant
+          ? 'h-[clamp(58px,5.6vw,72px)] xl:h-[clamp(64px,4.2vw,80px)] 2xl:h-[82px]'
+          : 'mt-1 h-[46px] xl:h-[52px]',
+      )}
+      aria-label="Schedule timeline"
     >
-      <div
-        className="absolute inset-x-0 top-[3px] h-[3px] overflow-hidden rounded-full bg-[rgba(7,7,56,0.2)]"
-        aria-hidden="true"
+      <ol
+        className={cx(
+          'absolute inset-x-0 z-[5] m-0 list-none p-0',
+          isHeroVariant ? 'top-[clamp(2px,0.25vw,4px)]' : 'top-0',
+        )}
       >
-        <motion.span
-          className="absolute inset-y-0 left-0 rounded-[inherit] bg-[linear-gradient(90deg,#070738,#008eff_62%,#ff1111)] shadow-[0_0_10px_rgba(0,142,255,0.28)]"
-          initial={false}
-          animate={{ width: progress }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.32, ease: 'easeOut' }}
-        />
-      </div>
-
-      <div className="absolute inset-x-0 top-2 h-[30px]" aria-hidden="true">
-        <span className="absolute left-0 right-0 top-px h-px bg-[rgba(7,7,56,0.34)]" />
-        <div className="absolute inset-0 grid grid-cols-[repeat(96,1fr)] items-start">
-          {minorTicks.map((tick) => (
-            <span
-              className={cx(
-                'block h-[11px] w-px justify-self-center bg-[rgba(7,7,56,0.72)]',
-                tick % 4 === 0 && 'h-4 bg-[rgba(7,7,56,0.82)]',
-                tick % 12 === 0 && 'h-[22px] bg-[#070738]',
-              )}
-              key={tick}
-            />
-          ))}
-        </div>
-      </div>
-
-      <ol className="absolute inset-x-0 top-2 h-[30px] list-none p-0">
         {items.map((item, index) => {
           const position = getAnchor(index, items.length)
           const isActive = index === activeIndex
@@ -166,19 +202,21 @@ function ScheduleTimeline({ items, activeIndex, activeItem, onSelect }) {
               style={{ left: position }}
             >
               <button
-                className="group grid h-[30px] w-[38px] cursor-pointer content-start justify-items-center border-0 bg-transparent p-0 focus-visible:rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]"
+                className="group cursor-pointer border-0 bg-transparent p-0 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008eff]"
                 type="button"
                 aria-label={`Jump to ${item.time}, ${item.artist} - ${item.title}`}
+                aria-current={isActive ? 'true' : undefined}
                 onClick={() => onSelect(item.id)}
               >
-                <span
+                <time
                   className={cx(
-                    'h-[27px] w-0.5 rounded-full bg-[#070738] transition-[background,box-shadow,height] duration-[160ms] motion-reduce:transition-none group-hover:bg-[#008eff] group-hover:shadow-[0_0_10px_rgba(0,142,255,0.48)]',
-                    isActive && 'h-[31px] bg-[#ff1111] shadow-[0_0_12px_rgba(255,17,17,0.62)] group-hover:bg-[#ff1111]',
+                    isHeroVariant
+                      ? "block m-0 font-['Roboto_Condensed','Helvetica_Neue',Arial,sans-serif] text-[clamp(12px,1.05vw,14px)] font-bold tabular-nums lining-nums leading-none tracking-[0.01em] text-[#070738] whitespace-nowrap transition-colors duration-[160ms] motion-reduce:transition-none [font-synthesis:none] group-hover:text-[#008eff] xl:text-[15px] 2xl:text-[16px]"
+                      : "block m-0 font-['Roboto_Condensed','Helvetica_Neue',Arial,sans-serif] text-[clamp(11px,0.95vw,13px)] font-bold tabular-nums lining-nums leading-none tracking-[0.01em] text-[#070738] whitespace-nowrap transition-colors duration-[160ms] motion-reduce:transition-none [font-synthesis:none] group-hover:text-[#008eff]",
+                    isActive && 'text-[#ff1111]',
                   )}
-                  aria-hidden="true"
-                />
-                <time className="sr-only" dateTime={item.time}>
+                  dateTime={item.time}
+                >
                   {item.time}
                 </time>
               </button>
@@ -187,25 +225,27 @@ function ScheduleTimeline({ items, activeIndex, activeItem, onSelect }) {
         })}
       </ol>
 
-      <motion.div
-        className="pointer-events-none absolute top-[-5px] z-[4] -translate-x-1/2"
-        aria-live="polite"
-        initial={false}
-        animate={{ left: progress }}
-        transition={{ duration: prefersReducedMotion ? 0 : 0.32, ease: 'easeOut' }}
+      <div
+        className={cx(
+          'pointer-events-none absolute inset-x-0 bottom-0 z-[3]',
+          isHeroVariant
+            ? 'h-[clamp(30px,2.9vw,36px)] xl:h-[clamp(34px,2.4vw,42px)] 2xl:h-[44px]'
+            : 'h-[26px] xl:h-[30px]',
+        )}
+        aria-hidden="true"
       >
-        <span
-          className="absolute left-1/2 top-[17px] h-[22px] w-[22px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,17,17,0.18),transparent_70%)]"
-          aria-hidden="true"
-        />
-        <span
-          className="absolute left-1/2 top-[19px] h-[30px] w-0.5 -translate-x-1/2 rounded-full bg-[linear-gradient(#ff1111,rgba(255,17,17,0))]"
-          aria-hidden="true"
-        />
-        <span className="relative z-[2] inline-grid min-h-[18px] min-w-[38px] place-items-center rounded-full border border-[rgba(255,255,255,0.72)] bg-[#070738] px-[7px] text-[8px] font-[950] leading-none text-white shadow-[0_5px_14px_rgba(7,7,56,0.28),0_0_12px_rgba(0,142,255,0.22)]">
-          {activeItem.time}
-        </span>
-      </motion.div>
+        <div className="absolute inset-0 grid grid-cols-[repeat(96,1fr)] items-end">
+          {minorTicks.map((tick) => (
+            <span
+              className={cx(
+                'block justify-self-center',
+                getTimelineTickClass(tick, activeMajorTick, isHeroVariant),
+              )}
+              key={tick}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -224,14 +264,14 @@ function ScheduleSection({ variant = 'default' }) {
   return (
     <section
       className={cx(
-        'relative isolate overflow-visible bg-transparent pt-2 max-[560px]:pt-[7px]',
-        isHeroVariant && 'pt-0 max-[560px]:pt-0',
+        'relative isolate overflow-visible pt-2 max-sm:pt-[7px]',
+        isHeroVariant ? 'bg-transparent pt-0 max-sm:pt-0' : 'bg-transparent',
       )}
       aria-label={isHeroVariant ? 'Közelgő műsor' : 'Nemrég hallottad — közelgő műsor'}
     >
       {!isHeroVariant ? (
-        <div className="relative z-[2] mx-auto mb-2 w-full max-w-[var(--page-width)] max-[560px]:mb-1.5">
-          <div className="flex min-h-7 items-center justify-between gap-3 px-1 text-[#070738] max-[560px]:px-2">
+        <div className="relative z-[2] mx-auto mb-2 w-full max-w-[var(--page-width)] max-sm:mb-1.5">
+          <div className="flex min-h-7 items-center justify-between gap-3 px-1 text-[#070738] max-sm:px-2">
             <h2 className="m-0 inline-flex min-w-0 items-center gap-2 font-normal lowercase leading-none tracking-normal text-[#070738]">
               <span
                 className="relative inline-grid h-[clamp(18px,1.55vw,23px)] w-[clamp(18px,1.55vw,23px)] shrink-0 place-items-center rounded-full border-2 border-current"
@@ -266,45 +306,93 @@ function ScheduleSection({ variant = 'default' }) {
       ) : null}
       <div
         className={cx(
-          'schedule-panel relative z-[2] mx-auto w-full max-w-[var(--page-width)] overflow-hidden rounded-[14px]',
-          'border border-[rgba(255,255,255,0.42)]',
-          'shadow-[0_8px_22px_rgba(7,7,56,0.06),inset_0_1px_0_rgba(255,255,255,0.22)]',
-          'max-[560px]:rounded-xl',
-          isHeroVariant &&
-            'schedule-panel--hero rounded-[9px] border-[rgba(255,255,255,0.45)] shadow-[0_12px_24px_rgba(76,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.32)]',
+          'relative z-[2] mx-auto w-full max-w-[var(--page-width)] overflow-hidden',
+          !isHeroVariant && [
+            'rounded-[14px] border border-[rgba(255,255,255,0.42)] bg-[#e8e6e6]',
+            'shadow-[0_8px_22px_rgba(7,7,56,0.06),inset_0_1px_0_rgba(255,255,255,0.22)]',
+            'max-sm:rounded-xl',
+          ],
+          isHeroVariant && 'overflow-visible border-0 bg-transparent shadow-none',
         )}
       >
-        {!isHeroVariant ? null : (
-          <img
-            className="pointer-events-none absolute inset-0 -z-[2] h-full w-full object-fill opacity-[0.12]"
-            src={schedulePanelBg}
-            alt=""
+        {!isHeroVariant ? (
+          <span
+            className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(135deg,rgba(255,255,255,0.08)_0%,transparent_50%,rgba(0,0,0,0.03)_100%)]"
             aria-hidden="true"
           />
-        )}
-        <span className="schedule-panel__texture pointer-events-none absolute inset-0 -z-[1]" aria-hidden="true" />
+        ) : null}
         {isHeroVariant ? <ScheduleHeroRocket /> : null}
-        <div className="relative z-[2] overflow-x-auto overscroll-x-contain scroll-smooth px-2.5 pb-[7px] pt-2 [scroll-padding-inline:10px] [scrollbar-width:none] [scroll-snap-type:x_proximity] [&::-webkit-scrollbar]:hidden max-[560px]:px-2 max-[560px]:py-[7px]">
-          <div className="min-w-[740px] max-[900px]:min-w-[720px] max-[560px]:min-w-[660px] max-[420px]:min-w-[620px]">
-            <div className="grid w-full grid-cols-[repeat(8,minmax(72px,1fr))] items-end gap-x-0 max-[560px]:grid-cols-[repeat(8,72px)] max-[420px]:grid-cols-[repeat(8,68px)]">
-              {scheduleItems.map((item, index) => (
-                <ScheduleTrackCard
-                  anchor={getAnchor(index, scheduleItems.length)}
-                  item={item}
-                  index={index}
-                  isActive={item.id === activeItem.id}
-                  key={item.id}
-                  onSelect={setActiveItemId}
-                />
-              ))}
-            </div>
+        <div
+          className={cx(
+            'relative z-[2] overflow-x-auto overscroll-x-contain scroll-smooth pb-[7px] [scroll-padding-inline:10px] [scrollbar-width:none] [scroll-snap-type:x_proximity] [&::-webkit-scrollbar]:hidden',
+            isHeroVariant
+              ? 'px-0 pt-0 xl:overflow-x-visible'
+              : 'px-2.5 pt-2 max-sm:px-2 max-sm:py-[7px] xl:overflow-x-visible',
+          )}
+        >
+          <div
+            className={cx(
+              isHeroVariant ? heroScheduleScrollMinClass : defaultScheduleScrollMinClass,
+            )}
+          >
+            <div className={isHeroVariant ? heroScheduleStageClass : undefined}>
+              {isHeroVariant ? (
+                <div className={heroScheduleCardsShellClass}>
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-0 z-0 h-1/2 bg-[var(--archive-red-core)]"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-1/2 bottom-0 z-0 bg-white"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className={cx(heroScheduleCardsAreaClass, heroScheduleGridClass, 'items-start')}
+                  >
+                    {scheduleItems.map((item, index) => (
+                      <ScheduleTrackCard
+                        anchor={getAnchor(index, scheduleItems.length)}
+                        item={item}
+                        index={index}
+                        isActive={item.id === activeItem.id}
+                        key={item.id}
+                        onSelect={setActiveItemId}
+                        variant="hero"
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={defaultScheduleGridClass}>
+                  {scheduleItems.map((item, index) => (
+                    <ScheduleTrackCard
+                      anchor={getAnchor(index, scheduleItems.length)}
+                      item={item}
+                      index={index}
+                      isActive={item.id === activeItem.id}
+                      key={item.id}
+                      onSelect={setActiveItemId}
+                      variant="default"
+                    />
+                  ))}
+                </div>
+              )}
 
-            <ScheduleTimeline
-              items={scheduleItems}
-              activeIndex={activeIndex}
-              activeItem={activeItem}
-              onSelect={setActiveItemId}
-            />
+              <div
+                className={
+                  isHeroVariant
+                    ? 'relative z-[2] bg-white pb-[clamp(4px,0.5vw,8px)] pt-[clamp(10px,1.15vw,16px)] xl:pt-[clamp(12px,1vw,20px)] xl:pb-[clamp(6px,0.45vw,10px)]'
+                    : undefined
+                }
+              >
+                <ScheduleTimeline
+                  items={scheduleItems}
+                  activeIndex={activeIndex}
+                  onSelect={setActiveItemId}
+                  variant={isHeroVariant ? 'hero' : 'default'}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

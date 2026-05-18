@@ -2,6 +2,9 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from
 import { createPortal } from 'react-dom'
 import { cx } from '../utils/cx'
 
+const streamValueClass =
+  "block font-['Roboto_Condensed','Arial_Narrow',sans-serif] text-[clamp(15px,1.4vw,19px)] font-normal leading-none tracking-[0.02em] text-white normal-case lining-nums tabular-nums [font-synthesis:none] [font-variation-settings:'wght'_400]"
+
 function streamMenuLabel(label) {
   const t = label.replace(/\s+/g, ' ').trim()
   const match = t.match(/^(\d+)\s*kb\/s$/i)
@@ -9,27 +12,27 @@ function streamMenuLabel(label) {
   return t
 }
 
-function StreamValue({ label, compact }) {
+function StreamValue({ label, compact, className }) {
   const t = label.replace(/\s+/g, ' ').trim()
   const match = t.match(/^(\d+)\s*kb\/s$/i)
 
   if (!match) {
-    return <span className="stream-selector__value">{label}</span>
+    return <span className={cx(streamValueClass, className)}>{label}</span>
   }
 
   if (compact) {
-    return <span className="stream-selector__value">{`${match[1]}K`}</span>
+    return <span className={cx(streamValueClass, className)}>{`${match[1]}K`}</span>
   }
 
-  return <span className="stream-selector__value">{`${match[1]}KB/S`}</span>
+  return <span className={cx(streamValueClass, className)}>{`${match[1]}KB/S`}</span>
 }
 
 function StreamChevron({ open, className }) {
   return (
     <span
       className={cx(
-        'stream-selector__chevron pointer-events-none shrink-0 transition-transform duration-150',
-        open && 'stream-selector__chevron--open',
+        'pointer-events-none block h-0 w-0 shrink-0 border-x-[6px] border-x-transparent border-t-[7px] border-t-[#ff1111] transition-transform duration-150',
+        open && 'rotate-180',
         className,
       )}
       aria-hidden="true"
@@ -111,7 +114,7 @@ export default function StreamSelector({
     return (
       <div
         className={cx(
-          'stream-selector stream-selector--static flex min-w-[52px] flex-col items-center justify-center gap-0.5 px-1 py-0.5',
+          'relative z-[60] flex min-w-[52px] flex-col items-center justify-center gap-0.5 px-1 py-0.5',
           className,
         )}
         title={streams[0].label}
@@ -126,7 +129,7 @@ export default function StreamSelector({
       ? createPortal(
           <ul
             id={`${labelId}-menu`}
-            className="stream-selector__menu"
+            className="fixed z-[200] m-0 -translate-x-1/2 list-none rounded-[2px] border border-[#008eff] bg-[#050536] p-1 shadow-[0_-12px_32px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,87,255,0.2)]"
             style={{
               left: menuPos.left,
               bottom: menuPos.bottom,
@@ -141,8 +144,8 @@ export default function StreamSelector({
                 <li className="list-none" key={stream.id} role="presentation">
                   <button
                     className={cx(
-                      'stream-selector__menu-option',
-                      isSelected && 'stream-selector__menu-option--selected',
+                      "box-border block w-full cursor-pointer border-0 bg-transparent px-[18px] py-[9px] text-center font-['Roboto_Condensed','Arial_Narrow',sans-serif] text-[clamp(13px,1.2vw,16px)] font-normal uppercase leading-[1.2] tracking-[0.03em] text-white transition-[background-color,color] duration-[120ms] [font-synthesis:none] hover:bg-[rgba(0,87,255,0.22)]",
+                      isSelected && 'bg-[rgba(0,87,255,0.14)] text-[#7ec0ff]',
                     )}
                     type="button"
                     role="option"
@@ -163,15 +166,15 @@ export default function StreamSelector({
       : null
 
   return (
-    <div className={cx('stream-selector relative z-[60] min-w-0', className)} ref={rootRef}>
+    <div className={cx('relative z-[60] min-w-0', className)} ref={rootRef}>
       <span className="sr-only" id={labelId}>
         Stream quality
       </span>
       <button
         ref={buttonRef}
         className={cx(
-          'stream-selector__button flex w-full min-w-[52px] cursor-pointer flex-col items-center justify-center gap-0.5 border-0 bg-transparent px-1 py-0.5 transition-opacity duration-150 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-[700px]:min-w-0',
-          open && 'stream-selector__button--open',
+          'flex w-full min-w-[52px] cursor-pointer flex-col items-center justify-center gap-0.5 border-0 bg-transparent px-1 py-0.5 transition-opacity duration-150 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-md:min-w-0',
+          open && 'outline-none',
           compact && 'min-w-0 max-w-full',
         )}
         type="button"
@@ -182,7 +185,7 @@ export default function StreamSelector({
         title={selected.label}
         onClick={() => setOpen((value) => !value)}
       >
-        <StreamValue label={selected.label} compact={compact} />
+        <StreamValue label={selected.label} compact={compact} className={open ? 'text-[#7ec0ff]' : undefined} />
         <StreamChevron open={open} />
       </button>
       {menu}

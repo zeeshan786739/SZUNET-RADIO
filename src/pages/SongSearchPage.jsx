@@ -78,9 +78,9 @@ function SongSearchPage({ onNavigateHome }) {
         </div>
       </header>
 
-      <div className="mx-auto w-[var(--page-width)] px-[clamp(12px,1.5vw,18px)] pb-[clamp(32px,5vw,56px)] pt-[clamp(24px,4vw,40px)]">
+      <div className="mx-auto w-[var(--page-width)] px-[clamp(12px,1.5vw,18px)] pb-[clamp(32px,5vw,56px)] pt-[clamp(24px,4vw,40px)] xl:px-[var(--page-gutter)] xl:pb-16 xl:pt-12 2xl:pb-20">
         <header className="mb-6 max-w-[40rem] sm:mb-8">
-          <h1 className="m-0 text-[clamp(24px,4vw,36px)] font-[950] uppercase leading-[1.05] tracking-[0.04em] text-[#080833]">
+          <h1 className="m-0 text-[clamp(24px,4vw,36px)] font-[950] uppercase leading-[1.05] tracking-[0.04em] text-[#080833] xl:text-[clamp(32px,3vw,44px)] 2xl:text-[44px]">
             Dal keresés
           </h1>
           <p className="mt-2.5 text-[15px] leading-relaxed text-[rgba(8,8,51,0.62)] sm:text-[16px]">
@@ -103,7 +103,7 @@ function SongSearchPage({ onNavigateHome }) {
             : 'Kezdj el gépelni a szűréshez, vagy görgess le az összes műsorponthoz.'}
         </p>
 
-        <ul className="m-0 mt-6 grid list-none gap-3 p-0 sm:mt-8 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        <ul className="m-0 mt-6 grid list-none gap-3 p-0 xs:mt-7 sm:mt-8 sm:grid-cols-2 sm:gap-4 md:gap-5 lg:grid-cols-3 xl:gap-6">
           {results.map((item) => (
             <li
               className="flex min-w-0 gap-3.5 rounded-xl border border-[rgba(8,8,51,0.07)] bg-white p-3.5 shadow-[0_4px_18px_rgba(8,8,51,0.05)] transition-[box-shadow,transform] duration-200 hover:shadow-[0_8px_24px_rgba(8,8,51,0.08)] sm:gap-4 sm:p-4"

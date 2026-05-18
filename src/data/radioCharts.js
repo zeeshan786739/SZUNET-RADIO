@@ -7,7 +7,7 @@ const baseCards = [
   {
     id: 'bruno',
     artist: 'Bruno Mars',
-    title: 'Just Magic',
+    title: 'I Just Might',
     image: brunoMars,
     imagePosition: 'center center',
     trend: 'up',
@@ -31,7 +31,7 @@ const baseCards = [
   {
     id: 'bts',
     artist: 'BTS',
-    title: 'Never',
+    title: 'Swim',
     image: bandCover,
     imagePosition: 'center center',
     trend: 'hot',

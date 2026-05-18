@@ -8,6 +8,8 @@ import volumeKnob from '../assets/images/Ellipse 1.png'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { cx } from '../utils/cx'
 import StreamSelector from '../components/StreamSelector'
+import StyledTrackLabel from '../components/StyledTrackLabel'
+import { BP, mediaMax } from '../utils/breakpoints'
 
 const feedbackControls = [
   { label: 'Like this track', icon: likeIcon },
@@ -25,11 +27,11 @@ const playerPortraitFocus = {
 
 function useNarrowPlayerBar() {
   const [narrow, setNarrow] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 560px)').matches,
+    () => typeof window !== 'undefined' && window.matchMedia(mediaMax(BP.sm)).matches,
   )
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 560px)')
+    const mq = window.matchMedia(mediaMax(BP.sm))
     function update() {
       setNarrow(mq.matches)
     }
@@ -165,7 +167,7 @@ function PlayerBar({
           />
         </div>
       ) : null}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[1] hidden -translate-x-1/2 -translate-y-1/2 place-items-center min-[861px]:grid">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-[1] hidden -translate-x-1/2 -translate-y-1/2 place-items-center player:grid">
         <img
           className="block h-auto w-[88px] object-contain"
           src={onAirBadge}
@@ -173,9 +175,12 @@ function PlayerBar({
         />
       </div>
 
-      <div className="player-channel-zone hidden min-[861px]:flex" aria-hidden="true">
+      <div
+        className="pointer-events-none absolute top-0 bottom-[env(safe-area-inset-bottom,0px)] left-[calc(50%+var(--player-on-air-half))] right-[calc((100vw-var(--page-width))/2+var(--player-controls-inset))] z-[2] hidden items-center justify-center player:flex"
+        aria-hidden="true"
+      >
         <p
-          className="player-channel-name m-0"
+          className="m-0 origin-center scale-y-[1.48] whitespace-nowrap font-['Roboto_Condensed','Arial_Narrow',sans-serif] text-[clamp(11px,1.05vw,16px)] font-bold uppercase leading-none tracking-[0.04em] [text-shadow:0_1px_6px_rgba(0,0,0,0.35)] [font-synthesis:none]"
           style={{ color: channel.trackLabelAccent ?? '#ff1111' }}
         >
           {channel.playerName}
@@ -184,13 +189,13 @@ function PlayerBar({
 
       <div
         className={cx(
-          'relative z-[2] mx-auto grid min-h-[calc(var(--player-height)_-_env(safe-area-inset-bottom,0px))] w-[var(--page-width)] max-w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-0 px-[clamp(10px,1.6vw,20px)] py-[clamp(6px,0.5vw,10px)] text-white ',
-          'max-[860px]:px-2.5',
-          'max-[560px]:py-1.5',
+          'relative z-[2] mx-auto grid min-h-[calc(var(--player-height)_-_env(safe-area-inset-bottom,0px))] w-[var(--page-width)] max-w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-0 px-[clamp(10px,1.6vw,20px)] py-[clamp(6px,0.5vw,10px)] text-white xl:px-6 xl:py-3 2xl:px-8',
+          'max-player:px-2.5',
+          'max-sm:py-1.5',
         )}
       >
         <button
-          className="group relative inline-grid h-12 w-12 shrink-0 cursor-pointer place-items-center rounded-full border border-[#ff1111] bg-[#090947] p-0 shadow-[inset_0_0_0_2px_rgba(255,17,17,0.12),0_0_18px_rgba(255,17,17,0.18)] transition-[transform,box-shadow,background] duration-150 hover:scale-[1.05] hover:bg-[#11115a] hover:shadow-[inset_0_0_0_2px_rgba(255,17,17,0.2),0_0_22px_rgba(255,17,17,0.28)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white max-[700px]:h-11 max-[700px]:w-11"
+          className="group relative inline-grid h-12 w-12 shrink-0 cursor-pointer place-items-center rounded-full border border-[#ff1111] bg-[#090947] p-0 shadow-[inset_0_0_0_2px_rgba(255,17,17,0.12),0_0_18px_rgba(255,17,17,0.18)] transition-[transform,box-shadow,background] duration-150 hover:scale-[1.05] hover:bg-[#11115a] hover:shadow-[inset_0_0_0_2px_rgba(255,17,17,0.2),0_0_22px_rgba(255,17,17,0.28)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white max-md:h-11 max-md:w-11"
           type="button"
           aria-label={isPlaying ? 'Pause radio' : 'Play radio'}
           aria-pressed={isPlaying}
@@ -198,7 +203,7 @@ function PlayerBar({
         >
           <img
             className={cx(
-              'h-[44px] w-[44px] object-contain transition-[opacity,transform] duration-150 max-[700px]:h-[42px] max-[700px]:w-[42px]',
+              'h-[44px] w-[44px] object-contain transition-[opacity,transform] duration-150 max-md:h-[42px] max-md:w-[42px]',
               isPlaying && 'scale-[0.72] opacity-0',
             )}
             src={playControl}
@@ -220,11 +225,11 @@ function PlayerBar({
         <div
           className={cx(
             'flex min-w-0 flex-1 items-center gap-[clamp(8px,1.2vw,18px)]',
-            'ml-[clamp(48px,5.6vw,88px)] max-[860px]:ml-[clamp(40px,4.8vw,64px)] max-[560px]:ml-8 max-[560px]:gap-2',
+            'ml-[clamp(48px,5.6vw,88px)] max-player:ml-[clamp(40px,4.8vw,64px)] max-sm:ml-8 max-sm:gap-2',
           )}
         >
         <div
-          className="relative flex aspect-square h-[calc(var(--player-height)-12px)] w-[calc(var(--player-height)-12px)] shrink-0 items-center justify-center overflow-hidden border border-[rgba(255,255,255,0.14)] bg-[#020225] max-[700px]:h-[52px] max-[700px]:w-[52px] max-[560px]:h-[48px] max-[560px]:w-[48px]"
+          className="relative flex aspect-square h-[calc(var(--player-height)-12px)] w-[calc(var(--player-height)-12px)] shrink-0 items-center justify-center overflow-hidden border border-[rgba(255,255,255,0.14)] bg-[#020225] max-md:h-[52px] max-md:w-[52px] max-sm:h-[48px] max-sm:w-[48px]"
           aria-hidden="true"
         >
           <img
@@ -237,8 +242,8 @@ function PlayerBar({
           />
         </div>
 
-        <div className="grid min-w-0 flex-1 grid-cols-[auto_minmax(0,1fr)] items-center gap-[clamp(8px,1vw,14px)] max-[560px]:grid-cols-1 max-[560px]:gap-0.5">
-          <div className="flex items-center gap-0.5 max-[560px]:hidden" aria-label="Track feedback">
+        <div className="grid min-w-0 flex-1 grid-cols-[auto_minmax(0,1fr)] items-center gap-[clamp(8px,1vw,14px)] max-sm:grid-cols-1 max-sm:gap-0.5">
+          <div className="flex items-center gap-0.5 max-sm:hidden" aria-label="Track feedback">
             {feedbackControls.map((control) => (
               <button
                 className="inline-grid h-9 w-9 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 transition-[background,border-color,transform] duration-150 hover:scale-105 hover:border-[rgba(255,255,255,0.22)] hover:bg-[rgba(255,255,255,0.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
@@ -254,24 +259,19 @@ function PlayerBar({
 
           <div className="min-w-0 max-w-[clamp(170px,24vw,480px)] overflow-hidden">
             {channel.trackLabelAccent ? (
-              <div className="player-track-label styled-track-label styled-track-label--plain">
-                <p className="styled-track-label__stack m-0 w-fit min-w-0 max-w-full">
-                  <span className="styled-track-label__artist-unit">
-                    <span className="styled-track-label__line styled-track-label__line--artist">
-                      {channel.artist}
-                    </span>
-                  </span>
-                  <strong className="styled-track-label__line styled-track-label__line--track">
-                    {channel.track}
-                  </strong>
-                </p>
-              </div>
+              <StyledTrackLabel
+                artist={channel.artist}
+                track={channel.track}
+                accent={channel.trackLabelAccent}
+                plain
+                className="min-w-0 max-w-full"
+              />
             ) : (
               <>
                 <p className="m-0 min-w-0 truncate text-[clamp(11px,1vw,14px)] font-black uppercase leading-none text-white">
                   {channel.artist}
                 </p>
-                <p className="m-0 mt-1 truncate text-[clamp(10px,0.9vw,13px)] font-black uppercase leading-none text-white max-[560px]:mt-0.5 max-[560px]:text-[9px]">
+                <p className="m-0 mt-1 truncate text-[clamp(10px,0.9vw,13px)] font-black uppercase leading-none text-white max-sm:mt-0.5 max-sm:text-[9px]">
                   {channel.track}
                 </p>
               </>
@@ -282,18 +282,18 @@ function PlayerBar({
         <div
           className={cx(
             'flex shrink-0 items-center justify-end gap-[clamp(8px,1vw,14px)]',
-            'max-[860px]:max-w-[min(40vw,190px)] max-[560px]:max-w-[86px]',
+            'max-player:max-w-[min(40vw,190px)] max-sm:max-w-[86px]',
           )}
         >
           <StreamSelector
-            className="order-2 w-[clamp(78px,9vw,112px)] max-[860px]:w-full max-[860px]:min-w-[66px] max-[560px]:min-w-0"
+            className="order-2 w-[clamp(78px,9vw,112px)] max-player:w-full max-player:min-w-[66px] max-sm:min-w-0"
             compact={narrowBar}
             onSelect={onChangeStream}
             selectedStreamId={selectedStreamId}
             streams={streams}
           />
 
-          <div className="order-1 flex items-center gap-2 max-[860px]:hidden">
+          <div className="order-1 flex items-center gap-2 max-player:hidden">
             <img className="h-4 w-[18px] shrink-0 object-contain" src={volumeIcon} alt="" aria-hidden="true" />
             <VolumeSlider volume={volume} onChangeVolume={onChangeVolume} />
           </div>

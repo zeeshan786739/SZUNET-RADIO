@@ -6,23 +6,24 @@ import {
   heroLightSweepTransition,
 } from '../animations/heroIntro'
 import { brandAssets } from '../data/channels'
+import StyledTrackLabel from './StyledTrackLabel'
 import { cx } from '../utils/cx'
 
 /** Proportional flex weights mirror original 1040px strip ratios; width fills --page-width. */
 const desktopFlexSizes = {
-  electric: 'min-[761px]:flex-[1.05_1_0%] min-[761px]:min-w-0',
-  oldschool: 'min-[761px]:flex-[1.12_1_0%] min-[761px]:min-w-0',
-  prime: 'min-[761px]:flex-[1.58_1.12_0%] min-[761px]:min-w-0',
-  power: 'min-[761px]:flex-[1.05_1_0%] min-[761px]:min-w-0',
-  relax: 'min-[761px]:flex-[1.32_1_0%] min-[761px]:min-w-0',
+  electric: 'hero:flex-[1.05_1_0%] hero:min-w-0',
+  oldschool: 'hero:flex-[1.12_1_0%] hero:min-w-0',
+  prime: 'hero:flex-[1.58_1.12_0%] hero:min-w-0',
+  power: 'hero:flex-[1.05_1_0%] hero:min-w-0',
+  relax: 'hero:flex-[1.32_1_0%] hero:min-w-0',
 }
 
 const desktopHeights = {
-  electric: 'min-[761px]:h-[clamp(465px,75svh,760px)]',
-  oldschool: 'min-[761px]:h-[clamp(505px,81svh,820px)]',
-  prime: 'min-[761px]:h-[clamp(510px,88svh,840px)]',
-  power: 'min-[761px]:h-[clamp(415px,67svh,680px)]',
-  relax: 'min-[761px]:h-[clamp(470px,78svh,780px)]',
+  electric: 'hero:h-[clamp(465px,75svh,760px)] xl:h-[clamp(480px,78svh,800px)] 2xl:h-[clamp(500px,80svh,840px)]',
+  oldschool: 'hero:h-[clamp(505px,81svh,820px)] xl:h-[clamp(520px,83svh,860px)] 2xl:h-[clamp(540px,85svh,880px)]',
+  prime: 'hero:h-[clamp(510px,88svh,840px)] xl:h-[clamp(530px,90svh,880px)] 2xl:h-[clamp(550px,92svh,900px)]',
+  power: 'hero:h-[clamp(415px,67svh,680px)] xl:h-[clamp(430px,70svh,720px)] 2xl:h-[clamp(450px,72svh,760px)]',
+  relax: 'hero:h-[clamp(470px,78svh,780px)] xl:h-[clamp(490px,80svh,820px)] 2xl:h-[clamp(510px,82svh,860px)]',
 }
 
 /** Focal point per portrait (square album art in tall cards). */
@@ -39,7 +40,7 @@ function CardBlurVeil({ index, isFeature, active }) {
 
   return (
     <motion.div
-      className="pointer-events-none absolute inset-0 z-[4] bg-[#0a0a12]/25 backdrop-blur-[16px] min-[761px]:backdrop-blur-[18px]"
+      className="pointer-events-none absolute inset-0 z-[4] bg-[#0a0a12]/25 backdrop-blur-[16px] hero:backdrop-blur-[18px]"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
       transition={getCardBlurVeilTransition(index, isFeature)}
@@ -67,11 +68,11 @@ function ChannelCard({
       className={cx(
         'relative z-[1] min-h-0 min-w-0 snap-center overflow-hidden bg-[#111] shadow-[0_16px_32px_rgba(0,0,0,0.18)]',
         '[--footer-height:26%] [--play-size:clamp(48px,4.5vw,88px)]',
-        'min-[761px]:[--footer-height:var(--channel-footer-height)]',
+        'hero:[--footer-height:var(--channel-footer-height)]',
         desktopFlexSizes[channel.id],
         desktopHeights[channel.id],
-        'max-[760px]:h-full max-[760px]:max-h-full max-[760px]:w-[var(--hero-mobile-card-width)] max-[760px]:max-w-[var(--hero-mobile-card-width)] max-[760px]:flex-[0_0_var(--hero-mobile-card-width)] max-[760px]:snap-center max-[760px]:snap-always',
-        isFeature && 'max-[760px]:[--play-size:clamp(54px,14vw,64px)]',
+        'max-hero:h-full max-hero:max-h-full max-hero:w-[var(--hero-mobile-card-width)] max-hero:max-w-[var(--hero-mobile-card-width)] max-hero:flex-[0_0_var(--hero-mobile-card-width)] max-hero:snap-center max-hero:snap-always',
+        isFeature && 'max-hero:[--play-size:clamp(54px,14vw,64px)]',
         isPlaying && 'outline-4 -outline-offset-4 outline-white',
       )}
       custom={index}
@@ -114,21 +115,12 @@ function ChannelCard({
       </motion.div>
 
       {channel.trackLabelAccent ? (
-        <div
-          className="styled-track-label absolute inset-x-0 bottom-[calc(var(--footer-height)_+_clamp(10px,1.4vw,15px))] z-[2] px-[clamp(9px,1.1vw,13px)]"
-          style={{ '--track-label-accent': channel.trackLabelAccent }}
-        >
-          <p className="styled-track-label__stack m-0 w-fit max-w-full">
-            <span className="styled-track-label__artist-unit">
-              <span className="styled-track-label__line styled-track-label__line--artist">
-                {channel.artist}
-              </span>
-            </span>
-            <strong className="styled-track-label__line styled-track-label__line--track">
-              {channel.track}
-            </strong>
-          </p>
-        </div>
+        <StyledTrackLabel
+          artist={channel.artist}
+          track={channel.track}
+          accent={channel.trackLabelAccent}
+          className="absolute inset-x-0 bottom-[calc(var(--footer-height)_+_clamp(10px,1.4vw,15px))] z-[2] px-[clamp(9px,1.1vw,13px)]"
+        />
       ) : (
         <motion.div className="absolute inset-x-0 bottom-[calc(var(--footer-height)_+_clamp(10px,1.4vw,15px))] z-[2] flex min-w-0 max-w-full flex-col gap-px px-[clamp(9px,1.1vw,13px)] uppercase text-white [text-shadow:0_2px_7px_rgba(0,0,0,0.8)]">
           <span className="block min-w-0 w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(8px,0.85vw,13px)] font-black leading-none">
