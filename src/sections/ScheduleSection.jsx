@@ -310,8 +310,8 @@ function ScheduleSection({ variant = 'default' }) {
             </h2>
             <a
               className="inline-flex shrink-0 items-center gap-[clamp(4px,0.45vw,6px)] no-underline"
-              href="/dal-kereses"
-              aria-label="Dal keresés — lejátszás folytatódik"
+              href="/"
+              aria-label="Kezdőlap — lejátszás folytatódik"
             >
               <span className="inline-flex items-center gap-[0.1em] rounded-full bg-[#ff1111] px-[clamp(12px,1.2vw,16px)] py-[clamp(4px,0.45vw,6px)] font-normal lowercase leading-none tracking-[0.02em] text-white shadow-[0_2px_8px_rgba(255,17,17,0.22)] [font-family:var(--font-family)] [font-size:clamp(1.2rem,1.75vw,1.8125rem)]">
                 <SearchGlyph className="h-[1em] w-[1em] shrink-0 text-white" />

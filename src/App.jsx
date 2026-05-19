@@ -7,7 +7,6 @@ import BlogSection from './sections/BlogSection'
 import MixcloudSection from './sections/MixcloudSection'
 import FooterSection from './sections/FooterSection'
 import SecondRadioPage from './pages/SecondRadioPage'
-import SongSearchPage from './pages/SongSearchPage'
 import RevealOnScroll from './components/RevealOnScroll'
 import { usePlaybackProgress } from './hooks/usePlaybackProgress'
 
@@ -15,8 +14,6 @@ function getInitialView() {
   const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/'
   const hash = window.location.hash
   if (normalizedPath === '/second-page' || hash === '#second-page') return 'archive'
-  if (normalizedPath === '/dal-kereses' || normalizedPath === '/dalkereses' || hash === '#dal-kereses')
-    return 'search'
   return 'home'
 }
 
@@ -124,8 +121,7 @@ function App() {
 
   const navigate = useCallback((nextView) => {
     setView(nextView)
-    const nextUrl =
-      nextView === 'archive' ? '/second-page' : nextView === 'search' ? '/dal-kereses' : '/'
+    const nextUrl = nextView === 'archive' ? '/second-page' : '/'
     window.history.pushState({ view: nextView }, '', nextUrl)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
@@ -151,21 +147,17 @@ function App() {
         return
       }
 
-      if (
-        pathOnly === '/dal-kereses' ||
-        pathOnly === '/dal-kereses/' ||
-        pathOnly === '/dalkereses' ||
-        pathOnly === '/dalkereses/' ||
-        hash === '#dal-kereses'
-      ) {
+      if ((pathOnly === '/' || pathOnly === '') && hash !== '#second-page') {
         event.preventDefault()
-        navigate('search')
-        return
-      }
-
-      if ((pathOnly === '/' || pathOnly === '') && view !== 'home' && hash !== '#second-page') {
-        event.preventDefault()
-        navigate('home')
+        if (view !== 'home') {
+          navigate('home')
+        } else {
+          const currentPath = window.location.pathname.replace(/\/$/, '') || '/'
+          if (currentPath !== '/') {
+            window.history.replaceState({ view: 'home' }, '', '/')
+          }
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
       }
     }
 
@@ -249,8 +241,6 @@ function App() {
       <audio ref={audioRef} preload="none" />
       {view === 'archive' ? (
         <SecondRadioPage onNavigateHome={() => navigate('home')} />
-      ) : view === 'search' ? (
-        <SongSearchPage onNavigateHome={() => navigate('home')} />
       ) : (
         <LandingPage playingChannelId={playingChannelId} onToggleChannel={toggleChannel} />
       )}
