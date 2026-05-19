@@ -75,7 +75,7 @@ function ArchiveCategoryColumn({ label, placement, dotClass, centerDot }) {
 
 function RadioHeader({ onNavigateHome }) {
   return (
-    <header className="relative z-[5] mx-auto grid w-[var(--page-width)] grid-cols-[minmax(92px,0.5fr)_minmax(280px,1fr)_minmax(92px,0.5fr)] items-start gap-[18px] pt-[clamp(24px,3vw,42px)] max-lg:grid-cols-[112px_1fr] max-md:grid-cols-1 max-md:justify-items-center max-md:pt-[22px] xl:gap-6 xl:pt-12 2xl:pt-14">
+    <header className="relative z-[5] mx-auto grid w-[min(100%,var(--page-width))] grid-cols-[minmax(92px,0.5fr)_minmax(280px,1fr)_minmax(92px,0.5fr)] items-start gap-[18px] px-[var(--page-gutter)] pt-[clamp(24px,3vw,42px)] max-lg:grid-cols-[minmax(88px,112px)_1fr] max-lg:gap-4 max-md:grid-cols-1 max-md:justify-items-center max-md:gap-5 max-md:pt-[22px] xl:gap-6 xl:pt-12 2xl:pt-14">
       <button
         className="block w-[clamp(82px,8vw,126px)] cursor-pointer border-0 bg-transparent p-0 max-md:justify-self-start"
         type="button"
@@ -294,7 +294,7 @@ function DecorativeElements() {
 
 function ScheduleTimelineSection() {
   return (
-    <div className="relative z-[20] w-full overflow-x-clip border-b-[4px] border-[#5cf5df] bg-transparent pb-0 [--launch-x:70.15%] max-md:overflow-hidden">
+    <div className="archive-schedule-strip relative z-[2] w-full overflow-visible border-b-[4px] border-[#5cf5df] bg-transparent pb-0 [--launch-x:75%] -mt-[var(--archive-overlap)]">
       <ScheduleSection variant="hero" />
     </div>
   )
@@ -303,20 +303,14 @@ function ScheduleTimelineSection() {
 function HeroRadioSection({ onNavigateHome }) {
   return (
     <section
-      className="relative isolate z-[1] flex min-h-[clamp(480px,52svh,640px)] flex-col overflow-hidden bg-[linear-gradient(142deg,var(--archive-red-hot)_0%,var(--archive-red-mid)_38%,var(--archive-red-core)_68%,var(--archive-red-deep)_100%)] max-lg:min-h-[clamp(520px,58svh,700px)] max-md:min-h-[clamp(560px,62svh,760px)] xl:min-h-[clamp(540px,50svh,720px)] 2xl:min-h-[680px]"
+      className="relative z-[1] flex min-h-[clamp(480px,52svh,640px)] flex-col overflow-hidden bg-transparent max-lg:min-h-[clamp(520px,58svh,700px)] max-md:min-h-0 max-md:pb-6 xl:min-h-[clamp(540px,50svh,720px)] 2xl:min-h-[680px]"
       aria-label="SZUNET RADIO archive hero"
     >
-      <img
-        className="pointer-events-none absolute inset-0 -z-[3] h-full w-full object-cover object-center opacity-[0.14] mix-blend-soft-light"
-        src={redBackground}
-        alt=""
-        aria-hidden="true"
-      />
       <DecorativeElements />
 
       <RadioHeader onNavigateHome={onNavigateHome} />
 
-      <div className="relative z-[3] mx-auto grid min-h-[clamp(310px,31vw,430px)] w-[var(--page-width)] flex-1 grid-cols-[minmax(260px,0.9fr)_minmax(168px,0.48fr)_minmax(190px,0.74fr)] items-center gap-[clamp(18px,4vw,86px)] pb-[clamp(26px,3.2vw,48px)] pt-[clamp(12px,2vw,28px)] max-lg:min-h-[390px] max-lg:grid-cols-[minmax(0,1fr)_minmax(168px,240px)] max-lg:grid-rows-[auto_auto] max-lg:gap-x-8 max-lg:gap-y-6 max-md:min-h-[500px] max-md:grid-cols-1 max-md:grid-rows-none max-md:justify-items-center max-md:gap-[20px] max-md:pt-6 max-sm:min-h-[470px]">
+      <div className="relative z-[3] mx-auto grid min-h-[clamp(310px,31vw,430px)] w-[min(100%,var(--page-width))] flex-1 grid-cols-[minmax(260px,0.9fr)_minmax(168px,0.48fr)_minmax(190px,0.74fr)] items-center gap-[clamp(18px,4vw,86px)] px-[var(--page-gutter)] pb-[clamp(26px,3.2vw,48px)] pt-[clamp(12px,2vw,28px)] max-lg:min-h-[390px] max-lg:grid-cols-[minmax(0,1fr)_minmax(168px,240px)] max-lg:grid-rows-[auto_auto] max-lg:gap-x-8 max-lg:gap-y-6 max-md:min-h-0 max-md:grid-cols-1 max-md:grid-rows-none max-md:justify-items-center max-md:gap-5 max-md:pb-8 max-md:pt-6 max-sm:gap-[18px]">
         <EditorialCopy />
         <CalendarWidget />
         <TimeWidget />
@@ -328,7 +322,7 @@ function HeroRadioSection({ onNavigateHome }) {
 function ChartsSection() {
   return (
     <section
-      className="relative z-0 grid min-h-[clamp(210px,24vw,320px)] place-items-center overflow-hidden bg-[#5cf5df] text-[#050526]"
+      className="relative z-0 grid min-h-[clamp(180px,28vw,320px)] place-items-center overflow-hidden bg-[#5cf5df] px-[var(--page-gutter)] text-[#050526] max-md:min-h-[clamp(160px,32vw,240px)]"
       aria-label="Charts"
     >
       <motion.h1
@@ -339,17 +333,31 @@ function ChartsSection() {
         transition={{ duration: 0.45, ease: 'easeOut' }}
       >
         CHARTS
-        <span className="pointer-events-none absolute bottom-[12%] left-[-1%] right-[4%] z-[2] h-[clamp(12px,1.4vw,22px)] bg-[#ff1111]" aria-hidden="true" />
+        <span className="pointer-events-none absolute bottom-[12%] left-[-1%] right-[4%] z-[2] h-[clamp(12px,1.4vw,22px)] -translate-y-[clamp(10px,1.1vw,20px)] bg-[#ff1111]" aria-hidden="true" />
       </motion.h1>
     </section>
+  )
+}
+
+function ArchiveRedStack({ onNavigateHome }) {
+  return (
+    <div className="archive-red-stack">
+      <img
+        className="archive-red-stack__texture"
+        src={redBackground}
+        alt=""
+        aria-hidden="true"
+      />
+      <HeroRadioSection onNavigateHome={onNavigateHome} />
+      <ScheduleTimelineSection />
+    </div>
   )
 }
 
 function SecondRadioPage({ onNavigateHome }) {
   return (
     <div className="min-h-[100svh] overflow-x-hidden bg-[#5cf5df] text-white">
-      <HeroRadioSection onNavigateHome={onNavigateHome} />
-      <ScheduleTimelineSection />
+      <ArchiveRedStack onNavigateHome={onNavigateHome} />
       <ChartsSection />
       <RadioChartsSection />
       <FooterSection />

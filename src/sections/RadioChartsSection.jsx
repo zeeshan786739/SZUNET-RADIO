@@ -32,12 +32,12 @@ function ChartRail({ label, railClass }) {
   return (
     <div
       className={cx(
-        'relative z-[2] grid w-[clamp(30px,4vw,52px)] shrink-0 place-items-center shadow-[inset_-1px_0_0_rgba(255,255,255,0.14)] max-xs:w-[26px]',
+        'relative z-[2] grid w-[clamp(34px,4.6vw,58px)] shrink-0 place-items-center px-[clamp(2px,0.25vw,4px)] shadow-[inset_-1px_0_0_rgba(255,255,255,0.14)] max-xs:w-[30px] xl:w-[62px] 2xl:w-[66px]',
         railClass,
       )}
       aria-hidden="true"
     >
-      <span className="block rotate-180 [writing-mode:vertical-rl] font-['Bebas_Neue',Impact,sans-serif] text-[clamp(9px,0.9vw,13px)] font-normal uppercase leading-none tracking-[0.08em] text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.32)]">
+      <span className="block rotate-180 [writing-mode:vertical-rl] font-['Bebas_Neue',Impact,sans-serif] text-[clamp(10px,1.05vw,14px)] font-normal uppercase leading-none tracking-[0.09em] text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.32)] xl:text-[15px] 2xl:text-[16px]">
         {label}
       </span>
     </div>
@@ -75,14 +75,14 @@ function PlayButton() {
 function ChartMeta({ artist, title }) {
   return (
     <div className="flex min-w-0 max-w-full flex-col items-start gap-[clamp(2px,0.28vw,4px)]">
-      <span className="relative z-0 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap px-[clamp(3px,0.35vw,5px)] pl-[clamp(1px,0.15vw,2px)] font-['Helvetica_Neue','Arial_Narrow',Arial,sans-serif] text-[clamp(8px,0.82vw,11px)] font-bold uppercase leading-[1.08] tracking-[0.045em] text-white">
+      <span className="relative z-0 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap px-[clamp(3px,0.35vw,5px)] pl-[clamp(1px,0.15vw,2px)] font-['Helvetica_Neue','Arial_Narrow',Arial,sans-serif] text-[clamp(9px,0.9vw,12px)] font-bold uppercase leading-[1.08] tracking-[0.045em] text-white">
         <span
           className="pointer-events-none absolute top-1/2 right-[clamp(-2px,-0.2vw,-1px)] left-[clamp(-2px,-0.2vw,-1px)] z-[-1] h-[0.5em] -translate-y-1/2 bg-black"
           aria-hidden="true"
         />
         {artist}
       </span>
-      <span className="block max-w-full overflow-hidden text-ellipsis whitespace-nowrap font-['Helvetica_Neue',Arial,sans-serif] text-[clamp(7px,0.72vw,10px)] font-normal leading-[1.15] tracking-[0.01em] text-white">
+      <span className="block max-w-full overflow-hidden text-ellipsis whitespace-nowrap font-['Helvetica_Neue',Arial,sans-serif] text-[clamp(8px,0.78vw,11px)] font-normal leading-[1.15] tracking-[0.01em] text-white">
         {title}
       </span>
     </div>
@@ -97,8 +97,8 @@ function ChartRank({ value }) {
       className={cx(
         'block select-none text-center font-[family-name:var(--font-family)] font-bold tabular-nums lining-nums leading-[0.82] text-white [-webkit-text-stroke:0.45px_rgba(90,0,0,0.38)] [paint-order:stroke_fill] [text-shadow:0_1px_0_rgba(90,0,0,0.42)] [font-synthesis:none]',
         digitCount >= 2
-          ? 'text-[clamp(50px,9.2vw,90px)] tracking-[-0.01em]'
-          : 'text-[clamp(58px,10.8vw,104px)] tracking-[0.02em]',
+          ? 'text-[clamp(54px,9.8vw,98px)] tracking-[-0.01em]'
+          : 'text-[clamp(62px,11.4vw,112px)] tracking-[0.02em]',
       )}
       aria-hidden="true"
     >
@@ -113,7 +113,7 @@ function ChartRankSlot({ rank }) {
   return (
     <div
       className={cx(
-        'relative z-[5] box-border flex shrink-0 items-center justify-center self-start h-[var(--chart-cover-size)] w-auto px-[clamp(12px,1.65vw,26px)]',
+        'relative z-[5] box-border flex shrink-0 items-end justify-center self-start h-[var(--chart-cover-size)] w-auto px-[clamp(12px,1.65vw,26px)]',
         digitCount >= 2 ? 'min-w-[clamp(48px,6.4vw,88px)]' : 'min-w-[clamp(44px,5.8vw,80px)]',
       )}
       aria-hidden="true"
@@ -158,7 +158,10 @@ function ChartRow({ row, index }) {
 
   return (
     <motion.section
-      className={cx('relative isolate grid min-h-[min(200px,34vw)] grid-cols-[auto_1fr] overflow-hidden text-white', tone.gradient)}
+      className={cx(
+        'relative isolate grid min-h-[min(200px,34vw)] grid-cols-[auto_1fr] gap-x-[clamp(6px,0.85vw,12px)] overflow-hidden text-white max-md:min-h-[min(180px,42vw,220px)]',
+        tone.gradient,
+      )}
       aria-labelledby={`${row.id}-chart-heading`}
       initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -177,11 +180,11 @@ function ChartRow({ row, index }) {
       <ChartRail label={row.label} railClass={tone.rail} />
 
       <div
-        className="relative z-[2] min-w-0 touch-pan-x overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="relative z-[2] min-w-0 touch-pan-x overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth [scroll-padding-inline:var(--page-gutter)] [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{ WebkitOverflowScrolling: 'touch' }}
         aria-label={`${row.label}: legfeljebb 30 dal, vízszintesen görgethető`}
       >
-        <div className="flex w-max flex-nowrap items-start gap-0 py-[clamp(10px,1.15vw,14px)] pl-[clamp(10px,1.25vw,16px)] pr-[clamp(14px,2vw,24px)] [--chart-cover-size:clamp(102px,15.5vw,152px)] max-xs:[--chart-cover-size:clamp(92px,27vw,124px)] xl:py-4 xl:pl-5 xl:pr-7 xl:[--chart-cover-size:clamp(118px,10vw,168px)] 2xl:[--chart-cover-size:clamp(128px,9vw,176px)]">
+        <div className="flex w-max flex-nowrap items-start gap-0 py-[clamp(10px,1.15vw,14px)] pl-[clamp(10px,1.25vw,16px)] pr-[clamp(14px,2vw,24px)] [--chart-cover-size:clamp(112px,16.5vw,166px)] max-xs:[--chart-cover-size:clamp(100px,28.5vw,134px)] xl:py-4 xl:pl-5 xl:pr-7 xl:[--chart-cover-size:clamp(128px,11vw,182px)] 2xl:[--chart-cover-size:clamp(140px,9.8vw,192px)]">
           {row.cards.map((card, cardIndex) => {
             const rank = cardIndex + 1
             const showRankAfter = cardIndex < row.cards.length - 1
@@ -202,7 +205,7 @@ function ChartRow({ row, index }) {
 function RadioChartsSection() {
   return (
     <section className="bg-white pb-[clamp(28px,4vw,58px)] pt-1 xl:pb-16 xl:pt-2" aria-label="SZUNET RADIO charts">
-      <div className="mx-auto grid w-[min(100%,var(--page-width))] gap-[8px] overflow-hidden max-md:w-[min(calc(100vw-16px),var(--page-width))] xl:gap-3 2xl:gap-4">
+      <div className="grid w-full gap-[8px] overflow-hidden xl:gap-3 2xl:gap-4">
         {radioChartRows.map((row, index) => (
           <ChartRow row={row} index={index} key={row.id} />
         ))}

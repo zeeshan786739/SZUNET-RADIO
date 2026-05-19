@@ -15,30 +15,52 @@ function FooterSection() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid min-h-0 w-[min(100%,var(--page-width))] flex-1 grid-rows-[1fr_auto] px-[clamp(16px,3vw,52px)] pb-[clamp(22px,3vw,34px)] pt-[clamp(44px,7vw,110px)] xl:px-[var(--page-gutter)] xl:pb-10 xl:pt-[clamp(56px,6vw,120px)]">
-        <div className="relative inline-block w-[clamp(210px,28vw,420px)] place-self-center px-[clamp(20px,4vw,72px)] pb-3.5 pt-2.5">
+      <div className="page-gutter-x flex min-h-0 flex-1 flex-col">
+        <div className="page-container relative grid min-h-0 flex-1 grid-rows-[1fr_auto] pb-[clamp(22px,3vw,34px)] pt-[clamp(44px,7vw,110px)] xl:pb-10 xl:pt-[clamp(56px,6vw,120px)]">
+        <div className="relative inline-block w-[clamp(180px,52vw,420px)] place-self-center px-[clamp(12px,4vw,72px)] pb-3.5 pt-2.5 max-md:w-[min(92vw,360px)]">
           <span
             className="pointer-events-none absolute bottom-[14%] left-[25%] right-[25%] z-0 h-[38%] bg-[#ff1111]"
             aria-hidden="true"
           />
           <img
-            className="relative z-[1] block w-[clamp(210px,28vw,420px)]"
+            className="relative z-[1] block w-full"
             src={footerHeadline}
             alt="Kimaxoljuk a napodat!"
           />
         </div>
 
-        <div className="grid grid-cols-[minmax(74px,140px)_1fr_auto] items-end gap-[clamp(14px,3vw,48px)] text-white max-md:grid-cols-[auto_1fr] max-md:items-center">
-          <img className="h-auto w-[clamp(74px,8vw,118px)]" src={stationLogo} alt="SZUNET Radio" />
+        <div className="flex flex-wrap items-end justify-between gap-x-[clamp(14px,3vw,48px)] gap-y-4 text-white">
+          <div className="flex min-w-0 flex-[1_1_280px] items-end gap-[clamp(12px,2vw,28px)] max-md:flex-col max-md:items-start max-md:gap-3">
+            <img
+              className="h-auto w-[clamp(74px,8vw,118px)] shrink-0"
+              src={stationLogo}
+              alt="SZUNET Radio"
+            />
+            <p className="m-0 min-w-0 max-w-[min(100%,52rem)] text-pretty font-['Helvetica_Neue',Arial,sans-serif] text-[clamp(8px,0.75vw,11px)] font-medium leading-[1.4] tracking-[0.01em] opacity-95 max-md:text-[clamp(8px,2.35vw,10px)]">
+              <span>Üzemeltető: WEISZ MÁTYÁS </span>
+              <a
+                className="text-white underline decoration-white/35 underline-offset-[2px] transition-colors hover:decoration-white"
+                href="mailto:info@szunet-radio.hu"
+              >
+                info@szunet-radio.hu
+              </a>
+              <span className="mx-[0.35em] opacity-70" aria-hidden="true">
+                |
+              </span>
+              <span>MÉDIA MEGKERESÉS: </span>
+              <a
+                className="text-white underline decoration-white/35 underline-offset-[2px] transition-colors hover:decoration-white"
+                href="mailto:media@szunet-radio.hu"
+              >
+                media@szunet-radio.hu
+              </a>
+            </p>
+          </div>
 
-          <p className="m-0 min-w-0 max-w-full text-pretty text-[clamp(7px,0.68vw,10px)] font-medium leading-[1.35] opacity-90 max-md:text-[clamp(8px,2.4vw,10px)]">
-            Készítette: McG012. Szép volt minden zene/tartalom itt csak
-            megjelenítésre. Minden jog fenntartva.
+          <p className="m-0 ml-auto min-w-0 shrink-0 text-pretty text-right font-['Helvetica_Neue',Arial,sans-serif] text-[clamp(8px,0.75vw,11px)] font-medium leading-[1.4] tracking-[0.01em] opacity-95 max-md:max-w-full max-md:text-[clamp(8px,2.35vw,10px)] max-sm:w-full max-sm:text-right">
+            Copyright © Szünet Rádió 2026 - Minden jog fenntartva
           </p>
-
-          <p className="m-0 min-w-0 max-w-full justify-self-end text-pretty text-right text-[clamp(7px,0.68vw,10px)] font-medium leading-[1.35] opacity-90 max-md:col-span-2 max-md:justify-self-start max-md:text-left max-md:text-[clamp(8px,2.4vw,10px)]">
-            Copyright © Szünet Rádió 2026 - Minden jog fenntartva.
-          </p>
+        </div>
         </div>
       </div>
 

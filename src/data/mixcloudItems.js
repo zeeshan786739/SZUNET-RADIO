@@ -21,7 +21,6 @@ export const topMixcloudItems = [
     titleStyle: 'artist-feature',
     image: bubbleGirl,
     imagePosition: 'center center',
-    active: true,
     showVotes: true,
   },
   {

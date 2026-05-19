@@ -187,13 +187,13 @@ function PlayerBar({
         </p>
       </div>
 
-      <div
-        className={cx(
-          'relative z-[2] mx-auto grid min-h-[calc(var(--player-height)_-_env(safe-area-inset-bottom,0px))] w-[var(--page-width)] max-w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-0 px-[clamp(10px,1.6vw,20px)] py-[clamp(6px,0.5vw,10px)] text-white xl:px-6 xl:py-3 2xl:px-8',
-          'max-player:px-2.5',
-          'max-sm:py-1.5',
-        )}
-      >
+      <div className="page-gutter-x">
+        <div
+          className={cx(
+            'page-container relative z-[2] grid min-h-[calc(var(--player-height)_-_env(safe-area-inset-bottom,0px))] grid-cols-[auto_minmax(0,1fr)] items-center gap-0 py-[clamp(6px,0.5vw,10px)] text-white xl:py-3',
+            'max-sm:py-1.5',
+          )}
+        >
         <button
           className="group relative inline-grid h-12 w-12 shrink-0 cursor-pointer place-items-center rounded-full border border-[#ff1111] bg-[#090947] p-0 shadow-[inset_0_0_0_2px_rgba(255,17,17,0.12),0_0_18px_rgba(255,17,17,0.18)] transition-[transform,box-shadow,background] duration-150 hover:scale-[1.05] hover:bg-[#11115a] hover:shadow-[inset_0_0_0_2px_rgba(255,17,17,0.2),0_0_22px_rgba(255,17,17,0.28)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white max-md:h-11 max-md:w-11"
           type="button"
@@ -297,6 +297,7 @@ function PlayerBar({
             <img className="h-4 w-[18px] shrink-0 object-contain" src={volumeIcon} alt="" aria-hidden="true" />
             <VolumeSlider volume={volume} onChangeVolume={onChangeVolume} />
           </div>
+        </div>
         </div>
         </div>
       </div>

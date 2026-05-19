@@ -7,8 +7,8 @@ import { cx } from '../utils/cx'
 
 function BlogSection() {
   return (
-    <section className="relative -mt-px overflow-visible bg-transparent" aria-label="Blog">
-      <div className="relative z-[1] mx-auto w-[min(100%,var(--page-width))] px-[clamp(12px,1.5vw,18px)] pb-[34px] pt-5 xl:px-[var(--page-gutter)] xl:pb-10 xl:pt-8">
+    <section className="relative z-[2] -mt-px overflow-visible bg-transparent" aria-label="Blog">
+      <div className="relative z-[1] w-full pb-[34px] pt-5 xl:pb-10 xl:pt-8">
         <header className="relative mb-[clamp(18px,2vw,28px)] w-fit max-w-full xl:mb-8">
           <h2 className="relative z-[1] m-0 max-w-full [font-family:var(--font-family)] text-[clamp(30px,5.2vw,76px)] font-normal uppercase leading-[0.86] tracking-normal text-[#070738] xl:text-[clamp(48px,3.8vw,88px)] 2xl:text-[88px]">
             Legfrissebb zenei híreink

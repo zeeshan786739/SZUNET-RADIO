@@ -22,7 +22,6 @@ function MixcloudCard({ item, variant = 'top' }) {
       className={cx(
         'relative min-w-0 aspect-[1.08/1] overflow-hidden bg-[#101018]',
         isBottom && 'aspect-[1.24/1]',
-        item.active && 'outline-4 -outline-offset-4 outline-[#0098ff]',
       )}
     >
       <img
@@ -130,7 +129,7 @@ function MixcloudCard({ item, variant = 'top' }) {
 
 function MixcloudSection() {
   return (
-    <section className="relative overflow-hidden bg-transparent" aria-label="Mixcloud">
+    <section className="relative z-[2] overflow-hidden bg-transparent" aria-label="Mixcloud">
       <img
         className="pointer-events-none absolute left-[31%] top-5 z-0 max-md:left-[34%] max-md:w-[74vw] max-sm:left-[58%] max-sm:top-10 max-sm:w-[68vw] max-sm:-translate-x-1/2 max-sm:opacity-85"
         src={vectorShape}
@@ -138,7 +137,7 @@ function MixcloudSection() {
         aria-hidden="true"
       />
 
-      <div className="relative z-[1] mx-auto w-[min(100%,var(--page-width))] min-w-0 px-[clamp(12px,1.5vw,18px)] pb-7 pt-5 xl:px-[var(--page-gutter)] xl:pb-9 xl:pt-8">
+      <div className="relative z-[1] min-w-0 w-full pb-7 pt-5 xl:pb-9 xl:pt-8">
         <div className="grid min-w-0 grid-cols-1 gap-3 xs:grid-cols-2 sm:gap-[clamp(10px,1.2vw,22px)] lg:grid-cols-4 lg:gap-[clamp(10px,1.2vw,22px)] xl:gap-[clamp(14px,1.1vw,28px)] 2xl:gap-8">
           {topMixcloudItems.map((item) => (
             <MixcloudCard item={item} key={item.id} />

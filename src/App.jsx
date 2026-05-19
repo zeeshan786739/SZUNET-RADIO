@@ -9,7 +9,6 @@ import FooterSection from './sections/FooterSection'
 import SecondRadioPage from './pages/SecondRadioPage'
 import SongSearchPage from './pages/SongSearchPage'
 import RevealOnScroll from './components/RevealOnScroll'
-import EditorialBlueRing from './components/EditorialBlueRing'
 import { usePlaybackProgress } from './hooks/usePlaybackProgress'
 
 function getInitialView() {
@@ -25,18 +24,19 @@ function LandingPage({ playingChannelId, onToggleChannel }) {
   return (
     <>
       <HeroSection channels={channels} playingChannelId={playingChannelId} onToggleChannel={onToggleChannel} />
-      <div className="relative isolate overflow-visible bg-white [--editorial-ellipse-size:clamp(210px,49.5vw,713px)] [--editorial-ellipse-right:calc(-1*clamp(120px,var(--editorial-ellipse-size)*0.58,420px))] [--editorial-ellipse-top:clamp(48px,calc(5vw+28px),196px)] [--editorial-ellipse-opacity:clamp(0.7,calc(0.66+0.2*((100vw-360px)/1080)),0.9)] xl:[--editorial-ellipse-size:clamp(380px,42vw,820px)] xl:[--editorial-ellipse-top:clamp(56px,calc(4vw+32px),220px)] 2xl:[--editorial-ellipse-size:820px]">
-        <EditorialBlueRing />
-        <div className="relative z-[2]">
-          <RevealOnScroll>
-            <ScheduleSection />
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.06}>
-            <BlogSection />
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.1}>
-            <MixcloudSection />
-          </RevealOnScroll>
+      <div className="relative isolate overflow-x-clip overflow-y-visible bg-white [--editorial-ellipse-size:clamp(178px,40.5vw,585px)] [--editorial-ellipse-right:calc(-1*clamp(28px,var(--editorial-ellipse-size)*0.16,110px))] [--editorial-ellipse-translate-x:clamp(-92px,-10vw,-36px)] [--editorial-ellipse-top:clamp(300px,calc(5vw+256px),480px)] [--editorial-ellipse-top-panel:calc(var(--editorial-ellipse-top)-clamp(56px,7vw,104px))] [--editorial-ellipse-opacity:clamp(0.7,calc(0.66+0.2*((100vw-360px)/1080)),0.9)] xl:[--editorial-ellipse-size:clamp(318px,34.5vw,670px)] xl:[--editorial-ellipse-top:clamp(312px,calc(4vw+268px),512px)] 2xl:[--editorial-ellipse-size:670px]">
+        <div className="page-gutter-x">
+          <div className="page-container">
+            <RevealOnScroll>
+              <ScheduleSection />
+            </RevealOnScroll>
+            <RevealOnScroll delay={0.06}>
+              <BlogSection />
+            </RevealOnScroll>
+            <RevealOnScroll delay={0.1}>
+              <MixcloudSection />
+            </RevealOnScroll>
+          </div>
         </div>
       </div>
       <RevealOnScroll delay={0.04}>

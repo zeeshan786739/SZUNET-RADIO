@@ -19,11 +19,22 @@ const desktopFlexSizes = {
 }
 
 const desktopHeights = {
-  electric: 'hero:h-[clamp(465px,75svh,760px)] xl:h-[clamp(480px,78svh,800px)] 2xl:h-[clamp(500px,80svh,840px)]',
-  oldschool: 'hero:h-[clamp(505px,81svh,820px)] xl:h-[clamp(520px,83svh,860px)] 2xl:h-[clamp(540px,85svh,880px)]',
-  prime: 'hero:h-[clamp(510px,88svh,840px)] xl:h-[clamp(530px,90svh,880px)] 2xl:h-[clamp(550px,92svh,900px)]',
-  power: 'hero:h-[clamp(415px,67svh,680px)] xl:h-[clamp(430px,70svh,720px)] 2xl:h-[clamp(450px,72svh,760px)]',
-  relax: 'hero:h-[clamp(470px,78svh,780px)] xl:h-[clamp(490px,80svh,820px)] 2xl:h-[clamp(510px,82svh,860px)]',
+  electric: 'hero:h-[clamp(442px,71svh,722px)] xl:h-[clamp(456px,74svh,760px)] 2xl:h-[clamp(475px,76svh,798px)]',
+  oldschool: 'hero:h-[clamp(480px,77svh,780px)] xl:h-[clamp(494px,79svh,818px)] 2xl:h-[clamp(513px,81svh,836px)]',
+  prime: 'hero:h-[clamp(485px,84svh,800px)] xl:h-[clamp(504px,86svh,836px)] 2xl:h-[clamp(523px,88svh,855px)]',
+  power: 'hero:h-[clamp(395px,64svh,646px)] xl:h-[clamp(409px,66svh,684px)] 2xl:h-[clamp(428px,68svh,722px)]',
+  relax: 'hero:h-[clamp(447px,74svh,742px)] xl:h-[clamp(466px,76svh,780px)] 2xl:h-[clamp(485px,78svh,817px)]',
+}
+
+/** Varied heights on mobile scroll strip — same relative scale as desktop. */
+const mobileHeights = {
+  electric:
+    'max-hero:h-[clamp(340px,min(66svh,var(--hero-mobile-card-height-max)),520px)]',
+  oldschool:
+    'max-hero:h-[clamp(360px,min(70svh,var(--hero-mobile-card-height-max)),548px)]',
+  prime: 'max-hero:h-[clamp(372px,min(72svh,var(--hero-mobile-card-height-max)),568px)]',
+  power: 'max-hero:h-[clamp(312px,min(60svh,var(--hero-mobile-card-height-max)),468px)]',
+  relax: 'max-hero:h-[clamp(352px,min(68svh,var(--hero-mobile-card-height-max)),532px)]',
 }
 
 /** Focal point per portrait (square album art in tall cards). */
@@ -71,8 +82,10 @@ function ChannelCard({
         'hero:[--footer-height:var(--channel-footer-height)]',
         desktopFlexSizes[channel.id],
         desktopHeights[channel.id],
-        'max-hero:h-full max-hero:max-h-full max-hero:w-[var(--hero-mobile-card-width)] max-hero:max-w-[var(--hero-mobile-card-width)] max-hero:flex-[0_0_var(--hero-mobile-card-width)] max-hero:snap-center max-hero:snap-always',
-        isFeature && 'max-hero:[--play-size:clamp(54px,14vw,64px)]',
+        mobileHeights[channel.id],
+        'max-hero:w-[var(--hero-mobile-card-width)] max-hero:max-w-[var(--hero-mobile-card-width)] max-hero:flex-[0_0_var(--hero-mobile-card-width)] max-hero:shrink-0 max-hero:snap-center max-hero:snap-always max-hero:[--footer-height:clamp(92px,24%,128px)]',
+        isFeature &&
+          'max-hero:[--play-size:clamp(54px,14vw,64px)] max-hero:h-[clamp(388px,min(74svh,var(--hero-mobile-card-height-max)),592px)]',
         isPlaying && 'outline-4 -outline-offset-4 outline-white',
       )}
       custom={index}

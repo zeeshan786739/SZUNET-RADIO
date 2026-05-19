@@ -75,7 +75,11 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
         initial={skipIntro ? false : 'hidden'}
         animate="visible"
       >
-        <img className="block h-full w-full object-fill object-right-top" src={redRibbon} alt="" />
+        <img
+          className="block h-full w-full object-fill object-right-top max-hero:scale-[1.08] max-hero:object-[72%_0%]"
+          src={redRibbon}
+          alt=""
+        />
       </motion.div>
 
       <header className="absolute inset-x-0 top-[max(clamp(10px,1.7vw,18px),var(--hero-header-safe-top))] z-[3] px-[var(--page-gutter)]">
@@ -127,7 +131,7 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
         animate={cameraState}
       >
         <motion.img
-          className="pointer-events-none absolute top-[clamp(48px,6.2vw,78px)] right-[clamp(0px,0.5vw,12px)] z-[2] h-auto w-[clamp(240px,34vw,520px)] max-w-[min(92vw,520px)] max-hero:top-[calc(var(--hero-stage-top)-12px)] max-hero:right-0 max-hero:w-[min(58vw,300px)] max-xs:w-[min(64vw,250px)] hero:left-[calc(50%+min(10%,var(--page-width)*0.16)+clamp(10px,1vw,18px))] hero:right-0 xl:w-[clamp(320px,28vw,560px)] xl:max-w-[560px] 2xl:w-[560px]"
+          className="pointer-events-none absolute top-[clamp(48px,6.2vw,78px)] right-[clamp(0px,0.5vw,12px)] z-[4] h-auto w-[clamp(240px,34vw,520px)] max-w-[min(92vw,520px)] max-hero:top-[clamp(96px,20svh,142px)] max-hero:left-[clamp(104px,28vw,158px)] max-hero:right-[var(--page-gutter)] max-hero:w-[min(72vw,320px)] max-hero:max-w-none max-hero:object-contain max-hero:object-center max-xs:left-[clamp(96px,26vw,140px)] max-xs:w-[min(76vw,300px)] hero:left-[calc(50%+min(10%,var(--page-width)*0.16)+clamp(10px,1vw,18px))] hero:right-0 hero:w-[clamp(240px,34vw,520px)] hero:max-w-[min(92vw,520px)] xl:w-[clamp(320px,28vw,560px)] xl:max-w-[560px] 2xl:w-[560px]"
           src={headline}
           alt="Kimaxoljuk a napodat!"
           variants={heroHeadlineVariants}
@@ -141,7 +145,7 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
 
         <div className="w-full px-[var(--page-gutter)]">
           <motion.div
-            className="relative z-[1] mx-auto flex min-h-0 w-full max-w-[var(--page-width)] flex-1 flex-row items-end justify-stretch gap-[var(--hero-card-gap)] hero:max-h-full max-hero:h-full max-hero:max-h-[min(72svh,calc(100svh-var(--player-height)-var(--hero-stage-top)))] max-hero:min-h-[220px] max-hero:max-w-none max-hero:snap-x max-hero:snap-mandatory max-hero:justify-start max-hero:items-stretch max-hero:gap-3 max-hero:overflow-x-auto max-hero:overflow-y-visible max-hero:overscroll-x-contain max-hero:scroll-smooth max-hero:[scroll-padding-inline:var(--page-gutter)] max-hero:[scroll-padding-bottom:8px] max-hero:[scrollbar-width:none] max-hero:[&::-webkit-scrollbar]:hidden"
+            className="relative z-[1] mx-auto flex min-h-0 w-full max-w-[var(--page-width)] flex-1 flex-row items-end justify-stretch gap-[var(--hero-card-gap)] hero:max-h-full max-hero:h-auto max-hero:min-h-[min(312px,60svh)] max-hero:max-h-[var(--hero-mobile-card-height-max)] max-hero:max-w-none max-hero:snap-x max-hero:snap-mandatory max-hero:justify-start max-hero:items-end max-hero:gap-3 max-hero:overflow-x-auto max-hero:overflow-y-visible max-hero:overscroll-x-contain max-hero:scroll-smooth max-hero:[scroll-padding-inline:var(--page-gutter)] max-hero:[scroll-padding-bottom:10px] max-hero:[scrollbar-width:none] max-hero:[&::-webkit-scrollbar]:hidden"
             aria-label="Radio channels"
             ref={channelStripRef}
           >
