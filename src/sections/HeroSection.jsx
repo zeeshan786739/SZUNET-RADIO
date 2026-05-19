@@ -114,8 +114,8 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
             </a>
             <a
               className="inline-flex items-center gap-[0.1em] border-0 bg-transparent p-0 font-[family-name:var(--font-family)] text-[length:var(--hero-nav-link-size)] font-normal lowercase leading-none tracking-[0.02em] text-[#080833] no-underline shadow-none transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-[#080833] focus-visible:outline-offset-4"
-              href="/dal-kereses"
-              aria-label="Dal keresés — lejátszás folytatódik"
+              href="/"
+              aria-label="Kezdőlap — lejátszás folytatódik"
             >
               <SearchGlyph className="h-[1em] w-[1em] shrink-0 text-[#080833]" />
               <span>dalkereses</span>
