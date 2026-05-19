@@ -1,4 +1,3 @@
-import footerHeadline from '../assets/images/KIMAXOLJUK A NAPODAT! (1).png'
 import footerBackground from '../assets/images/Rectangle 6.png'
 import stationLogo from '../assets/images/Szünet logo.png'
 
@@ -17,16 +16,20 @@ function FooterSection() {
 
       <div className="page-gutter-x flex min-h-0 flex-1 flex-col">
         <div className="page-container relative grid min-h-0 flex-1 grid-rows-[1fr_auto] pb-[clamp(22px,3vw,34px)] pt-[clamp(44px,7vw,110px)] xl:pb-10 xl:pt-[clamp(56px,6vw,120px)]">
-        <div className="relative inline-block w-[clamp(180px,52vw,420px)] place-self-center px-[clamp(12px,4vw,72px)] pb-3.5 pt-2.5 max-md:w-[min(92vw,360px)]">
+        <div
+          className="relative inline-grid max-w-full place-self-center px-[clamp(4px,0.75vw,10px)] pb-[clamp(8px,0.95vw,13px)] pt-[clamp(4px,0.5vw,7px)]"
+          aria-label="Kimaxoljuk a napodat!"
+        >
           <span
-            className="pointer-events-none absolute bottom-[14%] left-[25%] right-[25%] z-0 h-[38%] bg-[#ff1111]"
+            className="pointer-events-none absolute bottom-[7%] left-[8%] z-0 h-[44%] w-[82%] bg-[#ff1111]"
             aria-hidden="true"
           />
-          <img
-            className="relative z-[1] block w-full"
-            src={footerHeadline}
-            alt="Kimaxoljuk a napodat!"
-          />
+          <p
+            className="relative z-[1] m-0 whitespace-nowrap font-[family-name:var(--font-family)] text-[clamp(1.85rem,9.6vw,5.85rem)] font-normal uppercase leading-[0.8] tracking-[0] text-white"
+            aria-hidden="true"
+          >
+            KIMAXOLJUK A NAPODAT!
+          </p>
         </div>
 
         <div className="flex flex-wrap items-end justify-between gap-x-[clamp(14px,3vw,48px)] gap-y-4 text-white">

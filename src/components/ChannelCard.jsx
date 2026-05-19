@@ -27,15 +27,8 @@ const desktopHeights = {
 }
 
 /** Varied heights on mobile scroll strip — same relative scale as desktop. */
-const mobileHeights = {
-  electric:
-    'max-hero:h-[clamp(340px,min(66svh,var(--hero-mobile-card-height-max)),520px)]',
-  oldschool:
-    'max-hero:h-[clamp(360px,min(70svh,var(--hero-mobile-card-height-max)),548px)]',
-  prime: 'max-hero:h-[clamp(372px,min(72svh,var(--hero-mobile-card-height-max)),568px)]',
-  power: 'max-hero:h-[clamp(312px,min(60svh,var(--hero-mobile-card-height-max)),468px)]',
-  relax: 'max-hero:h-[clamp(352px,min(68svh,var(--hero-mobile-card-height-max)),532px)]',
-}
+const mobileCardHeight =
+  'max-hero:h-[clamp(360px,min(72svh,var(--hero-mobile-card-height-max)),568px)]'
 
 /** Focal point per portrait (square album art in tall cards). */
 const portraitFocus = {
@@ -82,12 +75,12 @@ function ChannelCard({
         'hero:[--footer-height:var(--channel-footer-height)]',
         desktopFlexSizes[channel.id],
         desktopHeights[channel.id],
-        mobileHeights[channel.id],
+        mobileCardHeight,
         'max-hero:w-[var(--hero-mobile-card-width)] max-hero:max-w-[var(--hero-mobile-card-width)] max-hero:flex-[0_0_var(--hero-mobile-card-width)] max-hero:shrink-0 max-hero:snap-center max-hero:snap-always max-hero:[--footer-height:clamp(92px,24%,128px)]',
-        isFeature &&
-          'max-hero:[--play-size:clamp(54px,14vw,64px)] max-hero:h-[clamp(388px,min(74svh,var(--hero-mobile-card-height-max)),592px)]',
+        isFeature && 'max-hero:[--play-size:clamp(54px,14vw,64px)]',
         isPlaying && 'outline-4 -outline-offset-4 outline-white',
       )}
+      data-channel-card-id={channel.id}
       custom={index}
       variants={variants}
       initial={skipIntro ? false : 'hidden'}

@@ -12,7 +12,6 @@ import {
 import ChannelCard from '../components/ChannelCard'
 import HeroIntroLoader from '../components/HeroIntroLoader'
 import brandLogo from '../assets/images/Group 2.png'
-import headline from '../assets/images/KIMAXOLJUK A NAPODAT!.png'
 import redRibbon from '../assets/images/Rectangle 19.png'
 import SearchGlyph from '../components/SearchGlyph'
 import { BP, mediaMax } from '../utils/breakpoints'
@@ -49,8 +48,14 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
     const strip = channelStripRef.current
     if (!strip || !window.matchMedia(mediaMax(BP.hero)).matches) return
 
-    const featureCard = strip.querySelector('[data-channel-id="prime"]')
-    featureCard?.scrollIntoView({ inline: 'center', block: 'nearest' })
+    const featureCard = strip.querySelector('[data-channel-card-id="prime"]')
+    if (!(featureCard instanceof HTMLElement)) return
+
+    const centerFeatureCard = () => {
+      strip.scrollLeft = featureCard.offsetLeft - (strip.clientWidth - featureCard.clientWidth) / 2
+    }
+
+    window.requestAnimationFrame(centerFeatureCard)
   }, [introComplete])
 
   const cameraState = skipIntro ? false : 'intro'
@@ -90,7 +95,7 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
           animate="visible"
         >
           <button
-            className="cursor-pointer border-0 bg-transparent p-0 transition-[opacity,transform] duration-300 hover:opacity-90 focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#080833]"
+            className="cursor-pointer border-0 bg-transparent p-0 transition-[opacity,transform] duration-300 hover:opacity-90 focus-visible:outline-none"
             type="button"
             aria-label="Scroll to top"
             onClick={scrollToTop}
@@ -130,14 +135,20 @@ function HeroSection({ channels, playingChannelId, onToggleChannel }) {
         initial={skipIntro ? false : 'hidden'}
         animate={cameraState}
       >
-        <motion.img
-          className="pointer-events-none absolute top-[clamp(48px,6.2vw,78px)] right-[clamp(0px,0.5vw,12px)] z-[4] h-auto w-[clamp(240px,34vw,520px)] max-w-[min(92vw,520px)] max-hero:top-[clamp(96px,20svh,142px)] max-hero:left-[clamp(104px,28vw,158px)] max-hero:right-[var(--page-gutter)] max-hero:w-[min(72vw,320px)] max-hero:max-w-none max-hero:object-contain max-hero:object-center max-xs:left-[clamp(96px,26vw,140px)] max-xs:w-[min(76vw,300px)] hero:left-[calc(50%+min(10%,var(--page-width)*0.16)+clamp(10px,1vw,18px))] hero:right-0 hero:w-[clamp(240px,34vw,520px)] hero:max-w-[min(92vw,520px)] xl:w-[clamp(320px,28vw,560px)] xl:max-w-[560px] 2xl:w-[560px]"
-          src={headline}
-          alt="Kimaxoljuk a napodat!"
+        <motion.div
+          className="pointer-events-none absolute top-[clamp(48px,6.2vw,78px)] right-[clamp(0px,0.5vw,12px)] z-[4] grid aspect-[3.2/1] w-[clamp(240px,34vw,520px)] max-w-[min(92vw,520px)] place-items-center overflow-visible max-hero:top-[clamp(36px,8svh,56px)] max-hero:left-[clamp(104px,28vw,158px)] max-hero:right-[var(--page-gutter)] max-hero:w-[min(72vw,320px)] max-hero:max-w-none max-xs:left-[clamp(96px,26vw,140px)] max-xs:w-[min(76vw,300px)] hero:left-[calc(50%+min(10%,var(--page-width)*0.16)+clamp(10px,1vw,18px))] hero:right-0 hero:w-[clamp(240px,34vw,520px)] hero:max-w-[min(92vw,520px)] xl:w-[clamp(320px,28vw,560px)] xl:max-w-[560px] 2xl:w-[560px]"
+          aria-label="Kimaxoljuk a napodat!"
           variants={heroHeadlineVariants}
           initial={skipIntro ? false : 'hidden'}
           animate="visible"
-        />
+        >
+          <p
+            className="m-0 w-max max-w-none origin-center -rotate-[7deg] whitespace-nowrap font-[family-name:var(--font-family)] text-[clamp(1.25rem,4.05vw,3.8rem)] font-bold uppercase leading-[0.78] tracking-[0.01em] text-white max-hero:text-[clamp(1.08rem,5.6vw,2rem)]"
+            aria-hidden="true"
+          >
+            KIMAXOLJUK A NAPODAT!
+          </p>
+        </motion.div>
 
         <AnimatePresence>
           {!skipIntro && showLoader ? <HeroIntroLoader key="hero-loader" /> : null}
